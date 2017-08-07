@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- Site Properties -->
-  <title>戒毒</title>
+  <title>戒毒好所在</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
 <!--
   <script src="../dist/components/visibility.js"></script>
@@ -58,8 +58,8 @@
         <a class="toc item">
           <i class="sidebar icon"></i>
         </a>
-        <a class="active item">尋求協助</a>
-        <a class="item">追蹤回報</a>
+        
+        <a class="item" href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286">協助編輯戒毒場所資訊</a>
         <div class="right item">
           <!--<a class="ui inverted button">Log in</a>
           <a class="ui inverted button">Sign Up</a>-->
@@ -69,7 +69,7 @@
 
     <div class="ui text container">
       <h1 class="ui inverted header">
-        戒毒資訊入口網
+        戒毒好所在
       </h1>
       <h2>協助成癮者或觀護人、家屬、個案管理師一起為成癮者找到適合戒毒的協助機構</h2>
       <div class="ui huge primary button" id="start-btn">尋求協助<i class="right arrow icon"></i></div>
@@ -100,22 +100,16 @@
                         
                         <div class="field">
                             <label>年齡</label>
-                            <select class="ui dropdown">
-                            <option value="">---</option>
-                            <option value="7">7~11歲</option>
-                            <option value="12">12~18歲</option>
-                            <option value="18">18-35</option>
-                            <option value="36">36-50</option>
-                            <option value="50">50+</option>
+                            <input id="form-age" type="number"  placeholder="年齡">
                             </select>
                         </div>
                         <div class="field">
                             <label>性別</label>
-                            <select class="ui dropdown">
+                            <select class="ui dropdown" id="form-性別">
                             <option value="">選擇性別</option>
-                            <option value="male">男</option>
-                            <option value="female">女</option>
-                            <option value="other">其他</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                            <option value="NULL">其他</option>
                             </select>
                         </div>
                     </div>
@@ -135,8 +129,7 @@
                         <div class="field">
                             <label>居住地區</label>
                             <select class="ui fluid dropdown" id="form-分區" attr="area">
-                                <option value="">---</option>
-                                <option value="臺北區">臺北區</option>
+                                <option value="NULL">---</option>
                                 <option value="北區">北區</option>
                                 <option value="中區">中區</option>
                                 <option value="南區">南區</option>
@@ -146,8 +139,8 @@
                         </div>
                         <div class="field">
                             <label>宗教信仰</label>
-                            <select class="ui fluid dropdown">
-                                <option value="NULL">無</option>
+                            <select class="ui fluid dropdown" id="form-宗教">
+                                <option value="NULL">無或不排斥</option>
                                 <option value="基督教">基督教</option>
                                 <option value="佛教">佛教</option>
                                 <option value="道教">道教</option>
@@ -155,7 +148,7 @@
                             </select>
                         </div>
                     </div>
-                
+                    <!--
                     <div class="ui segment">
                         <div class="field">
                         <div class="ui toggle checkbox" id="strict-match">
@@ -163,13 +156,13 @@
                             <label>結果需完全符合條件</label>
                         </div>
                         </div>
-                    </div>
-                <div class="ui button massive" id="agancy-btn" tabindex="0">送出：推薦協助單位</div>
+                    </div>-->
+                <div class="ui button massive blue" id="agancy-btn" tabindex="0">推薦我協助單位</div>
                 
             </form>
         </div>
         <div class="six wide right floated column">
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p>請填寫左列表格，網站會根據填寫內容提供最適合您的戒毒選項。為保護隱私，本表格內容僅供作為了解訪問此網站使用者之分析，不會外流。</p>
         </div>
       </div>
     </div>
@@ -198,28 +191,35 @@
             <div style="display:none;" class="ui three column centered stackable grid container" id="agency-group-template">
                 <div id="type" class=""><!--type-->
                     <h2 id="title" class="ui horizontal header divider">替代治療</h2><!--title-->
-                    <p id="description">awefea</p><!--description-->
+                    <p id="description" class="ui text container">awefea</p><!--description-->
                 </div>
                 <div class="column" id="agency-card-template">
                     <a class="ui fluid card">
                         <div class="content">
                             <div class="header"><i class="hospital icon"></i><span class='title'>XX醫院</span></div>
+                            <span class="religion"></span>
+                            <span class="teens"></span>
                         </div>
                         <div class="content">
                             <div class="meta">
-                                <span class="area">地區：台北</span>
-                                <span class="phone">電話：09xxxxxxs</span>
+                                <span class="area"></span>
+                                <span class="phone"></span>
+                                </br>
+                                  <span class="address"></span>
+                                
                             </div>
                             <div>
-                              <span class="service">處置方式</span>
+                              <h3 class="service">處置方式</h3>
                             </div>
                             <div>
                               <span class="allowance">補助：25000/一年</span>
                             </div>
+                            <div>
+                              
+                            </div>
                         </div>
                         <div class="extra content">
-                            <span class="success_rate">戒斷成功率：89%</span>
-                            <span><i class="thumbs outline up icon"></i>接受治療者：5</span>
+                            <span class="success_rate"></span>
                         </div>
                     </a>
                 </div>
