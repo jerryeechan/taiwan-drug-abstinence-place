@@ -1,10 +1,8 @@
-<html> 
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="semantic/dist/semantic.min.js"></script>
+<html>
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="semantic/dist/semantic.min.js"></script>
 
 <head>
   <!-- Standard Meta -->
@@ -15,66 +13,67 @@
   <!-- Site Properties -->
   <title>戒毒好所在</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
-<!--
+  <!--
   <script src="../dist/components/visibility.js"></script>
   <script src="../dist/components/sidebar.js"></script>
   <script src="../dist/components/transition.js"></script>-->
   <script>
-  $(document)
-    .ready(function() {
+    $(document)
+      .ready(function () {
 
-      // fix menu when passed
-      $('.masthead')
-        .visibility({
-          once: false,
-          onBottomPassed: function() {
-            $('.fixed.menu').transition('fade in');
-          },
-          onBottomPassedReverse: function() {
-            $('.fixed.menu').transition('fade out');
-          }
-        })
-      ;
+        // fix menu when passed
+        $('.masthead')
+          .visibility({
+            once: false,
+            onBottomPassed: function () {
+              $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function () {
+              $('.fixed.menu').transition('fade out');
+            }
+          })
+          ;
 
-      // create sidebar and attach to menu open
-      $('.ui.sidebar')
-        .sidebar('attach events', '.toc.item')
+        // create sidebar and attach to menu open
+        $('.ui.sidebar')
+          .sidebar('attach events', '.toc.item')
+          ;
+      })
       ;
-    })
-  ;
   </script>
 </head>
+
 <body>
 
 
 
 
-<!-- Page Contents -->
-<div class="pusher">
-  <div class="ui inverted vertical masthead center aligned segment">
+  <!-- Page Contents -->
+  <div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
 
-    <div class="ui container">
-      <div class="ui large secondary inverted pointing menu">
-        <a class="toc item">
+      <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+          <a class="toc item">
           <i class="sidebar icon"></i>
         </a>
-        
-        <a class="item" href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286">協助編輯戒毒場所資訊</a>
-        <div class="right item">
-          <!--<a class="ui inverted button">Log in</a>
+
+          <a class="item" href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286">協助編輯戒毒場所資訊</a>
+          <div class="right item">
+            <!--<a class="ui inverted button">Log in</a>
           <a class="ui inverted button">Sign Up</a>-->
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="ui text container">
-      <h1 class="ui inverted header">
-        戒毒好所在
-      </h1>
-      <h2>協助成癮者或觀護人、家屬、個案管理師一起為成癮者找到適合戒毒的協助機構</h2>
-      <div class="ui huge primary button" id="start-btn">尋求協助<i class="right arrow icon"></i></div>
-    </div>
-<!--
+      <div class="ui text container">
+        <h1 class="ui inverted header">
+          戒毒好所在
+        </h1>
+        <h2>協助成癮者或觀護人、家屬、個案管理師一起為成癮者找到適合戒毒的協助機構</h2>
+        <div class="ui huge primary button" id="start-btn">尋求協助<i class="right arrow icon"></i></div>
+      </div>
+      <!--
      <div class="ui search">
       <div class="ui icon input">
         <input class="prompt" type="text" placeholder="Common passwords...">
@@ -83,39 +82,39 @@
       <div class="results"></div>
     </div>-->
 
-  </div>
+    </div>
 
-  <div class="ui vertical stripe segment">
-    <div class="ui middle aligned stackable grid container">
-      <div class="row">
-        <div class="eight wide column">
+    <div class="ui vertical stripe segment">
+      <div class="ui middle aligned stackable grid container">
+        <div class="row">
+          <div class="eight wide column">
             <form class="ui form" id="form">
-                <h4 class="ui dividing header">成癮患者資料填寫</h4>
-                
-                    <div class="field">
-                        <label>暱稱</label>
-                        <input type="text" name="shipping[first-name]" placeholder="暱稱">
-                    </div>
-                    <div class="two fields">
-                        
-                        <div class="field">
-                            <label>年齡</label>
-                            <input id="form-age" type="number"  placeholder="年齡">
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label>性別</label>
-                            <select class="ui dropdown" id="form-性別">
+              <h4 class="ui dividing header">成癮患者資料填寫</h4>
+
+              <div class="field">
+                <label>暱稱</label>
+                <input type="text" name="shipping[first-name]" placeholder="暱稱">
+              </div>
+              <div class="two fields">
+
+                <div class="field">
+                  <label>年齡</label>
+                  <input id="form-age" type="number" placeholder="年齡">
+                  </select>
+                </div>
+                <div class="field">
+                  <label>性別</label>
+                  <select class="ui dropdown" id="form-性別">
                             <option value="">選擇性別</option>
                             <option value="男">男</option>
                             <option value="女">女</option>
                             <option value="NULL">其他</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>使用毒品</label>
-                        <select multiple="" class="ui dropdown">
+                </div>
+              </div>
+              <div class="field">
+                <label>使用毒品</label>
+                <select multiple="" class="ui dropdown">
                             <option value="">---</option>
                             <option value="1">嗎啡、海洛因</option>
                             <option value="2">安非他命類(安非他命及甲基安非他命)</option>
@@ -124,11 +123,11 @@
                             <option value="5">愷他命類(愷他命及原愷他命)</option>
                             <option value="other">其他</option>
                         </select>
-                    </div>
-                    <div class="two fields">
-                        <div class="field">
-                            <label>居住地區</label>
-                            <select class="ui fluid dropdown" id="form-分區" attr="area">
+              </div>
+              <div class="two fields">
+                <div class="field">
+                  <label>居住地區</label>
+                  <select class="ui fluid dropdown" id="form-分區" attr="area">
                                 <option value="NULL">---</option>
                                 <option value="北區">北區</option>
                                 <option value="中區">中區</option>
@@ -136,19 +135,19 @@
                                 <option value="高屏區">高屏區</option>
                                 <option value="東區">東區</option>
                             </select>
-                        </div>
-                        <div class="field">
-                            <label>宗教信仰</label>
-                            <select class="ui fluid dropdown" id="form-宗教">
+                </div>
+                <div class="field">
+                  <label>宗教信仰</label>
+                  <select class="ui fluid dropdown" id="form-宗教">
                                 <option value="NULL">無或不排斥</option>
                                 <option value="基督教">基督教</option>
                                 <option value="佛教">佛教</option>
                                 <option value="道教">道教</option>
                                 <option value="-1">排斥宗教性協助</option>
                             </select>
-                        </div>
-                    </div>
-                    <!--
+                </div>
+              </div>
+              <!--
                     <div class="ui segment">
                         <div class="field">
                         <div class="ui toggle checkbox" id="strict-match">
@@ -157,16 +156,16 @@
                         </div>
                         </div>
                     </div>-->
-                <div class="ui button massive blue" id="agancy-btn" tabindex="0">推薦我協助單位</div>
-                
+              <div class="ui button massive blue" id="agancy-btn" tabindex="0">推薦我協助單位</div>
+
             </form>
-        </div>
-        <div class="six wide right floated column">
-          <p>請填寫左列表格，網站會根據填寫內容提供最適合您的戒毒選項。為保護隱私，本表格內容僅供作為了解訪問此網站使用者之分析，不會外流。</p>
+          </div>
+          <div class="six wide right floated column">
+            <p>請填寫左列表格，網站會根據填寫內容提供最適合您的戒毒選項。為保護隱私，本表格內容僅供作為了解訪問此網站使用者之分析，不會外流。</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
     <div id="agency" class="ui vertical stripe segment quote">
@@ -185,49 +184,52 @@
             </div>
           </div>
         </div>-->
-        <h1 class="ui horizontal header centered">推薦單位</h1>
-          <div class="group-area">
-            <!--template-->
-            <div style="display:none;" class="ui three column centered stackable grid container" id="agency-group-template">
-                <div id="type" class=""><!--type-->
-                    <h2 id="title" class="ui horizontal header divider">替代治療</h2><!--title-->
-                    <p id="description" class="ui text container">awefea</p><!--description-->
-                </div>
-                <div class="column" id="agency-card-template">
-                    <a class="ui fluid card">
-                        <div class="content">
-                            <div class="header"><i class="hospital icon"></i><span class='title'>XX醫院</span></div>
-                            <span class="religion"></span>
-                            <span class="teens"></span>
-                        </div>
-                        <div class="content">
-                            <div class="meta">
-                                <span class="area"></span>
-                                <span class="phone"></span>
-                                </br>
-                                  <span class="address"></span>
-                                
-                            </div>
-                            <div>
-                              <h3 class="service">處置方式</h3>
-                            </div>
-                            <div>
-                              <span class="allowance">補助：25000/一年</span>
-                            </div>
-                            <div>
-                              
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <span class="success_rate"></span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!--template-->
+      <h1 class="ui horizontal header centered">推薦單位</h1>
+      <div class="group-area">
+        <!--template-->
+        <div style="display:none;" class="ui three column centered stackable grid container" id="agency-group-template">
+          <div id="type" class="">
+            <!--type-->
+            <h2 id="title" class="ui horizontal header divider">替代治療</h2>
+            <!--title-->
+            <p id="description" class="ui text container">awefea</p>
+            <!--description-->
           </div>
+          <div class="column" id="agency-card-template">
+            <a class="ui fluid card">
+              <div class="content">
+                <div class="header"><i class="hospital icon"></i><span class='title'>XX醫院</span></div>
+                <span class="religion"></span>
+                <span class="teens"></span>
+              </div>
+              <div class="content">
+                <div class="meta">
+                  <span class="area"></span>
+                  <span class="phone"></span>
+                  </br>
+                  <span class="address"></span>
+
+                </div>
+                <div>
+                  <h3 class="service">處置方式</h3>
+                </div>
+                <div>
+                  <span class="allowance">補助：25000/一年</span>
+                </div>
+                <div>
+
+                </div>
+              </div>
+              <div class="extra content">
+                <span class="success_rate"></span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!--template-->
+      </div>
     </div>
-<!--
+    <!--
   <div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui stackable inverted divided equal height stackable grid">
@@ -257,13 +259,13 @@
     </div>
   </div>
   -->
-</div>
+  </div>
 </body>
-    
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
-    <script src="js/main.js"></script>
-<script type='text/javascript'>    
-  
-</script>
-</html>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script src="js/main.js"></script>
+<script type='text/javascript'>
+
+</script>
+
+</html>

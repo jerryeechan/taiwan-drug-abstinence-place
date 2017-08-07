@@ -1,12 +1,13 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "module": "amd",
-        "outFile": "public/js/main.js",
+        "target": "es5",
+        "module": "commonjs",
         "watch": true,
-        "sourceMap": true
+        "jsx": "react",
+        "experimentalDecorators": true
     },
-    "exclude": [
-        "node_modules"
+    "include": [
+        "./src/**/*"
     ]
 }
