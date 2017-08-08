@@ -8,6 +8,7 @@
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "react": "^15.6.1",
+    "react-scroll": "^1.5.4",
     "semantic-ui-react": "^0.71.3"
   },
   "devDependencies": {},

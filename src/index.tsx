@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { Header, Segment, Container, Menu, Item, Button, Icon } from "semantic-ui-react"
 
 class MastHead extends React.Component<any, any>{
-    getHelp() {
+    scrollToSearch() {
 
     }
     render() {
@@ -19,7 +19,7 @@ class MastHead extends React.Component<any, any>{
                         戒毒好所在
                 </Header>
                     <h2>協助成癮者或觀護人、家屬、個案管理師一起為成癮者找到適合戒毒的協助機構</h2>
-                    <Button primary size="huge" onClick={() => { this.getHelp() }}>
+                    <Button primary size="huge" onClick={() => { this.scrollToSearch() }}>
                         尋求協助<Icon className="right arrow"></Icon>
                     </Button>
                 </Container>
@@ -27,11 +27,13 @@ class MastHead extends React.Component<any, any>{
         )
     }
 }
+class SearchForm extends React.Component<any, any>
+{
+
+}
 const Main = () =>
     <div>
-
-        <p>
-        </p>
+        <MastHead />
     </div>;
 
 ReactDOM.render(<Main />, document.getElementById("main"));

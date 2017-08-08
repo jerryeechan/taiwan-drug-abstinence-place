@@ -88,7 +88,7 @@ var MastHead = (function (_super) {
     function MastHead() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MastHead.prototype.getHelp = function () {
+    MastHead.prototype.scrollToSearch = function () {
     };
     MastHead.prototype.render = function () {
         var _this = this;
@@ -99,15 +99,22 @@ var MastHead = (function (_super) {
             React.createElement(semantic_ui_react_1.Container, { text: true },
                 React.createElement(semantic_ui_react_1.Header, { as: "h1", inverted: true }, "\u6212\u6BD2\u597D\u6240\u5728"),
                 React.createElement("h2", null, "\u5354\u52A9\u6210\u766E\u8005\u6216\u89C0\u8B77\u4EBA\u3001\u5BB6\u5C6C\u3001\u500B\u6848\u7BA1\u7406\u5E2B\u4E00\u8D77\u70BA\u6210\u766E\u8005\u627E\u5230\u9069\u5408\u6212\u6BD2\u7684\u5354\u52A9\u6A5F\u69CB"),
-                React.createElement(semantic_ui_react_1.Button, { primary: true, size: "huge", onClick: function () { _this.getHelp(); } },
+                React.createElement(semantic_ui_react_1.Button, { primary: true, size: "huge", onClick: function () { _this.scrollToSearch(); } },
                     "\u5C0B\u6C42\u5354\u52A9",
                     React.createElement(semantic_ui_react_1.Icon, { className: "right arrow" })))));
     };
     return MastHead;
 }(React.Component));
+var SearchForm = (function (_super) {
+    __extends(SearchForm, _super);
+    function SearchForm() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return SearchForm;
+}(React.Component));
 var Main = function () {
     return React.createElement("div", null,
-        React.createElement("p", null));
+        React.createElement(MastHead, null));
 };
 ReactDOM.render(React.createElement(Main, null), document.getElementById("main"));
 
