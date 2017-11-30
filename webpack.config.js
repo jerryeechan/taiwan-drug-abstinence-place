@@ -45,6 +45,10 @@ var config = {
   // Enable sourcemaps for debugging webpack's output.
   devtool: devtool,
   //--optimize-minimize
+  devServer: {
+    contentBase: "./public/dist",
+    hot: true
+  },
   resolve: {
     modules: ["node_modules", "./src"],
     // Add '.ts' and '.tsx' as resolvable extensions.
