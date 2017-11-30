@@ -16,6 +16,9 @@ var plugins = [
     template: './src/index.html',
     filename: 'index.html',
     inject: 'body',
+  }),
+  new webpack.ProvidePlugin({
+    "React": "react",
   })
 ];
 // if(PROD)
@@ -47,7 +50,7 @@ var config = {
   //--optimize-minimize
   devServer: {
     contentBase: "./public/dist",
-    hot: true
+    hot: false
   },
   resolve: {
     modules: ["node_modules", "./src"],
@@ -70,16 +73,16 @@ var config = {
   // assume a corresponding global variable exists and use that instead.
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
-  externals: [
-    {
-      react: "React",
-      "react-dom": "ReactDOM",
-      "semantic-ui-react": "semanticUIReact",
-      redux: "Redux",
-      "react-router-dom": "ReactRouterDOM",
-      firebase: "firebase"
-    }
-  ]
+  // externals: [
+  //   {
+  //     react: "React",
+  //     "react-dom": "ReactDOM",
+  //     "semantic-ui-react": "semanticUIReact",
+  //     redux: "Redux",
+  //     "react-router-dom": "ReactRouterDOM",
+  //     firebase: "firebase"
+  //   }
+  // ]
 };
 module.exports = config;
 
