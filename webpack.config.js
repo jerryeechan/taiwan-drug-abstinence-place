@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 var node_modules_dir = path.resolve(__dirname, "node_modules");
 var devtool = "eval-source-map"; //["eval-source-map"]
 console.log(process.env.arg);
@@ -10,6 +11,11 @@ var plugins = [
   new webpack.optimize.CommonsChunkPlugin({
     names: ["vendors"], //"app"
     minChunks: Infinity
+  }),
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    filename: 'index.html',
+    inject: 'body',
   })
 ];
 // if(PROD)
