@@ -11,7 +11,8 @@ import {
   Form,
   Input,
   Select,
-  Dropdown
+  Dropdown,
+  Card
 } from "semantic-ui-react";
 import { Tabletop } from "tabletop";
 
@@ -2866,7 +2867,8 @@ export class Home extends React.Component<any, any> {
     gender: "",
     drug: "",
     zone: "",
-    religion: ""
+    religion: "",
+    angencyResult: []
   };
   scrollToSearch() {
     // TODO : scroll down
@@ -2875,9 +2877,12 @@ export class Home extends React.Component<any, any> {
   recommendFacility() {
     // json_data
     // TODO : 推薦場所 並產生資料
+    this.setState({ angencyResult: json_data });
   }
 
   render() {
+    console.log(this.state.angencyResult);
+
     return (
       <div>
         <Segment inverted vertical textAlign="center" className="masthead">
@@ -3000,6 +3005,13 @@ export class Home extends React.Component<any, any> {
             </Button>
           </Container>
         </Segment>
+        {this.state.angencyResult.map((item, index) => (
+          <Card
+            header={item["機構名稱"]}
+            meta={item['機構屬性']}
+            description={item['地址']}
+          />
+        ))}
         <Segment />
       </div>
     );
