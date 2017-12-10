@@ -1,6 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 var node_modules_dir = path.resolve(__dirname, "node_modules");
 var devtool = "eval-source-map"; //["eval-source-map"]
 console.log(process.env.arg);
@@ -13,12 +13,12 @@ var plugins = [
     minChunks: Infinity
   }),
   new HtmlWebpackPlugin({
-    template: './src/index.html',
-    filename: 'index.html',
-    inject: 'body',
+    template: "./src/index.html",
+    filename: "index.html",
+    inject: "body"
   }),
   new webpack.ProvidePlugin({
-    "React": "react",
+    React: "react"
   })
 ];
 // if(PROD)
@@ -68,7 +68,8 @@ var config = {
       { test: /\.css?$/, loader: "style-loader!css-loader" }
     ]
   },
-  plugins: plugins,
+
+  plugins: plugins
   // When importing a module whose path matches one of the following, just
   // assume a corresponding global variable exists and use that instead.
   // This is important because it allows us to avoid bundling all of our
