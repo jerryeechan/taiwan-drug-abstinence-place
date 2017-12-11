@@ -14,7 +14,8 @@ import {
   Dropdown,
   Card
 } from "semantic-ui-react";
-import { Tabletop } from "tabletop";
+
+import FirebaseAuth from "react-firebase-auth";
 
 const json_data = [
   {
@@ -2858,7 +2859,9 @@ const religionOptions = [
   { key: "taoism", text: "道教", value: "taoism" },
   { key: "nosupport", text: "排斥宗教性協助", value: "nosupport" }
 ];
-class userStore {}
+const responseGoogle = response => {
+  console.log(response);
+};
 
 export class Home extends React.Component<any, any> {
   state = {
@@ -2882,9 +2885,28 @@ export class Home extends React.Component<any, any> {
 
   render() {
     console.log(this.state.angencyResult);
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     // User is signed in.
+    //   } else {
+    //     // No user is signed in.
+    //   }
+    // });
 
     return (
       <div>
+        <FirebaseAuth
+          email
+          tosUrl="https://www.google.com"
+          apiKey="AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0"
+          authDomain="taiwan-drug-abstinence-p-2edf5.firebaseapp.com"
+          databaseURL="https://taiwan-drug-abstinence-p-2edf5.firebaseio.com"
+          storageBucket="taiwan-drug-abstinence-p-2edf5.appspot.com"
+          //
+          onAuthStateChanged={user => {
+            console.log(user);
+          }}
+        />
         <Segment inverted vertical textAlign="center" className="masthead">
           <Container>
             <Menu pointing secondary inverted>
@@ -3008,8 +3030,8 @@ export class Home extends React.Component<any, any> {
         {this.state.angencyResult.map((item, index) => (
           <Card
             header={item["機構名稱"]}
-            meta={item['機構屬性']}
-            description={item['地址']}
+            meta={item["機構屬性"]}
+            description={item["地址"]}
           />
         ))}
         <Segment />

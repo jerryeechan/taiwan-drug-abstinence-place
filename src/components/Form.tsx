@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { DoctorForm } from './DoctorForm';
-import { Tab } from 'semantic-ui-react';
+import { DoctorForm } from "./DoctorForm";
+import { Tab } from "semantic-ui-react";
 
 export class Form extends React.Component<any, any> {
   // static initCount = 5;
@@ -18,9 +18,12 @@ export class Form extends React.Component<any, any> {
     // this.handleSet = this.handleSet.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
 
-    this.state = { editorHtml: 'A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.',
-                   name: "Wall-E",
-                   location: "Earth"};
+    this.state = {
+      editorHtml:
+        "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.",
+      name: "Wall-E",
+      location: "Earth"
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -31,35 +34,54 @@ export class Form extends React.Component<any, any> {
   render() {
     return (
       <div className="form">
-        <Tab panes={[{menuItem: 'Doctor', render: ()=> (<Tab.Pane><DoctorForm editorHtml={this.state.editorHtml} name={this.state.name} location={this.state.location} handleSubmit={this.handleSubmit} handleNameChange={this.handleNameChange} handleLocationChange={this.handleLocationChange} handleChange={this.handleChange}/></Tab.Pane>)}]} />
+        <Tab
+          panes={[
+            {
+              menuItem: "Doctor",
+              render: () => (
+                <Tab.Pane>
+                  <DoctorForm
+                    editorHtml={this.state.editorHtml}
+                    name={this.state.name}
+                    location={this.state.location}
+                    handleSubmit={this.handleSubmit}
+                    handleNameChange={this.handleNameChange}
+                    handleLocationChange={this.handleLocationChange}
+                    handleChange={this.handleChange}
+                  />
+                </Tab.Pane>
+              )
+            }
+          ]}
+        />
       </div>
     );
   }
 
-  handleSubmit(e){
-    var data={
+  handleSubmit(e) {
+    var data = {
       name: this.state.name,
       location: this.state.location,
       intro: this.state.editorHtml
-    }
+    };
     console.log(data);
     this.setState({
       name: "",
       location: "",
       editorHtml: ""
-    })
+    });
   }
 
-  handleNameChange(e){
+  handleNameChange(e) {
     this.setState({
       name: e.target.value
     });
   }
 
-  handleLocationChange(e){
+  handleLocationChange(e) {
     this.setState({
       location: e.target.value
-    })
+    });
   }
 
   handleChange(e) {
