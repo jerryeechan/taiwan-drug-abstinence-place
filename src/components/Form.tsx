@@ -1,7 +1,9 @@
 import * as React from "react";
 
 import { DoctorForm } from "./DoctorForm";
-import { Tab } from "semantic-ui-react";
+import { Login } from "./Login";
+import { Tab, Button } from "semantic-ui-react";
+import * as firebase from "firebase";
 
 export class Form extends React.Component<any, any> {
   // static initCount = 5;
@@ -22,8 +24,36 @@ export class Form extends React.Component<any, any> {
       editorHtml:
         "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.",
       name: "Wall-E",
-      location: "Earth"
+      location: "Earth",
+      login: false
     };
+
+    var config = {
+      apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+      authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+      databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+      projectId: "taiwan-drug-abstinence-p-2edf5",
+      storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+      messagingSenderId: "933584242007"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+
+    firebase.auth().onAuthStateChanged(
+      function(user) {
+        if (user) {
+          console.log("login in");
+          console.log(user);
+          // 用看看Redirect，不要單頁判斷
+          this.setState({
+            login: true
+          });
+        } else {
+          console.log("user is not sign in");
+        }
+      }.bind(this)
+    );
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -31,32 +61,57 @@ export class Form extends React.Component<any, any> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  render() {
-    return (
-      <div className="form">
-        <Tab
-          panes={[
-            {
-              menuItem: "Doctor",
-              render: () => (
-                <Tab.Pane>
-                  <DoctorForm
-                    editorHtml={this.state.editorHtml}
-                    name={this.state.name}
-                    location={this.state.location}
-                    handleSubmit={this.handleSubmit}
-                    handleNameChange={this.handleNameChange}
-                    handleLocationChange={this.handleLocationChange}
-                    handleChange={this.handleChange}
-                  />
-                </Tab.Pane>
-              )
-            }
-          ]}
-        />
-      </div>
-    );
+  signOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(
+        function() {
+          console.log("sign out!");
+          this.setState({
+            login: false
+          });
+        }.bind(this),
+        function(error) {
+          console.log("sign out error");
+        }
+      );
   }
+
+  render() {
+    if (this.state.login) {
+      return (
+        <div className="form">
+          <Tab
+            panes={[
+              {
+                menuItem: "Doctor",
+                render: () => (
+                  <Tab.Pane>
+                    <h1>Hello Form</h1>
+                    <Form />
+                  </Tab.Pane>
+                )
+              }
+            ]}
+          />
+          <Button onClick={() => this.signOut()}>Sign Out</Button>
+        </div>
+      );
+    } else {
+      return <Login />;
+    }
+  }
+
+  /* <DoctorForm
+        editorHtml={this.state.editorHtml}
+        name={this.state.name}
+        location={this.state.location}
+        handleSubmit={this.handleSubmit}
+        handleNameChange={this.handleNameChange}
+        handleLocationChange={this.handleLocationChange}
+        handleChange={this.handleChange}
+      /> */
 
   handleSubmit(e) {
     var data = {

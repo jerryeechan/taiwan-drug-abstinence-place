@@ -1,5 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
+import * as firebase from "firebase";
 import {
   Header,
   Segment,
@@ -2884,29 +2885,96 @@ export class Home extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.state.angencyResult);
+    // 登入
+    //
+    // Initialize Firebase
+    // var config = {
+    //   apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+    //   authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+    //   databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+    //   projectId: "taiwan-drug-abstinence-p-2edf5",
+    //   storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+    //   messagingSenderId: "933584242007"
+    // };
+    // firebase.initializeApp(config);
+    // 服務機構入口
+    // -> 註冊/登入
+    // ->
+    // firebase.auth().createUserWithEmailAndPassword("a4027971@gmail.com", "88888888").catch(function(error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   console.log(errorCode + ": " +errorMessage);
+    // });
+
+    // 註冊確認信
+    // user.sendEmailVerification().then(function() {
+    //   // Email sent.
+    // }).catch(function(error) {
+    //   // An error happened.
+    // });
+
+    // firebase
+    //   .auth()
+    //   .signInWithEmailAndPassword("a4027971@gmail.com", "88888888")
+    //   .catch(function(error) {
+    //     // Handle Errors here.
+    //     var errorCode = error.code;
+    //     var errorMessage = error.message;
+    //   });
+
     // firebase.auth().onAuthStateChanged(function(user) {
     //   if (user) {
+    //     console.log(user.emailVerified);
     //     // User is signed in.
+    //     // TODO : signInWithRedirect
+    //     // 直接get
+    //     // var user = firebase.auth().currentUser;
+    //     // console.log(user);
+    //     // user.sendEmailVerification().then(function() {
+    //     //   // Email sent.
+    //     //   console.log("success");
+    //     // }).catch(function(error) {
+    //     //   console.log("error");
+    //     //   // An error happened.
+    //     // });
     //   } else {
     //     // No user is signed in.
     //   }
     // });
 
+    // 使用 user profile
+    // var user = firebase.auth().currentUser;
+    // var name, email, photoUrl, uid, emailVerified;
+
+    // if (user != null) {
+    //   name = user.displayName;
+    //   email = user.email;
+    //   photoUrl = user.photoURL;
+    //   emailVerified = user.emailVerified;
+    //   uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+    //                    // this value to authenticate with your backend server, if
+    //                    // you have one. Use User.getToken() instead.
+    // }
+
+    // 更新 user profile
+    // user.updateProfile({
+    //   displayName: "Jane Q. User",
+    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
+    // }).then(function() {
+    //   // Update successful.
+    // }).catch(function(error) {
+    //   // An error happened.
+    // });
+
+    // 更新 Email
+    // user.updateEmail("user@example.com").then(function() {
+    //   // Update successful.
+    // }).catch(function(error) {
+    //   // An error happened.
+    // });
     return (
       <div>
-        <FirebaseAuth
-          email
-          tosUrl="https://www.google.com"
-          apiKey="AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0"
-          authDomain="taiwan-drug-abstinence-p-2edf5.firebaseapp.com"
-          databaseURL="https://taiwan-drug-abstinence-p-2edf5.firebaseio.com"
-          storageBucket="taiwan-drug-abstinence-p-2edf5.appspot.com"
-          //
-          onAuthStateChanged={user => {
-            console.log(user);
-          }}
-        />
         <Segment inverted vertical textAlign="center" className="masthead">
           <Container>
             <Menu pointing secondary inverted>
@@ -2915,6 +2983,9 @@ export class Home extends React.Component<any, any> {
                 href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286"
               >
                 協助編輯戒毒場所資訊
+              </Item>
+              <Item as="a" href="/#/Form">
+                服務機構入口
               </Item>
             </Menu>
           </Container>
