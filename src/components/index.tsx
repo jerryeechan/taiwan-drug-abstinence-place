@@ -11,7 +11,9 @@ import {
 } from "semantic-ui-react";
 import { HashRouter, Switch, Route } from "react-router-dom";
 import { Home } from "./home";
-import { Form } from "./Form";
+import { DataForm } from "./dataForm";
+import { Login } from "./login";
+import { Register } from "./register";
 
 class MastHead extends React.Component<any, any> {
   render() {
@@ -19,7 +21,9 @@ class MastHead extends React.Component<any, any> {
       <HashRouter>
         <div>
           <Switch>
-            <Route path="/form" component={Form} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/form" component={DataForm} />
             <Route path="/home" component={Home} />
             <Route path="/" component={Home} />
           </Switch>
@@ -28,7 +32,7 @@ class MastHead extends React.Component<any, any> {
     );
   }
 }
-class SearchForm extends React.Component<any, any> {}
+class SearchForm extends React.Component<any, any> { }
 const Main = () => (
   <div>
     <MastHead />

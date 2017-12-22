@@ -3,9 +3,10 @@ import * as firebase from "firebase";
 import { Redirect } from 'react-router';
 import { Form, Checkbox, Button } from "semantic-ui-react";
 
-export class Login extends React.Component<any, any> {
+export class Register extends React.Component<any, any> {
   constructor(props) {
     super(props);
+
     this.state = {
       email: "",
       password: ""
@@ -24,33 +25,21 @@ export class Login extends React.Component<any, any> {
     }
   }
 
-  componentDidMount() { }
-
-  handleLogin() {
-    console.log("handle login");
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        alert(errorMessage);
-        return;
-      });
-    window.location.href = "./#/form";
-  }
-
-  redirectToRegister() {
-    window.location.href = "./#/register"; 
+  handleRegister() {
+    console.log("handle register");
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
+      return;
+    });
+    window.location.href = "./#/login";
   }
 
   render() {
     return (
       <Form>
-        <h1>登入</h1>
+        <h1>註冊</h1>
         <Form.Field>
           <label>信箱</label>
           <input
@@ -64,8 +53,7 @@ export class Login extends React.Component<any, any> {
         </Form.Field>
         <Form.Field>
           <label>密碼</label>
-          <input
-            type="password"
+          <input type="password"
             onChange={evt =>
               this.setState({
                 password: evt.target.value
@@ -77,13 +65,10 @@ export class Login extends React.Component<any, any> {
         <Form.Field>
           <Checkbox label="I agree to the Terms and Conditions" />
         </Form.Field>
-        <Button type="submit" onClick={() => this.handleLogin()}>
+        <Button type="submit" onClick={() => this.handleRegister()}>
           送出
         </Button>
-        <Button type="submit" onClick={() => this.redirectToRegister()} >
-          註冊帳號
-        </Button>
-      </Form >
+      </Form>
     );
   }
 }

@@ -2,10 +2,28 @@ import * as React from "react";
 
 import { DoctorForm } from "./DoctorForm";
 import { Login } from "./Login";
-import { Tab, Button } from "semantic-ui-react";
-import * as firebase from "firebase";
+import { Tab, Button, Form, Container } from "semantic-ui-react";
+import { Redirect } from 'react-router';
 
-export class Form extends React.Component<any, any> {
+import * as firebase from "firebase";
+import '@firebase/firestore';
+
+
+const config = {
+  apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+  authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+  databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+  projectId: "taiwan-drug-abstinence-p-2edf5",
+  storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+  messagingSenderId: "933584242007"
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
+let db = firebase.firestore();
+
+
+export class DataForm extends React.Component<any, any> {
   // static initCount = 5;
 
   constructor(props) {
@@ -25,35 +43,12 @@ export class Form extends React.Component<any, any> {
         "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.",
       name: "Wall-E",
       location: "Earth",
-      login: false
+      phone: "",
+      web: "",
+      address: "",
+      user: ""
     };
 
-    var config = {
-      apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
-      authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
-      databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
-      projectId: "taiwan-drug-abstinence-p-2edf5",
-      storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
-      messagingSenderId: "933584242007"
-    };
-    if (!firebase.apps.length) {
-      firebase.initializeApp(config);
-    }
-
-    firebase.auth().onAuthStateChanged(
-      function(user) {
-        if (user) {
-          console.log("login in");
-          console.log(user);
-          // 用看看Redirect，不要單頁判斷
-          this.setState({
-            login: true
-          });
-        } else {
-          console.log("user is not sign in");
-        }
-      }.bind(this)
-    );
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -61,48 +56,85 @@ export class Form extends React.Component<any, any> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  signOut() {
+  signOut = () => {
     firebase
       .auth()
       .signOut()
       .then(
-        function() {
-          console.log("sign out!");
-          this.setState({
-            login: false
-          });
-        }.bind(this),
-        function(error) {
-          console.log("sign out error");
-        }
+      function () {
+        console.log("sign out!");
+        this.setState({
+          login: false
+        });
+      }.bind(this),
+      function (error) {
+        console.log("sign out error");
+      }
       );
+  }
+
+  handleSave = () => {
+    console.log(this.state);
+    var user = firebase.auth().currentUser;
+
+    let uid = user.uid;
+
+    let data = {
+      name: this.state.name,
+      web: this.state.web,
+      phone: this.state.phone,
+      address: this.state.address
+    };
+    try {
+      db.collection("agency").doc(uid).set(data);
+    } catch (err) {
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
+  }
+
+  handleFormChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
   }
 
   render() {
-    if (this.state.login) {
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+      console.log(user);
       return (
-        <div className="form">
-          <Tab
-            panes={[
-              {
-                menuItem: "Doctor",
-                render: () => (
-                  <Tab.Pane>
-                    <h1>Hello Form</h1>
-                    <Form />
-                  </Tab.Pane>
-                )
-              }
-            ]}
-          />
-          <Button onClick={() => this.signOut()}>Sign Out</Button>
-        </div>
+        <Container>
+          <Form>
+            <Form.Input label='機構名稱' name="name" placeholder='' onChange={this.handleFormChange} />
+            <Form.Input label='網站位置' name="web" placeholder='' onChange={this.handleFormChange} />
+            <Form.Input label='電話' name="phone" placeholder='' onChange={this.handleFormChange} />
+            <Form.Input label='地址' name="address" placeholder='Address' onChange={this.handleFormChange} />
+
+            <Button onClick={this.handleSave}>送出</Button>
+            <Button onClick={this.signOut}>Sign Out</Button>
+          </Form >
+        </Container>
       );
     } else {
-      return <Login />;
+      console.log("user is not sign in");
+      return (<Redirect to='/login' />);
     }
   }
 
+  // <Tab
+  //           panes={[
+  //             {
+  //               menuItem: "Doctor",
+  //               render: () => (
+  //                 <Tab.Pane>
+  //                   <h1>Hello Form</h1>
+  //                   <Form />
+  //                 </Tab.Pane>
+  //               )
+  //             }
+  //           ]}
+  //         />
   /* <DoctorForm
         editorHtml={this.state.editorHtml}
         name={this.state.name}
