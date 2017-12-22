@@ -2865,114 +2865,37 @@ const responseGoogle = response => {
 };
 
 export class Home extends React.Component<any, any> {
-  state = {
-    name: "",
-    age: 0,
-    gender: "",
-    drug: "",
-    zone: "",
-    religion: "",
-    angencyResult: []
-  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      age: 0,
+      gender: "",
+      drug: "",
+      zone: "",
+      religion: "",
+      angencyResult: []
+    };
+  }
   scrollToSearch() {
     // TODO : scroll down
   }
 
-  recommendFacility() {
+  handleFormChange = (e, { name, value }) => {
+    console.log(name + ": " + value);
+    this.setState({ [name]: value });
+  }
+
+  recommendFacility = () => {
+    console.log(this.state);
     // json_data
     // TODO : 推薦場所 並產生資料
     this.setState({ angencyResult: json_data });
   }
 
   render() {
-    // 登入
-    //
-    // Initialize Firebase
-    // var config = {
-    //   apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
-    //   authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
-    //   databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
-    //   projectId: "taiwan-drug-abstinence-p-2edf5",
-    //   storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
-    //   messagingSenderId: "933584242007"
-    // };
-    // firebase.initializeApp(config);
-    // 服務機構入口
-    // -> 註冊/登入
-    // ->
-    // firebase.auth().createUserWithEmailAndPassword("a4027971@gmail.com", "88888888").catch(function(error) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   console.log(errorCode + ": " +errorMessage);
-    // });
-
-    // 註冊確認信
-    // user.sendEmailVerification().then(function() {
-    //   // Email sent.
-    // }).catch(function(error) {
-    //   // An error happened.
-    // });
-
-    // firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword("a4027971@gmail.com", "88888888")
-    //   .catch(function(error) {
-    //     // Handle Errors here.
-    //     var errorCode = error.code;
-    //     var errorMessage = error.message;
-    //   });
-
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     console.log(user.emailVerified);
-    //     // User is signed in.
-    //     // TODO : signInWithRedirect
-    //     // 直接get
-    //     // var user = firebase.auth().currentUser;
-    //     // console.log(user);
-    //     // user.sendEmailVerification().then(function() {
-    //     //   // Email sent.
-    //     //   console.log("success");
-    //     // }).catch(function(error) {
-    //     //   console.log("error");
-    //     //   // An error happened.
-    //     // });
-    //   } else {
-    //     // No user is signed in.
-    //   }
-    // });
-
-    // 使用 user profile
-    // var user = firebase.auth().currentUser;
-    // var name, email, photoUrl, uid, emailVerified;
-
-    // if (user != null) {
-    //   name = user.displayName;
-    //   email = user.email;
-    //   photoUrl = user.photoURL;
-    //   emailVerified = user.emailVerified;
-    //   uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-    //                    // this value to authenticate with your backend server, if
-    //                    // you have one. Use User.getToken() instead.
-    // }
-
-    // 更新 user profile
-    // user.updateProfile({
-    //   displayName: "Jane Q. User",
-    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
-    // }).then(function() {
-    //   // Update successful.
-    // }).catch(function(error) {
-    //   // An error happened.
-    // });
-
-    // 更新 Email
-    // user.updateEmail("user@example.com").then(function() {
-    //   // Update successful.
-    // }).catch(function(error) {
-    //   // An error happened.
-    // });
     return (
       <div>
         <Segment inverted vertical textAlign="center" className="masthead">
@@ -3017,28 +2940,22 @@ export class Home extends React.Component<any, any> {
                 <Form.Input
                   label="暱稱"
                   placeholder="暱稱"
-                  value={this.state.name}
-                  onChange={(event, { value }) => {
-                    this.setState({ name: value });
-                  }}
+                  name="name"
+                  onChange={this.handleFormChange}
                 />
               </Form.Field>
               <Form.Group widths="equal">
                 <Form.Input
                   label="年齡"
                   placeholder="年齡"
-                  value={this.state.age}
-                  onChange={(event, { value }) => {
-                    this.setState({ age: value });
-                  }}
+                  name="age"
+                  onChange={this.handleFormChange}
                 />
                 <Form.Input
                   control={Select}
                   options={genderOptions}
-                  value={this.state.gender}
-                  onChange={(event, { value }) => {
-                    this.setState({ gender: value });
-                  }}
+                  onChange={this.handleFormChange}
+                  name="gender"
                   label="性別"
                   placeholder="性別"
                 />
@@ -3047,11 +2964,8 @@ export class Home extends React.Component<any, any> {
                 <Dropdown
                   label="使用毒品"
                   options={drugOptions}
-                  defaultValue={this.state.drug}
-                  onChange={(event, { value }) => {
-                    this.setState({ drug: value });
-                    console.log(this.state);
-                  }}
+                  onChange={this.handleFormChange}
+                  name="drug"
                   onAddItem={(e, { value }) => {
                     this.setState({
                       options: [{ text: value, value }, ...this.state.drug]
@@ -3068,20 +2982,16 @@ export class Home extends React.Component<any, any> {
                 <Form.Input
                   control={Select}
                   options={zoneOptions}
-                  value={this.state.zone}
-                  onChange={(event, { value }) => {
-                    this.setState({ zone: value });
-                  }}
+                  onChange={this.handleFormChange}
+                  name="zone"
                   label="居住地區"
                   placeholder="--"
                 />
                 <Form.Input
                   control={Select}
                   options={religionOptions}
-                  value={this.state.religion}
-                  onChange={(event, { value }) => {
-                    this.setState({ religion: value });
-                  }}
+                  onChange={this.handleFormChange}
+                  name="religion"
                   label="宗教信仰"
                   placeholder="--"
                 />
@@ -3090,9 +3000,7 @@ export class Home extends React.Component<any, any> {
             <Button
               primary
               size="huge"
-              onClick={() => {
-                this.recommendFacility();
-              }}
+              onClick={this.recommendFacility}
             >
               推薦我協助單位<Icon className="right arrow" />
             </Button>
