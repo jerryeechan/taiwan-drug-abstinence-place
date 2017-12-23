@@ -39,10 +39,8 @@ export class DataForm extends React.Component<any, any> {
     // this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
-      editorHtml:
-        "A robot who has developed sentience, and is the only robot of his kind shown to be still functioning on Earth.",
-      name: "Wall-E",
-      location: "Earth",
+      editorHtml: "",
+      name: "",
       phone: "",
       web: "",
       address: "",
@@ -50,10 +48,11 @@ export class DataForm extends React.Component<any, any> {
     };
 
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDoctorSubmit = this.handleDoctorSubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   signOut = () => {
@@ -104,17 +103,38 @@ export class DataForm extends React.Component<any, any> {
     if (user) {
       console.log(user);
       return (
-        <Container>
-          <Form>
-            <Form.Input label='機構名稱' name="name" placeholder='' onChange={this.handleFormChange} />
-            <Form.Input label='網站位置' name="web" placeholder='' onChange={this.handleFormChange} />
-            <Form.Input label='電話' name="phone" placeholder='' onChange={this.handleFormChange} />
-            <Form.Input label='地址' name="address" placeholder='Address' onChange={this.handleFormChange} />
+        <Tab
+          panes={[
+            {
+              menuItem: "Doctor",
+              render: () => (
+                <Tab.Pane>
+                  <DoctorForm
+                    editorHtml={this.state.editorHtml}
+                    name={this.state.name}
+                    location={this.state.location}
+                    handleSubmit={this.handleDoctorSubmit}
+                    handleNameChange={this.handleNameChange}
+                    handlePhoneChange={this.handlePhoneChange}
+                    handleChange={this.handleChange}
+                    handleClick={this.handleClick}
+                  /> 
+                </Tab.Pane>
+              )
+            }
+          ]}
+        />
+        // <Container>
+        //   <Form>
+        //     <Form.Input label='機構名稱' name="name" placeholder='' onChange={this.handleFormChange} />
+        //     <Form.Input label='網站位置' name="web" placeholder='' onChange={this.handleFormChange} />
+        //     <Form.Input label='電話' name="phone" placeholder='' onChange={this.handleFormChange} />
+        //     <Form.Input label='地址' name="address" placeholder='Address' onChange={this.handleFormChange} />
 
-            <Button onClick={this.handleSave}>送出</Button>
-            <Button onClick={this.signOut}>Sign Out</Button>
-          </Form >
-        </Container>
+        //     <Button onClick={this.handleSave}>送出</Button>
+        //     <Button onClick={this.signOut}>Sign Out</Button>
+        //   </Form >
+        // </Container>
       );
     } else {
       console.log("user is not sign in");
@@ -122,36 +142,34 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
-  // <Tab
-  //           panes={[
-  //             {
-  //               menuItem: "Doctor",
-  //               render: () => (
-  //                 <Tab.Pane>
-  //                   <h1>Hello Form</h1>
-  //                   <Form />
-  //                 </Tab.Pane>
-  //               )
-  //             }
-  //           ]}
-  //         />
-  /* <DoctorForm
-        editorHtml={this.state.editorHtml}
-        name={this.state.name}
-        location={this.state.location}
-        handleSubmit={this.handleSubmit}
-        handleNameChange={this.handleNameChange}
-        handleLocationChange={this.handleLocationChange}
-        handleChange={this.handleChange}
-      /> */
+  handleClick(e) {
+    let parent = e.target.parentElement;
+    if (parent.style.visibility == "hidden") {
+      parent.style.visibility = "visible";
+    } else {
+      parent.style.visibility = "hidden";
+    }
+    e.target.style.visibility = "visible";
+  }
 
-  handleSubmit(e) {
+  handleDoctorSubmit(e) {
     var data = {
       name: this.state.name,
       location: this.state.location,
       intro: this.state.editorHtml
     };
     console.log(data);
+    var user = firebase.auth().currentUser;
+    
+    let uid = user.uid;
+
+    try {
+      db.collection("doctor").doc(uid).set(data);
+    } catch (err) {
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
     this.setState({
       name: "",
       location: "",
@@ -165,9 +183,9 @@ export class DataForm extends React.Component<any, any> {
     });
   }
 
-  handleLocationChange(e) {
+  handlePhoneChange(e) {
     this.setState({
-      location: e.target.value
+      phone: e.target.value
     });
   }
 
