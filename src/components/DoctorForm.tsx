@@ -12,22 +12,6 @@ import {
 } from "semantic-ui-react";
 
 export class DoctorForm extends React.Component<any, any> {
-  static modules = {
-    toolbar: [["bold", "italic", "underline", "strike"], ["link"], ["clean"]],
-    clipboard: {
-      // toggle to add extra line breaks when pasting HTML:
-      matchVisual: true
-    }
-  };
-
-  
-
-  // static formats = [
-  //   'header', 'font', 'size',
-  //   'bold', 'italic', 'underline', 'strike', 'blockquote',
-  //   'list', 'bullet', 'indent',
-  //   'link', 'image', 'video'
-  // ]
 
   constructor(props) {
     super(props);
@@ -46,14 +30,14 @@ export class DoctorForm extends React.Component<any, any> {
                   <Grid.Row>
                     <Grid.Column mobile={16} tablet={4} computer={4}>
                       <div style={{crop}}>
-                        <Image
+                        <Image id='img-rounded'
                           style={cropImg}
                           src="http://ebil.nctu.edu.tw/wp-content/uploads/2016/11/%E7%A9%BA%E7%99%BD%E5%A4%A7%E9%A0%AD%E7%85%A7-300x300.jpg"
                         />
                       </div>
                       <Container style={link}>
-                        <a style={{display:"block", color: "#fff", "textAlign": "center", margin:"auto"}} role="button">
-                          Change picture
+                        <a style={{display:"block", color: "#fff", "textAlign": "center", margin:"auto"}} role="button" id="aa">
+                          更換照片
                           <input style={{height:"20px", width:"100%", right: "0", position: "absolute"}}
                             id="oi"
                             type="file"
@@ -65,7 +49,7 @@ export class DoctorForm extends React.Component<any, any> {
                     </Grid.Column>
                     <Grid.Column mobile={16} tablet={12} computer={12}>
                       <Form.Field>
-                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>Display name</label>
+                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>姓名</label>
                         <input
                           placeholder="First Name"
                           value={this.props.name}
@@ -73,7 +57,7 @@ export class DoctorForm extends React.Component<any, any> {
                         />
                       </Form.Field>
                       <Form.Field>
-                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>Phone</label>
+                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>電話</label>
                         <input
                           placeholder="phone"
                           value={this.props.phone}
@@ -85,7 +69,7 @@ export class DoctorForm extends React.Component<any, any> {
                   <Grid.Row>
                     <Grid.Column mobile={16} tablet={8} computer={8}>
                       <Form.Field width={16}>
-                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "10px"}}>About me</label>
+                        <label style={{textAlign: "left",fontSize: "1.5em",padding: "10px"}}>簡介</label>
                         <textarea style={{width:"98%", margin:"5px"}} placeholder="tell us more" onChange={this.props.handleChange} value={this.props.editorHtml}/>
                       </Form.Field>
                     </Grid.Column>
@@ -109,58 +93,58 @@ export class DoctorForm extends React.Component<any, any> {
                               上<br />午
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sun1' style={this.props.OKtime['Sun1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Mon1' style={this.props.OKtime['Mon1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Tue1' style={this.props.OKtime['Tue1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Wed1' style={this.props.OKtime['Wed1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Thu1' style={this.props.OKtime['Thu1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Fri1' style={this.props.OKtime['Fri1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sat1' style={this.props.OKtime['Sat1']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
@@ -170,58 +154,58 @@ export class DoctorForm extends React.Component<any, any> {
                               下<br />午
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sun2' style={this.props.OKtime['Sun2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Mon2' style={this.props.OKtime['Mon2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Tue2' style={this.props.OKtime['Tue2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Wed2' style={this.props.OKtime['Wed2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Thu2' style={this.props.OKtime['Thu2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Fri2' style={this.props.OKtime['Fri2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sat2' style={this.props.OKtime['Sat2']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
@@ -231,58 +215,58 @@ export class DoctorForm extends React.Component<any, any> {
                               晚<br />上
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sun3' style={this.props.OKtime['Sun3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Mon3' style={this.props.OKtime['Mon3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Tue3' style={this.props.OKtime['Tue3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Wed3' style={this.props.OKtime['Wed3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Thu3' style={this.props.OKtime['Thu3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Fri3' style={this.props.OKtime['Fri3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
                             <Table.Cell>
-                              <Icon color="green" name="checkmark" size="large">
+                              <Icon color="green" name="checkmark" size="large" id='Sat3' style={this.props.OKtime['Sat3']}>
                                 <Button
                                   style={iconbtn}
-                                  onClick={this.props.handleClick}
+                                  onClick={this.props.handleTimeClick}
                                 />
                               </Icon>
                             </Table.Cell>
@@ -306,7 +290,7 @@ export class DoctorForm extends React.Component<any, any> {
   }
 
   previewFile() {
-    var preview: any = document.querySelector(".img-rounded");
+    var preview: any = document.getElementById("img-rounded");
     var input: any = document.querySelector("input[type=file]");
     var file = input.files[0];
     var reader = new FileReader();
@@ -325,11 +309,17 @@ export class DoctorForm extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    let icons = document.getElementsByTagName("i");
-    for (let i = 0; i <= 20; ++i) {
-      icons[i].style.visibility = "hidden";
-      let childElem: any = icons[i].firstElementChild;
-      childElem.style.visibility = "visible";
+    // console.log(this.props.OKtime)
+    // let buttons = document.getElementsByTagName("button");
+    // for (let i = 0; i <= 20; ++i) {
+    //   buttons[i].style.visibility = "visible";
+    // }
+    let aElem: any = document.getElementById('aa');
+    aElem.onmouseover = ()=>{
+      aElem.style.color = "#46A3FF";
+    }
+    aElem.onmouseout = ()=>{
+      aElem.style.color='#fff';
     }
     let IElem: any = document.getElementById("oi");
     IElem.style.opacity = 0;
@@ -342,7 +332,8 @@ const iconbtn = {
   width:  "50px",
   left: "-10px",
   top: "-35px",
-  opacity: "0"
+  opacity: "0",
+  visibility: "visible"
   /* background-color: gray; */
 }
 

@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 
 import * as firebase from "firebase";
 import '@firebase/firestore';
+import { AgencyForm } from "./AgencyForm";
 
 
 const config = {
@@ -42,17 +43,51 @@ export class DataForm extends React.Component<any, any> {
       editorHtml: "",
       name: "",
       phone: "",
-      web: "",
+      website: "",
       address: "",
-      user: ""
+      area: "",
+      location: "",
+      user: "",
+      method: [['','']],
+      checked: true,
+      OKtime:{
+        'Sun1': {visibility: 'hidden'},
+        'Mon1': {visibility: 'hidden'},
+        'Tue1': {visibility: 'hidden'},
+        'Wed1': {visibility: 'hidden'},
+        'Thu1': {visibility: 'hidden'},
+        'Fri1': {visibility: 'hidden'},
+        'Sat1': {visibility: 'hidden'},
+        'Sun2': {visibility: 'hidden'},
+        'Mon2': {visibility: 'hidden'},
+        'Tue2': {visibility: 'hidden'},
+        'Wed2': {visibility: 'hidden'},
+        'Thu2': {visibility: 'hidden'},
+        'Fri2': {visibility: 'hidden'},
+        'Sat2': {visibility: 'hidden'},
+        'Sun3': {visibility: 'hidden'},
+        'Mon3': {visibility: 'hidden'},
+        'Tue3': {visibility: 'hidden'},
+        'Wed3': {visibility: 'hidden'},
+        'Thu3': {visibility: 'hidden'},
+        'Fri3': {visibility: 'hidden'},
+        'Sat3': {visibility: 'hidden'}
+      }
     };
 
 
     this.handleDoctorSubmit = this.handleDoctorSubmit.bind(this);
+    this.handleAgnecySubmit = this.handleAgnecySubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleTimeClick = this.handleTimeClick.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
+    this.handleAreaChange = this.handleAreaChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.handleAddMethod = this.handleAddMethod.bind(this);
   }
 
   signOut = () => {
@@ -101,10 +136,38 @@ export class DataForm extends React.Component<any, any> {
     var user = firebase.auth().currentUser;
 
     if (user) {
-      console.log(user);
+      // console.log(user);
       return (
         <Tab
           panes={[
+            {
+              menuItem: "Agency",
+              render: () => (
+                <Tab.Pane>
+                  <AgencyForm 
+                    OKtime={this.state.OKtime}
+                    handleTimeClick={this.handleTimeClick}
+                    name={this.state.name}
+                    handleNameChange={this.handleNameChange}
+                    phone={this.state.phone}
+                    handlePhoneChange={this.handlePhoneChange}
+                    website={this.state.website}
+                    handleWebsiteChange={this.handleWebsiteChange}
+                    address={this.state.address}
+                    handleAddressChange={this.handleAddressChange}
+                    area={this.state.area}
+                    handleAreaChange={this.handleAreaChange}
+                    location={this.state.location}
+                    handleLocationChange={this.handleLocationChange}
+                    handleSubmit={this.handleAgnecySubmit}
+                    handleCheckboxChange={this.handleCheckboxChange}
+                    checked={this.state.checked}
+                    method={this.state.method}
+                    handleAddMethod={this.handleAddMethod}
+                  />
+                </Tab.Pane>
+              )
+            },
             {
               menuItem: "Doctor",
               render: () => (
@@ -112,12 +175,13 @@ export class DataForm extends React.Component<any, any> {
                   <DoctorForm
                     editorHtml={this.state.editorHtml}
                     name={this.state.name}
-                    location={this.state.location}
+                    phone={this.state.phone}
                     handleSubmit={this.handleDoctorSubmit}
                     handleNameChange={this.handleNameChange}
                     handlePhoneChange={this.handlePhoneChange}
                     handleChange={this.handleChange}
-                    handleClick={this.handleClick}
+                    handleTimeClick={this.handleTimeClick}
+                    OKtime={this.state.OKtime}
                   /> 
                 </Tab.Pane>
               )
@@ -142,41 +206,60 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
-  handleClick(e) {
-    let parent = e.target.parentElement;
-    if (parent.style.visibility == "hidden") {
-      parent.style.visibility = "visible";
+  handleTimeClick(e) {
+    console.log('Handle Time Click');
+    var id = e.target.parentElement.id
+    var ntime = this.state.OKtime;
+    if(ntime[id].visibility == 'hidden'){
+      ntime[id].visibility = 'visible';
     } else {
-      parent.style.visibility = "hidden";
+      ntime[id].visibility = 'hidden';
     }
-    e.target.style.visibility = "visible";
+    this.setState({
+      OKtime: ntime
+    })
   }
 
   handleDoctorSubmit(e) {
     var data = {
       name: this.state.name,
-      location: this.state.location,
-      intro: this.state.editorHtml
+      phone: this.state.phone,
+      intro: this.state.editorHtml,
+      OKtime: this.state.OKtime
     };
     console.log(data);
     var user = firebase.auth().currentUser;
     
     let uid = user.uid;
 
+    
     try {
-      db.collection("doctor").doc(uid).set(data);
+      db.collection("agency").doc(uid).collection("doctor").doc(this.state.name).set(data);
     } catch (err) {
+      console.log(err);
       alert("系統錯誤，請稍後在試");
       return;
     }
     alert("儲存成功");
     this.setState({
       name: "",
-      location: "",
+      phone: "",
       editorHtml: ""
     });
   }
 
+  handleAgnecySubmit(e) {
+    var data = {
+      name: this.state.name,
+      phone: this.state.phone,
+      website: this.state.website,
+      address: this.state.address,
+      area: this.state.area,
+      location: this.state.location,
+      OKtime: this.state.OKtime
+    }
+    console.log(data);
+  }
   handleNameChange(e) {
     this.setState({
       name: e.target.value
@@ -191,8 +274,47 @@ export class DataForm extends React.Component<any, any> {
 
   handleChange(e) {
     this.setState({
-      editorHtml: e
+      editorHtml: e.target.value
     });
+  }
+
+  handleWebsiteChange(e){
+    this.setState({
+      website: e.target.value
+    });
+  }
+
+  handleAddressChange(e){
+    this.setState({
+      address: e.target.value
+    })
+  }
+
+  handleAreaChange(e, target){
+    this.setState({
+      area: target.value,
+      location: ""
+    })
+  }
+
+  handleCheckboxChange(e, target){
+    this.setState({
+      checked: target.checked
+    })
+  }
+
+  handleLocationChange(e, target){
+    this.setState({
+      location: target.value
+    })
+  }
+
+  handleAddMethod(e) {
+    let newItem = this.state.method;
+    newItem.push(['','']);
+    this.setState({
+      method: newItem
+    })
   }
 
   // tick() {
