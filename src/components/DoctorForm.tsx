@@ -10,6 +10,7 @@ import {
   Icon,
   Table
 } from "semantic-ui-react";
+import Dropdown from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 
 export class DoctorForm extends React.Component<any, any> {
 
@@ -22,6 +23,7 @@ export class DoctorForm extends React.Component<any, any> {
   render() {
     return (
       <Container className="form-container">
+        <Dropdown selection options={this.props.doctorNameOptions} onChange={this.props.handleDoctorNameOptionsChange} value={this.props.doctorName}/>
         <Form>
           <Grid>
             <Grid.Row style={nopadding}>
@@ -70,7 +72,7 @@ export class DoctorForm extends React.Component<any, any> {
                     <Grid.Column mobile={16} tablet={8} computer={8}>
                       <Form.Field width={16}>
                         <label style={{textAlign: "left",fontSize: "1.5em",padding: "10px"}}>簡介</label>
-                        <textarea style={{width:"98%", margin:"5px"}} placeholder="tell us more" onChange={this.props.handleChange} value={this.props.editorHtml}/>
+                        <textarea style={{width:"98%", margin:"5px"}} placeholder="tell us more" onChange={this.props.handleChange} value={this.props.intro}/>
                       </Form.Field>
                     </Grid.Column>
 

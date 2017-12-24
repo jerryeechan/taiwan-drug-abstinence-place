@@ -40,7 +40,7 @@ export class DataForm extends React.Component<any, any> {
     // this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
-      editorHtml: "",
+      intro: "",
       name: "",
       phone: "",
       website: "",
@@ -59,6 +59,8 @@ export class DataForm extends React.Component<any, any> {
       e1checked: false,
       e2checked: false,
       e3checked: false,
+      doctorNameOptions: [ { key: 'new', value: 'new', text: '新增' } ],
+      doctorName: 'new',
       OKtime:{
         'Sun1': {visibility: 'hidden'},
         'Mon1': {visibility: 'hidden'},
@@ -107,6 +109,8 @@ export class DataForm extends React.Component<any, any> {
     this.handleE1CheckboxChange = this.handleE1CheckboxChange.bind(this);
     this.handleE2CheckboxChange = this.handleE2CheckboxChange.bind(this);
     this.handleE3CheckboxChange = this.handleE3CheckboxChange.bind(this);
+    this.handleDoctorNameOptionsChange = this.handleDoctorNameOptionsChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   signOut = () => {
@@ -157,7 +161,7 @@ export class DataForm extends React.Component<any, any> {
     if (user) {
       // console.log(user);
       return (
-        <Tab
+        <Tab onTabChange={this.handleTabChange}
           panes={[
             {
               menuItem: "Agency",
@@ -211,7 +215,7 @@ export class DataForm extends React.Component<any, any> {
               render: () => (
                 <Tab.Pane>
                   <DoctorForm
-                    editorHtml={this.state.editorHtml}
+                    intro={this.state.intro}
                     name={this.state.name}
                     phone={this.state.phone}
                     handleSubmit={this.handleDoctorSubmit}
@@ -220,6 +224,9 @@ export class DataForm extends React.Component<any, any> {
                     handleChange={this.handleChange}
                     handleTimeClick={this.handleTimeClick}
                     OKtime={this.state.OKtime}
+                    doctorNameOptions={this.state.doctorNameOptions}
+                    doctorName={this.state.doctorName}
+                    handleDoctorNameOptionsChange={this.handleDoctorNameOptionsChange}
                   /> 
                 </Tab.Pane>
               )
@@ -262,7 +269,7 @@ export class DataForm extends React.Component<any, any> {
     var data = {
       name: this.state.name,
       phone: this.state.phone,
-      intro: this.state.editorHtml,
+      intro: this.state.intro,
       OKtime: this.state.OKtime
     };
     console.log(data);
@@ -283,7 +290,7 @@ export class DataForm extends React.Component<any, any> {
     this.setState({
       name: "",
       phone: "",
-      editorHtml: ""
+      intro: ""
     });
   }
 
@@ -333,7 +340,7 @@ export class DataForm extends React.Component<any, any> {
 
   handleChange(e) {
     this.setState({
-      editorHtml: e.target.value
+      intro: e.target.value
     });
   }
 
@@ -396,6 +403,27 @@ export class DataForm extends React.Component<any, any> {
     })
   }
 
+  handleDoctorNameOptionsChange(e, target){
+    this.setState({
+      doctorName: target.value
+    })
+    var user = firebase.auth().currentUser;
+    let uid = user.uid;
+    try{
+      db.collection("agency").doc(uid).collection('doctor').doc(target.value).get().then(doc=>{
+        var data = doc.data();
+        this.setState({
+          OKtime: data.OKtime,
+          intro: data.intro,
+          name: data.name,
+          phone: data.phone
+        })
+      })
+    }catch{
+      return
+    }
+  }
+
   handleAddMethod(e) {
     let newItem = this.state.method;
     newItem.push({0:'',1:''});
@@ -442,6 +470,54 @@ export class DataForm extends React.Component<any, any> {
     })
   }
 
+  handleTabChange(e){
+    this.setState({
+      intro: "",
+      name: "",
+      phone: "",
+      website: "",
+      address: "",
+      area: "",
+      location: "",
+      user: "",
+      method: [{0:'',1:''}],
+      checked: true,
+      boyChecked: false,
+      girlChecked: false,
+      attritube: "",
+      LBage: '',
+      UBage: '',
+      religon: 'R1',
+      e1checked: false,
+      e2checked: false,
+      e3checked: false,
+      doctorName: 'new',
+      OKtime:{
+        'Sun1': {visibility: 'hidden'},
+        'Mon1': {visibility: 'hidden'},
+        'Tue1': {visibility: 'hidden'},
+        'Wed1': {visibility: 'hidden'},
+        'Thu1': {visibility: 'hidden'},
+        'Fri1': {visibility: 'hidden'},
+        'Sat1': {visibility: 'hidden'},
+        'Sun2': {visibility: 'hidden'},
+        'Mon2': {visibility: 'hidden'},
+        'Tue2': {visibility: 'hidden'},
+        'Wed2': {visibility: 'hidden'},
+        'Thu2': {visibility: 'hidden'},
+        'Fri2': {visibility: 'hidden'},
+        'Sat2': {visibility: 'hidden'},
+        'Sun3': {visibility: 'hidden'},
+        'Mon3': {visibility: 'hidden'},
+        'Tue3': {visibility: 'hidden'},
+        'Wed3': {visibility: 'hidden'},
+        'Thu3': {visibility: 'hidden'},
+        'Fri3': {visibility: 'hidden'},
+        'Sat3': {visibility: 'hidden'}
+      }
+    })
+  }
+
   // tick() {
   //   if(this.state.count > 0){
   //     this.setState((prevState, props) => ({
@@ -473,9 +549,22 @@ export class DataForm extends React.Component<any, any> {
   //   return false;
   // }
 
-  // componentDidMount() {
-  //   this.countdownId = setInterval(() => this.tick(), 10);
-  // }
+  componentDidMount() {
+    var user = firebase.auth().currentUser;
+    if(user){
+      let uid = user.uid;
+      let newDoctorOptions = this.state.doctorNameOptions;
+      db.collection("agency").doc(uid).collection('doctor').get().then(snapshot=>{
+        snapshot.forEach(doc=>{
+          newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.id})
+        })
+      })
+      this.setState({
+        doctorNameOptions: newDoctorOptions
+      })
+      console.log('Done');
+    }
+  }
 
   // componentWillUnmount() {
   //   if(this.countdownId){
