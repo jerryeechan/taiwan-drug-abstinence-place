@@ -48,8 +48,17 @@ export class DataForm extends React.Component<any, any> {
       area: "",
       location: "",
       user: "",
-      method: [['','']],
+      method: [{0:'',1:''}],
       checked: true,
+      boyChecked: false,
+      girlChecked: false,
+      attritube: "",
+      LBage: '',
+      UBage: '',
+      religon: 'R1',
+      e1checked: false,
+      e2checked: false,
+      e3checked: false,
       OKtime:{
         'Sun1': {visibility: 'hidden'},
         'Mon1': {visibility: 'hidden'},
@@ -87,7 +96,17 @@ export class DataForm extends React.Component<any, any> {
     this.handleAreaChange = this.handleAreaChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.handleBoyCheckboxChange = this.handleBoyCheckboxChange.bind(this);
+    this.handleGirlCheckboxChange = this.handleGirlCheckboxChange.bind(this);
     this.handleAddMethod = this.handleAddMethod.bind(this);
+    this.handleAttritubeChange = this.handleAttritubeChange.bind(this);
+    this.handleLBageChange = this.handleLBageChange.bind(this);
+    this.handleUBageChange = this.handleUBageChange.bind(this);
+    this.handleMethodChange = this.handleMethodChange.bind(this);
+    this.handleReligonChange = this.handleReligonChange.bind(this);
+    this.handleE1CheckboxChange = this.handleE1CheckboxChange.bind(this);
+    this.handleE2CheckboxChange = this.handleE2CheckboxChange.bind(this);
+    this.handleE3CheckboxChange = this.handleE3CheckboxChange.bind(this);
   }
 
   signOut = () => {
@@ -162,8 +181,27 @@ export class DataForm extends React.Component<any, any> {
                     handleSubmit={this.handleAgnecySubmit}
                     handleCheckboxChange={this.handleCheckboxChange}
                     checked={this.state.checked}
+                    boyChecked={this.state.boyChecked}
+                    girlChecked={this.state.girlChecked}
+                    handleBoyCheckboxChange={this.handleBoyCheckboxChange}
+                    handleGirlCheckboxChange={this.handleGirlCheckboxChange}
                     method={this.state.method}
                     handleAddMethod={this.handleAddMethod}
+                    handleMethodChange={this.handleMethodChange}
+                    attritube={this.state.attritube}
+                    handleAttritubeChange={this.handleAttritubeChange}
+                    LBage={this.state.LBage}
+                    handleLBageChange={this.handleLBageChange}
+                    UBage={this.state.UBage}
+                    handleUBageChange={this.handleUBageChange}
+                    religon={this.state.religon}
+                    handleReligonChange={this.handleReligonChange}
+                    e1checked={this.state.e1checked}
+                    e2checked={this.state.e2checked}
+                    e3checked={this.state.e3checked}
+                    handleE1CheckboxChange={this.handleE1CheckboxChange}
+                    handleE2CheckboxChange={this.handleE2CheckboxChange}
+                    handleE3CheckboxChange={this.handleE3CheckboxChange}
                   />
                 </Tab.Pane>
               )
@@ -228,6 +266,7 @@ export class DataForm extends React.Component<any, any> {
       OKtime: this.state.OKtime
     };
     console.log(data);
+
     var user = firebase.auth().currentUser;
     
     let uid = user.uid;
@@ -256,9 +295,29 @@ export class DataForm extends React.Component<any, any> {
       address: this.state.address,
       area: this.state.area,
       location: this.state.location,
-      OKtime: this.state.OKtime
+      attritube: this.state.attritube,
+      OKtime: this.state.OKtime,
+      method: this.state.method,
+      boyChecked: this.state.boyChecked,
+      girlChecked: this.state.girlChecked,
+      religon: this.state.religon,
+      e1checked: this.state.e1checked,
+      e2checked: this.state.e2checked,
+      e3checked: this.state.e3checked
     }
     console.log(data);
+
+    var user = firebase.auth().currentUser;
+    
+    let uid = user.uid;
+    try {
+      db.collection("agency").doc(uid).set(data);
+    } catch (err) {
+      console.log(err);
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
   }
   handleNameChange(e) {
     this.setState({
@@ -303,6 +362,34 @@ export class DataForm extends React.Component<any, any> {
     })
   }
 
+  handleBoyCheckboxChange(e, target){
+    this.setState({
+      boyChecked: target.checked
+    })
+  }
+
+  handleGirlCheckboxChange(e, target){
+    this.setState({
+      girlChecked: target.checked
+    })
+  }
+
+  handleE1CheckboxChange(e, target){
+    this.setState({
+      e1checked: target.checked
+    })
+  }
+  handleE2CheckboxChange(e, target){
+    this.setState({
+      e2checked: target.checked
+    })
+  }
+  handleE3CheckboxChange(e, target){
+    this.setState({
+      e3checked: target.checked
+    })
+  }
+
   handleLocationChange(e, target){
     this.setState({
       location: target.value
@@ -311,9 +398,47 @@ export class DataForm extends React.Component<any, any> {
 
   handleAddMethod(e) {
     let newItem = this.state.method;
-    newItem.push(['','']);
+    newItem.push({0:'',1:''});
     this.setState({
       method: newItem
+    })
+  }
+
+  handleAttritubeChange(e, target){
+    this.setState({
+      attritube: target.value
+    })
+  }
+
+  handleLBageChange(e, target){
+    this.setState({
+      LBage: target.value
+    })
+  }
+
+  handleUBageChange(e, target){
+    this.setState({
+      UBage: target.value
+    })
+  }
+
+  handleReligonChange(e, target){
+    this.setState({
+      religon: target.value
+    })
+  }
+
+  handleMethodChange(e){
+    let PElem: any = e.target.parentElement;
+    let i = PElem.id;
+    let newMethod = this.state.method;
+    if(e.target.name == "first"){
+      newMethod[i][0] = e.target.value;
+    }else if(e.target.name == "second"){
+      newMethod[i][1] = e.target.value;
+    }
+    this.setState({
+      method: newMethod
     })
   }
 

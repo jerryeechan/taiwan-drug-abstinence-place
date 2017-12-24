@@ -65,26 +65,36 @@ export class AgencyForm extends React.Component<any, any> {
             />
           </Form.Field>
           <Form.Field>
+            <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>機構屬性</label>
+            <Dropdown selection placeholder="屬性" options={Attritubeoptions} onChange={this.props.handleAttritubeChange} value={this.props.attritube}/>
+          </Form.Field>
+          <Form.Field>
             <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>性別</label>
-            <Checkbox label='男' /><Checkbox label='女' />
+            <Checkbox label='男' onChange={this.props.handleBoyCheckboxChange} checked={this.props.boyChecked}/><Checkbox label='女' onChange={this.props.handleGirlCheckboxChange} checked={this.props.girlChecked}/>
           </Form.Field>
           <Form.Field>
             <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>年齡</label>
             <Checkbox label='不限' onChange={this.props.handleCheckboxChange} checked={this.props.checked}/><br/>
             {!this.props.checked &&
               <div>
-                <Dropdown search options={NumOptions}/> ～ <Dropdown search options={NumOptions}/>
+                <Dropdown search options={NumOptions} onChange={this.props.handleLBageChange} value={this.props.LBage}/> ～ <Dropdown search options={NumOptions} onChange={this.props.handleUBageChange} value={this.props.UBage}/>
               </div>}
           </Form.Field>
           <Form.Field>
-            <Checkbox label='更生保護法'/><br/>
-            <Checkbox label='非鴉片類補助'/><br/>
-            <Checkbox label='青少年'/><br/>
+            <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>宗教</label>
+            <Dropdown search options={religonOptions} onChange={this.props.handleReligonChange} value={this.props.religon}/>
           </Form.Field>
           <Form.Field>
-            <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>處置方式</label>
+            <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>其他</label>
+            <Checkbox label='更生保護法' onChange={this.props.handleE1CheckboxChange} checked={this.props.e1checked}/><br/>
+            <Checkbox label='非鴉片類補助' onChange={this.props.handleE2CheckboxChange} checked={this.props.e2checked}/><br/>
+            <Checkbox label='青少年' onChange={this.props.handleE3CheckboxChange} checked={this.props.e3checked}/><br/>
+          </Form.Field>
+          <Form.Field>
+            <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>處置方式及費用</label>
+            <input id="ro1" style={{width:"50%"}} value="處置方式" readOnly/><input id="ro2" style={{width:"50%"}} value="費用" readOnly/>
             {this.props.method.map((name,i)=>{
-              return <div key={i}><input style={{width:"50%"}}placeholder={name[0]}/><input style={{width:"50%"}} placeholder={name[1]}/></div>
+              return <div id={i} key={i}><input name="first" style={{width:"50%"}} onChange={this.props.handleMethodChange} value={this.props.method[i][0]}/><input name="second" style={{width:"50%"}} onChange={this.props.handleMethodChange}value={this.props.method[i][1]}/></div>
             })}
             <Icon onClick={this.props.handleAddMethod} id="ii" size="big" name="add circle" style={{display:"block",margin:"auto"}}></Icon>
           </Form.Field>
@@ -507,4 +517,18 @@ const NumOptions = [
   { key: '98', value: '98', text: '98' },
   { key: '99', value: '99', text: '99' },
   { key: '100', value: '100', text: '100' }
+]
+
+const Attritubeoptions = [
+  { key: 'A1', value: 'A1', text: '醫療' },
+  { key: 'A2', value: 'A2', text: '中途之家' },
+  { key: 'A3', value: 'A3', text: '心理諮商' }
+]
+
+const religonOptions = [
+  { key: 'R1', value: 'R1', text: '不限'},
+  { key: 'R2', value: 'R2', text: '基督教'},
+  { key: 'R3', value: 'R3', text: '伊斯蘭教'},
+  { key: 'R4', value: 'R4', text: '印度教'},
+  { key: 'R5', value: 'R5', text: '佛教'}
 ]
