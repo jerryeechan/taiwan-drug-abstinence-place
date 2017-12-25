@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as firebase from "firebase";
-import { Redirect } from 'react-router';
+import { Redirect } from "react-router";
 import { Form, Checkbox, Button } from "semantic-ui-react";
 
 export class Register extends React.Component<any, any> {
@@ -9,7 +9,8 @@ export class Register extends React.Component<any, any> {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      passwordConfirm: ""
     };
 
     var config = {
@@ -27,12 +28,19 @@ export class Register extends React.Component<any, any> {
 
   handleRegister() {
     console.log("handle register");
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
+    if (this.state.password !== this.state.passwordConfirm) {
+      alert("密碼不相符");
       return;
-    });
+    }
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        return;
+      });
     window.location.href = "./#/login";
   }
 
@@ -53,10 +61,23 @@ export class Register extends React.Component<any, any> {
         </Form.Field>
         <Form.Field>
           <label>密碼</label>
-          <input type="password"
+          <input
+            type="password"
             onChange={evt =>
               this.setState({
                 password: evt.target.value
+              })
+            }
+            placeholder="密碼"
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>密碼確認</label>
+          <input
+            type="password"
+            onChange={evt =>
+              this.setState({
+                passwordConfirm: evt.target.value
               })
             }
             placeholder="密碼"
