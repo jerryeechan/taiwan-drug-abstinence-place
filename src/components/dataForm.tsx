@@ -22,7 +22,9 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 let db = firebase.firestore();
+let storageRef = firebase.storage().ref();
 
+const defaultProfile = "https://firebasestorage.googleapis.com/v0/b/taiwan-drug-abstinence-p-2edf5.appspot.com/o/images%2Fprofile.jpg?alt=media&token=0dbce49d-03b9-4af9-83e8-63ac25598e98";
 
 export class DataForm extends React.Component<any, any> {
   // static initCount = 5;
@@ -40,6 +42,7 @@ export class DataForm extends React.Component<any, any> {
     // this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
+      id: 'new',
       intro: "",
       name: "",
       phone: "",
@@ -56,11 +59,12 @@ export class DataForm extends React.Component<any, any> {
       LBage: '',
       UBage: '',
       religon: 'R1',
+      src: defaultProfile,
+      file: null,
       e1checked: false,
       e2checked: false,
       e3checked: false,
       doctorNameOptions: [ { key: 'new', value: 'new', text: '新增' } ],
-      doctorName: 'new',
       OKtime:{
         'Sun1': {visibility: 'hidden'},
         'Mon1': {visibility: 'hidden'},
@@ -111,6 +115,7 @@ export class DataForm extends React.Component<any, any> {
     this.handleE3CheckboxChange = this.handleE3CheckboxChange.bind(this);
     this.handleDoctorNameOptionsChange = this.handleDoctorNameOptionsChange.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.previewFile = this.previewFile.bind(this);
   }
 
   signOut = () => {
@@ -225,8 +230,10 @@ export class DataForm extends React.Component<any, any> {
                     handleTimeClick={this.handleTimeClick}
                     OKtime={this.state.OKtime}
                     doctorNameOptions={this.state.doctorNameOptions}
-                    doctorName={this.state.doctorName}
+                    id={this.state.id}
                     handleDoctorNameOptionsChange={this.handleDoctorNameOptionsChange}
+                    src={this.state.src}
+                    previewFile={this.previewFile}
                   /> 
                 </Tab.Pane>
               )
@@ -270,7 +277,8 @@ export class DataForm extends React.Component<any, any> {
       name: this.state.name,
       phone: this.state.phone,
       intro: this.state.intro,
-      OKtime: this.state.OKtime
+      OKtime: this.state.OKtime,
+      src: this.state.src
     };
     console.log(data);
 
@@ -278,20 +286,57 @@ export class DataForm extends React.Component<any, any> {
     
     let uid = user.uid;
 
-    
-    try {
-      db.collection("agency").doc(uid).collection("doctor").doc(this.state.name).set(data);
-    } catch (err) {
-      console.log(err);
-      alert("系統錯誤，請稍後在試");
-      return;
+    if(this.state.file){
+      storageRef.child('images/'+uid+'_'+this.state.name+'.jpg').put(this.state.file).then(snapshot=>{
+        data['src'] = snapshot.downloadURL;
+      });
     }
-    alert("儲存成功");
+
+    if(this.state.id=='new'){
+      try {
+        db.collection("agency").doc(uid).collection("doctor").add(data);
+      } catch (err) {
+        console.log(err);
+        alert("系統錯誤，請稍後在試");
+        return;
+      }
+      alert("儲存成功");
+      this.setState({
+        name: "",
+        phone: "",
+        intro: "",
+        src: defaultProfile,
+        file: null,
+        id: 'new'
+      });
+    }else{
+      try {
+        db.collection("agency").doc(uid).collection("doctor").doc(this.state.id).set(data);
+      } catch (err) {
+        console.log(err);
+        alert("系統錯誤，請稍後在試");
+        return;
+      }
+      alert("儲存成功");
+      this.setState({
+        name: "",
+        phone: "",
+        intro: "",
+        src: defaultProfile,
+        file: null,
+        id: 'new'
+      });
+    }
+
+    let newDoctorOptions = [ { key: 'new', value: 'new', text: '新增' } ];
+    db.collection("agency").doc(uid).collection('doctor').get().then(snapshot=>{
+      snapshot.forEach(doc=>{
+        newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.data().name});
+      })
+    })
     this.setState({
-      name: "",
-      phone: "",
-      intro: ""
-    });
+      doctorNameOptions: newDoctorOptions
+    })
   }
 
   handleAgnecySubmit(e) {
@@ -405,8 +450,39 @@ export class DataForm extends React.Component<any, any> {
 
   handleDoctorNameOptionsChange(e, target){
     this.setState({
-      doctorName: target.value
+      id: target.value
     })
+    if(target.value=='new'){
+      this.setState({
+        name: '',
+        phoen: '',
+        intro: '',
+        OKtime:{
+          'Sun1': {visibility: 'hidden'},
+          'Mon1': {visibility: 'hidden'},
+          'Tue1': {visibility: 'hidden'},
+          'Wed1': {visibility: 'hidden'},
+          'Thu1': {visibility: 'hidden'},
+          'Fri1': {visibility: 'hidden'},
+          'Sat1': {visibility: 'hidden'},
+          'Sun2': {visibility: 'hidden'},
+          'Mon2': {visibility: 'hidden'},
+          'Tue2': {visibility: 'hidden'},
+          'Wed2': {visibility: 'hidden'},
+          'Thu2': {visibility: 'hidden'},
+          'Fri2': {visibility: 'hidden'},
+          'Sat2': {visibility: 'hidden'},
+          'Sun3': {visibility: 'hidden'},
+          'Mon3': {visibility: 'hidden'},
+          'Tue3': {visibility: 'hidden'},
+          'Wed3': {visibility: 'hidden'},
+          'Thu3': {visibility: 'hidden'},
+          'Fri3': {visibility: 'hidden'},
+          'Sat3': {visibility: 'hidden'}
+        }
+      })
+      return;
+    }
     var user = firebase.auth().currentUser;
     let uid = user.uid;
     try{
@@ -418,6 +494,15 @@ export class DataForm extends React.Component<any, any> {
           name: data.name,
           phone: data.phone
         })
+        if(data.src){
+          this.setState({
+            src: data.src
+          })
+        }else{
+          this.setState({
+            src : defaultProfile
+          })
+        }
       })
     }catch{
       return
@@ -470,8 +555,33 @@ export class DataForm extends React.Component<any, any> {
     })
   }
 
+  previewFile(e) {
+    // var preview: any = document.getElementById("img-rounded");
+    // var input: any = document.querySelector("input[type=file]");
+    var input: any = e.target;
+    var file = input.files[0];
+    var reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        this.setState({
+          src: reader.result,
+          file: file
+        })
+        // preview.src = reader.result;
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
   handleTabChange(e){
     this.setState({
+      id: 'new',
       intro: "",
       name: "",
       phone: "",
@@ -488,10 +598,11 @@ export class DataForm extends React.Component<any, any> {
       LBage: '',
       UBage: '',
       religon: 'R1',
+      src: defaultProfile,
+      file: null,
       e1checked: false,
       e2checked: false,
       e3checked: false,
-      doctorName: 'new',
       OKtime:{
         'Sun1': {visibility: 'hidden'},
         'Mon1': {visibility: 'hidden'},
@@ -553,16 +664,15 @@ export class DataForm extends React.Component<any, any> {
     var user = firebase.auth().currentUser;
     if(user){
       let uid = user.uid;
-      let newDoctorOptions = this.state.doctorNameOptions;
+      let newDoctorOptions = [ { key: 'new', value: 'new', text: '新增' } ];
       db.collection("agency").doc(uid).collection('doctor').get().then(snapshot=>{
         snapshot.forEach(doc=>{
-          newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.id})
+          newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.data().name});
         })
       })
       this.setState({
         doctorNameOptions: newDoctorOptions
       })
-      console.log('Done');
     }
   }
 

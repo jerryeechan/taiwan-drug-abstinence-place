@@ -16,14 +16,12 @@ export class DoctorForm extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-
-    this.previewFile = this.previewFile.bind(this);
   }
 
   render() {
     return (
       <Container className="form-container">
-        <Dropdown selection options={this.props.doctorNameOptions} onChange={this.props.handleDoctorNameOptionsChange} value={this.props.doctorName}/>
+        <Dropdown selection options={this.props.doctorNameOptions} onChange={this.props.handleDoctorNameOptionsChange} value={this.props.id}/>
         <Form>
           <Grid>
             <Grid.Row style={nopadding}>
@@ -34,7 +32,7 @@ export class DoctorForm extends React.Component<any, any> {
                       <div style={{crop}}>
                         <Image id='img-rounded'
                           style={cropImg}
-                          src="http://ebil.nctu.edu.tw/wp-content/uploads/2016/11/%E7%A9%BA%E7%99%BD%E5%A4%A7%E9%A0%AD%E7%85%A7-300x300.jpg"
+                          src={this.props.src}
                         />
                       </div>
                       <Container style={link}>
@@ -44,7 +42,7 @@ export class DoctorForm extends React.Component<any, any> {
                             id="oi"
                             type="file"
                             accept="image/*"
-                            onChange={this.previewFile}
+                            onChange={this.props.previewFile}
                           />
                         </a>
                       </Container>
@@ -291,24 +289,24 @@ export class DoctorForm extends React.Component<any, any> {
     );
   }
 
-  previewFile() {
-    var preview: any = document.getElementById("img-rounded");
-    var input: any = document.querySelector("input[type=file]");
-    var file = input.files[0];
-    var reader = new FileReader();
+  // previewFile() {
+  //   var preview: any = document.getElementById("img-rounded");
+  //   var input: any = document.querySelector("input[type=file]");
+  //   var file = input.files[0];
+  //   var reader = new FileReader();
 
-    reader.addEventListener(
-      "load",
-      function() {
-        preview.src = reader.result;
-      },
-      false
-    );
+  //   reader.addEventListener(
+  //     "load",
+  //     function() {
+  //       preview.src = reader.result;
+  //     },
+  //     false
+  //   );
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  }
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
 
   componentDidMount() {
     // console.log(this.props.OKtime)
