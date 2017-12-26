@@ -455,8 +455,9 @@ export class DataForm extends React.Component<any, any> {
     if(target.value=='new'){
       this.setState({
         name: '',
-        phoen: '',
+        phone: '',
         intro: '',
+        src: defaultProfile,
         OKtime:{
           'Sun1': {visibility: 'hidden'},
           'Mon1': {visibility: 'hidden'},
