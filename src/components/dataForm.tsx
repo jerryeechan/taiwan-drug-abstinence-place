@@ -26,6 +26,30 @@ let storageRef = firebase.storage().ref();
 
 const defaultProfile = "https://firebasestorage.googleapis.com/v0/b/taiwan-drug-abstinence-p-2edf5.appspot.com/o/images%2Fprofile.jpg?alt=media&token=0dbce49d-03b9-4af9-83e8-63ac25598e98";
 
+const defaultOKtime = {
+  'Sun1': {visibility: 'hidden'},
+  'Mon1': {visibility: 'hidden'},
+  'Tue1': {visibility: 'hidden'},
+  'Wed1': {visibility: 'hidden'},
+  'Thu1': {visibility: 'hidden'},
+  'Fri1': {visibility: 'hidden'},
+  'Sat1': {visibility: 'hidden'},
+  'Sun2': {visibility: 'hidden'},
+  'Mon2': {visibility: 'hidden'},
+  'Tue2': {visibility: 'hidden'},
+  'Wed2': {visibility: 'hidden'},
+  'Thu2': {visibility: 'hidden'},
+  'Fri2': {visibility: 'hidden'},
+  'Sat2': {visibility: 'hidden'},
+  'Sun3': {visibility: 'hidden'},
+  'Mon3': {visibility: 'hidden'},
+  'Tue3': {visibility: 'hidden'},
+  'Wed3': {visibility: 'hidden'},
+  'Thu3': {visibility: 'hidden'},
+  'Fri3': {visibility: 'hidden'},
+  'Sat3': {visibility: 'hidden'}
+};
+
 export class DataForm extends React.Component<any, any> {
   // static initCount = 5;
 
@@ -64,6 +88,7 @@ export class DataForm extends React.Component<any, any> {
       e1checked: false,
       e2checked: false,
       e3checked: false,
+<<<<<<< HEAD
       doctorNameOptions: [{ key: 'new', value: 'new', text: '新增' }],
       OKtime: {
         'Sun1': { visibility: 'hidden' },
@@ -88,6 +113,10 @@ export class DataForm extends React.Component<any, any> {
         'Fri3': { visibility: 'hidden' },
         'Sat3': { visibility: 'hidden' }
       }
+=======
+      doctorNameOptions: [ { key: 'new', value: 'new', text: '新增' } ],
+      OKtime: defaultOKtime
+>>>>>>> 40d18283920688abcaa635364eac13acc0f61871
     };
 
 
@@ -317,7 +346,8 @@ export class DataForm extends React.Component<any, any> {
         intro: "",
         src: defaultProfile,
         file: null,
-        id: 'new'
+        id: 'new',
+        OKtime: defaultOKtime
       });
     } else {
       try {
@@ -334,7 +364,8 @@ export class DataForm extends React.Component<any, any> {
         intro: "",
         src: defaultProfile,
         file: null,
-        id: 'new'
+        id: 'new',
+        OKtime: defaultOKtime
       });
     }
 
@@ -366,6 +397,13 @@ export class DataForm extends React.Component<any, any> {
       e1checked: this.state.e1checked,
       e2checked: this.state.e2checked,
       e3checked: this.state.e3checked
+    }
+    if(this.state.checked){
+      data['LBage'] = 0;
+      data['UBage'] = 200;
+    }else{
+      data['LBage'] = this.state.LBage;
+      data['UBage'] = this.state.UBage;
     }
     console.log(data);
 
@@ -468,6 +506,7 @@ export class DataForm extends React.Component<any, any> {
         phone: '',
         intro: '',
         src: defaultProfile,
+<<<<<<< HEAD
         OKtime: {
           'Sun1': { visibility: 'hidden' },
           'Mon1': { visibility: 'hidden' },
@@ -491,6 +530,9 @@ export class DataForm extends React.Component<any, any> {
           'Fri3': { visibility: 'hidden' },
           'Sat3': { visibility: 'hidden' }
         }
+=======
+        OKtime: defaultOKtime
+>>>>>>> 40d18283920688abcaa635364eac13acc0f61871
       })
       return;
     }
@@ -590,6 +632,7 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
+<<<<<<< HEAD
   handleTabChange(e) {
     this.setState({
       id: 'new',
@@ -636,8 +679,108 @@ export class DataForm extends React.Component<any, any> {
         'Thu3': { visibility: 'hidden' },
         'Fri3': { visibility: 'hidden' },
         'Sat3': { visibility: 'hidden' }
+=======
+  handleTabChange(e){
+    console.log(e.target.text);
+    if(e.target.text=='Doctor'){
+      this.setState({
+        id: 'new',
+        intro: "",
+        name: "",
+        phone: "",
+        website: "",
+        address: "",
+        area: "",
+        location: "",
+        user: "",
+        method: [{0:'',1:''}],
+        checked: true,
+        boyChecked: false,
+        girlChecked: false,
+        attritube: "",
+        LBage: '',
+        UBage: '',
+        religon: 'R1',
+        src: defaultProfile,
+        file: null,
+        e1checked: false,
+        e2checked: false,
+        e3checked: false,
+        OKtime: defaultOKtime
+      });
+    }else{
+      var user = firebase.auth().currentUser;
+      if(user){
+        let uid = user.uid;
+        db.collection('agency').doc(uid).get().then(doc=>{
+          if(doc.exists){
+            let data = doc.data();
+            this.setState({
+              id: 'new',
+              intro: "",
+              name: data.name,
+              phone: data.phone,
+              website: data.website,
+              address: data.address,
+              area: data.area,
+              location: data.location,
+              user: "",
+              method: data.method,
+              boyChecked: data.boyChecked,
+              girlChecked: data.girlChecked,
+              attritube: data.attritube,
+              religon: data.religon,
+              src: defaultProfile,
+              file: null,
+              e1checked: data.e1checked,
+              e2checked: data.e2checked,
+              e3checked: data.e3checked,
+              OKtime: data.OKtime
+            });
+            if(data.UBage==200){
+              this.setState({
+                LBage: '',
+                UBage: '',
+                checked: true
+              });
+            }else{
+              this.setState({
+                LBage: data.LBage,
+                UBage: data.UBage,
+                checked: false
+              });
+            }
+          }else{
+            this.setState({
+              id: 'new',
+              intro: "",
+              name: "",
+              phone: "",
+              website: "",
+              address: "",
+              area: "",
+              location: "",
+              user: "",
+              method: [{0:'',1:''}],
+              checked: true,
+              boyChecked: false,
+              girlChecked: false,
+              attritube: "",
+              LBage: '',
+              UBage: '',
+              religon: 'R1',
+              src: defaultProfile,
+              file: null,
+              e1checked: false,
+              e2checked: false,
+              e3checked: false,
+              OKtime: defaultOKtime
+            });
+          }
+        });
+>>>>>>> 40d18283920688abcaa635364eac13acc0f61871
       }
-    })
+    }
   }
 
   // tick() {
@@ -672,6 +815,7 @@ export class DataForm extends React.Component<any, any> {
   // }
 
   componentDidMount() {
+    console.log('React Perect!!!');
     var user = firebase.auth().currentUser;
     if (user) {
       let uid = user.uid;
@@ -684,6 +828,72 @@ export class DataForm extends React.Component<any, any> {
       this.setState({
         doctorNameOptions: newDoctorOptions
       })
+      db.collection('agency').doc(uid).get().then(doc=>{
+        if(doc.exists){
+          let data = doc.data();
+          this.setState({
+            id: 'new',
+            intro: "",
+            name: data.name,
+            phone: data.phone,
+            website: data.website,
+            address: data.address,
+            area: data.area,
+            location: data.location,
+            user: "",
+            method: data.method,
+            boyChecked: data.boyChecked,
+            girlChecked: data.girlChecked,
+            attritube: data.attritube,
+            religon: data.religon,
+            src: defaultProfile,
+            file: null,
+            e1checked: data.e1checked,
+            e2checked: data.e2checked,
+            e3checked: data.e3checked,
+            OKtime: data.OKtime
+          });
+          if(data.UBage==200){
+            this.setState({
+              LBage: '',
+              UBage: '',
+              checked: true
+            });
+          }else{
+            this.setState({
+              LBage: data.LBage,
+              UBage: data.UBage,
+              checked: false
+            });
+          }
+        }else{
+          this.setState({
+            id: 'new',
+            intro: "",
+            name: "",
+            phone: "",
+            website: "",
+            address: "",
+            area: "",
+            location: "",
+            user: "",
+            method: [{0:'',1:''}],
+            checked: true,
+            boyChecked: false,
+            girlChecked: false,
+            attritube: "",
+            LBage: '',
+            UBage: '',
+            religon: 'R1',
+            src: defaultProfile,
+            file: null,
+            e1checked: false,
+            e2checked: false,
+            e3checked: false,
+            OKtime: defaultOKtime
+          });
+        }
+      });
     }
   }
 
