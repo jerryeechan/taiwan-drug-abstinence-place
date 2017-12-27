@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as firebase from "firebase";
 import { Redirect } from 'react-router';
-import { Form, Checkbox, Button } from "semantic-ui-react";
+import { Form, Checkbox, Button, Sidebar, Segment, Menu, Icon, Container, Header, Sticky } from 'semantic-ui-react';
 
 export class Login extends React.Component<any, any> {
   constructor(props) {
@@ -44,46 +44,62 @@ export class Login extends React.Component<any, any> {
   }
 
   redirectToRegister() {
-    window.location.href = "./#/register"; 
+    window.location.href = "./#/register";
+  }
+
+  toIndex() {
+    window.location.href = "./#/";
   }
 
   render() {
     return (
-      <Form>
-        <h1>登入</h1>
-        <Form.Field>
-          <label>信箱</label>
-          <input
-            onChange={evt =>
-              this.setState({
-                email: evt.target.value
-              })
-            }
-            placeholder="信箱"
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>密碼</label>
-          <input
-            type="password"
-            onChange={evt =>
-              this.setState({
-                password: evt.target.value
-              })
-            }
-            placeholder="密碼"
-          />
-        </Form.Field>
-        <Form.Field>
-          <Checkbox label="I agree to the Terms and Conditions" />
-        </Form.Field>
-        <Button type="submit" onClick={() => this.handleLogin()}>
-          送出
-        </Button>
-        <Button type="submit" onClick={() => this.redirectToRegister()} >
-          註冊帳號
-        </Button>
-      </Form >
+      <div>
+        <Sticky>
+          <Menu inverted>
+            <Menu.Item onClick={() => this.toIndex()}>
+              <Icon name='home' />
+              戒毒好所在
+            </Menu.Item>
+          </Menu>
+        </Sticky>
+        <Container>
+          <Form>
+            <h1>登入</h1>
+            <Form.Field>
+              <label>信箱</label>
+              <input
+                onChange={evt =>
+                  this.setState({
+                    email: evt.target.value
+                  })
+                }
+                placeholder="信箱"
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>密碼</label>
+              <input
+                type="password"
+                onChange={evt =>
+                  this.setState({
+                    password: evt.target.value
+                  })
+                }
+                placeholder="密碼"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Checkbox label="I agree to the Terms and Conditions" />
+            </Form.Field>
+            <Button type="submit" onClick={() => this.handleLogin()}>
+              送出
+            </Button>
+            <Button type="submit" onClick={() => this.redirectToRegister()} >
+              註冊帳號
+            </Button>
+          </Form >
+        </Container>
+      </div >
     );
   }
 }

@@ -2852,6 +2852,12 @@ const zoneOptions = [
   { key: "east", text: "東部", value: "east" },
   { key: "kp", text: "高屏區", value: "kp" }
 ];
+
+const zoneMap = {
+  north: "北部",
+  west: "西部",
+  south: "南部",
+}
 const religionOptions = [
   { key: "none", text: "無或不排斥", value: "none" },
   { key: "christian", text: "基督教", value: "christian" },
@@ -2860,6 +2866,11 @@ const religionOptions = [
   { key: "taoism", text: "道教", value: "taoism" },
   { key: "nosupport", text: "排斥宗教性協助", value: "nosupport" }
 ];
+
+const segmentHeight = {
+  height: 550,
+};
+
 const responseGoogle = response => {
   console.log(response);
 };
@@ -2879,8 +2890,9 @@ export class Home extends React.Component<any, any> {
       angencyResult: []
     };
   }
-  scrollToSearch() {
-    // TODO : scroll down
+  scrollToSearch = () => {
+    window.scrollTo(0, 300);
+    // TODO : smoothly scroll
   }
 
   handleFormChange = (e, { name, value }) => {
@@ -2892,14 +2904,19 @@ export class Home extends React.Component<any, any> {
     console.log(this.state);
     // json_data
     // TODO : 推薦場所 並產生資料
-    this.setState({ angencyResult: json_data });
+    // TODO : 搜尋 和 存檔，資料對應一致問題
+
+    let filted_data = json_data.filter((agency) => {
+      return agency["縣市"] === "桃園市";
+    });
+    this.setState({ angencyResult: filted_data });
   }
 
   render() {
     return (
       <div>
-        <Segment inverted vertical textAlign="center" className="masthead">
-          <Container>
+        <Segment inverted textAlign="center" className="masthead" vertical>
+          <Segment inverted vertical>
             <Menu pointing secondary inverted>
               <Item
                 as="a"
@@ -2907,12 +2924,12 @@ export class Home extends React.Component<any, any> {
               >
                 協助編輯戒毒場所資訊
               </Item>
-              <Item as="a" href="/#/Form">
+              <Item as="a" href="/#/Form" className="right">
                 服務機構入口
               </Item>
             </Menu>
-          </Container>
-          <Container text>
+          </Segment>
+          <Segment inverted style={segmentHeight} vertical>
             <Header as="h1" inverted>
               戒毒好所在
             </Header>
@@ -2922,13 +2939,11 @@ export class Home extends React.Component<any, any> {
             <Button
               primary
               size="huge"
-              onClick={() => {
-                this.scrollToSearch();
-              }}
+              onClick={this.scrollToSearch}
             >
               尋求協助<Icon className="right arrow" />
             </Button>
-          </Container>
+          </Segment>
         </Segment>
         <Segment>
           <Container text>

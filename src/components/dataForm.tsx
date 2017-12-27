@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { DoctorForm } from "./DoctorForm";
 import { Login } from "./Login";
-import { Tab, Button, Form, Container } from "semantic-ui-react";
+import { Tab, Button, Form, Container, Menu, Icon, Sidebar, Sticky } from "semantic-ui-react";
 import { Redirect } from 'react-router';
 
 import * as firebase from "firebase";
@@ -51,7 +51,7 @@ export class DataForm extends React.Component<any, any> {
       area: "",
       location: "",
       user: "",
-      method: [{0:'',1:''}],
+      method: [{ 0: '', 1: '' }],
       checked: true,
       boyChecked: false,
       girlChecked: false,
@@ -64,29 +64,29 @@ export class DataForm extends React.Component<any, any> {
       e1checked: false,
       e2checked: false,
       e3checked: false,
-      doctorNameOptions: [ { key: 'new', value: 'new', text: '新增' } ],
-      OKtime:{
-        'Sun1': {visibility: 'hidden'},
-        'Mon1': {visibility: 'hidden'},
-        'Tue1': {visibility: 'hidden'},
-        'Wed1': {visibility: 'hidden'},
-        'Thu1': {visibility: 'hidden'},
-        'Fri1': {visibility: 'hidden'},
-        'Sat1': {visibility: 'hidden'},
-        'Sun2': {visibility: 'hidden'},
-        'Mon2': {visibility: 'hidden'},
-        'Tue2': {visibility: 'hidden'},
-        'Wed2': {visibility: 'hidden'},
-        'Thu2': {visibility: 'hidden'},
-        'Fri2': {visibility: 'hidden'},
-        'Sat2': {visibility: 'hidden'},
-        'Sun3': {visibility: 'hidden'},
-        'Mon3': {visibility: 'hidden'},
-        'Tue3': {visibility: 'hidden'},
-        'Wed3': {visibility: 'hidden'},
-        'Thu3': {visibility: 'hidden'},
-        'Fri3': {visibility: 'hidden'},
-        'Sat3': {visibility: 'hidden'}
+      doctorNameOptions: [{ key: 'new', value: 'new', text: '新增' }],
+      OKtime: {
+        'Sun1': { visibility: 'hidden' },
+        'Mon1': { visibility: 'hidden' },
+        'Tue1': { visibility: 'hidden' },
+        'Wed1': { visibility: 'hidden' },
+        'Thu1': { visibility: 'hidden' },
+        'Fri1': { visibility: 'hidden' },
+        'Sat1': { visibility: 'hidden' },
+        'Sun2': { visibility: 'hidden' },
+        'Mon2': { visibility: 'hidden' },
+        'Tue2': { visibility: 'hidden' },
+        'Wed2': { visibility: 'hidden' },
+        'Thu2': { visibility: 'hidden' },
+        'Fri2': { visibility: 'hidden' },
+        'Sat2': { visibility: 'hidden' },
+        'Sun3': { visibility: 'hidden' },
+        'Mon3': { visibility: 'hidden' },
+        'Tue3': { visibility: 'hidden' },
+        'Wed3': { visibility: 'hidden' },
+        'Thu3': { visibility: 'hidden' },
+        'Fri3': { visibility: 'hidden' },
+        'Sat3': { visibility: 'hidden' }
       }
     };
 
@@ -128,11 +128,17 @@ export class DataForm extends React.Component<any, any> {
         this.setState({
           login: false
         });
+        this.toIndex();
       }.bind(this),
       function (error) {
         console.log("sign out error");
       }
       );
+
+  }
+
+  toIndex() {
+    window.location.href = "./#/";
   }
 
   handleSave = () => {
@@ -164,93 +170,97 @@ export class DataForm extends React.Component<any, any> {
     var user = firebase.auth().currentUser;
 
     if (user) {
-      // console.log(user);
       return (
-        <Tab onTabChange={this.handleTabChange}
-          panes={[
-            {
-              menuItem: "Agency",
-              render: () => (
-                <Tab.Pane>
-                  <AgencyForm 
-                    OKtime={this.state.OKtime}
-                    handleTimeClick={this.handleTimeClick}
-                    name={this.state.name}
-                    handleNameChange={this.handleNameChange}
-                    phone={this.state.phone}
-                    handlePhoneChange={this.handlePhoneChange}
-                    website={this.state.website}
-                    handleWebsiteChange={this.handleWebsiteChange}
-                    address={this.state.address}
-                    handleAddressChange={this.handleAddressChange}
-                    area={this.state.area}
-                    handleAreaChange={this.handleAreaChange}
-                    location={this.state.location}
-                    handleLocationChange={this.handleLocationChange}
-                    handleSubmit={this.handleAgnecySubmit}
-                    handleCheckboxChange={this.handleCheckboxChange}
-                    checked={this.state.checked}
-                    boyChecked={this.state.boyChecked}
-                    girlChecked={this.state.girlChecked}
-                    handleBoyCheckboxChange={this.handleBoyCheckboxChange}
-                    handleGirlCheckboxChange={this.handleGirlCheckboxChange}
-                    method={this.state.method}
-                    handleAddMethod={this.handleAddMethod}
-                    handleMethodChange={this.handleMethodChange}
-                    attritube={this.state.attritube}
-                    handleAttritubeChange={this.handleAttritubeChange}
-                    LBage={this.state.LBage}
-                    handleLBageChange={this.handleLBageChange}
-                    UBage={this.state.UBage}
-                    handleUBageChange={this.handleUBageChange}
-                    religon={this.state.religon}
-                    handleReligonChange={this.handleReligonChange}
-                    e1checked={this.state.e1checked}
-                    e2checked={this.state.e2checked}
-                    e3checked={this.state.e3checked}
-                    handleE1CheckboxChange={this.handleE1CheckboxChange}
-                    handleE2CheckboxChange={this.handleE2CheckboxChange}
-                    handleE3CheckboxChange={this.handleE3CheckboxChange}
-                  />
-                </Tab.Pane>
-              )
-            },
-            {
-              menuItem: "Doctor",
-              render: () => (
-                <Tab.Pane>
-                  <DoctorForm
-                    intro={this.state.intro}
-                    name={this.state.name}
-                    phone={this.state.phone}
-                    handleSubmit={this.handleDoctorSubmit}
-                    handleNameChange={this.handleNameChange}
-                    handlePhoneChange={this.handlePhoneChange}
-                    handleChange={this.handleChange}
-                    handleTimeClick={this.handleTimeClick}
-                    OKtime={this.state.OKtime}
-                    doctorNameOptions={this.state.doctorNameOptions}
-                    id={this.state.id}
-                    handleDoctorNameOptionsChange={this.handleDoctorNameOptionsChange}
-                    src={this.state.src}
-                    previewFile={this.previewFile}
-                  /> 
-                </Tab.Pane>
-              )
-            }
-          ]}
-        />
-        // <Container>
-        //   <Form>
-        //     <Form.Input label='機構名稱' name="name" placeholder='' onChange={this.handleFormChange} />
-        //     <Form.Input label='網站位置' name="web" placeholder='' onChange={this.handleFormChange} />
-        //     <Form.Input label='電話' name="phone" placeholder='' onChange={this.handleFormChange} />
-        //     <Form.Input label='地址' name="address" placeholder='Address' onChange={this.handleFormChange} />
-
-        //     <Button onClick={this.handleSave}>送出</Button>
-        //     <Button onClick={this.signOut}>Sign Out</Button>
-        //   </Form >
-        // </Container>
+        <div>
+          <Sticky>
+            <Menu inverted>
+              <Menu.Item onClick={() => this.toIndex()}>
+                <Icon name='home' />
+                戒毒好所在
+              </Menu.Item>
+              <Menu.Item position="right" onClick={() => this.signOut()}>
+                <Icon name='sign out' />
+                登出
+              </Menu.Item>
+            </Menu>
+          </Sticky>
+          <Container>
+            <Tab onTabChange={this.handleTabChange}
+              panes={[
+                {
+                  menuItem: "Agency",
+                  render: () => (
+                    <Tab.Pane>
+                      <AgencyForm
+                        OKtime={this.state.OKtime}
+                        handleTimeClick={this.handleTimeClick}
+                        name={this.state.name}
+                        handleNameChange={this.handleNameChange}
+                        phone={this.state.phone}
+                        handlePhoneChange={this.handlePhoneChange}
+                        website={this.state.website}
+                        handleWebsiteChange={this.handleWebsiteChange}
+                        address={this.state.address}
+                        handleAddressChange={this.handleAddressChange}
+                        area={this.state.area}
+                        handleAreaChange={this.handleAreaChange}
+                        location={this.state.location}
+                        handleLocationChange={this.handleLocationChange}
+                        handleSubmit={this.handleAgnecySubmit}
+                        handleCheckboxChange={this.handleCheckboxChange}
+                        checked={this.state.checked}
+                        boyChecked={this.state.boyChecked}
+                        girlChecked={this.state.girlChecked}
+                        handleBoyCheckboxChange={this.handleBoyCheckboxChange}
+                        handleGirlCheckboxChange={this.handleGirlCheckboxChange}
+                        method={this.state.method}
+                        handleAddMethod={this.handleAddMethod}
+                        handleMethodChange={this.handleMethodChange}
+                        attritube={this.state.attritube}
+                        handleAttritubeChange={this.handleAttritubeChange}
+                        LBage={this.state.LBage}
+                        handleLBageChange={this.handleLBageChange}
+                        UBage={this.state.UBage}
+                        handleUBageChange={this.handleUBageChange}
+                        religon={this.state.religon}
+                        handleReligonChange={this.handleReligonChange}
+                        e1checked={this.state.e1checked}
+                        e2checked={this.state.e2checked}
+                        e3checked={this.state.e3checked}
+                        handleE1CheckboxChange={this.handleE1CheckboxChange}
+                        handleE2CheckboxChange={this.handleE2CheckboxChange}
+                        handleE3CheckboxChange={this.handleE3CheckboxChange}
+                      />
+                    </Tab.Pane>
+                  )
+                },
+                {
+                  menuItem: "Doctor",
+                  render: () => (
+                    <Tab.Pane>
+                      <DoctorForm
+                        intro={this.state.intro}
+                        name={this.state.name}
+                        phone={this.state.phone}
+                        handleSubmit={this.handleDoctorSubmit}
+                        handleNameChange={this.handleNameChange}
+                        handlePhoneChange={this.handlePhoneChange}
+                        handleChange={this.handleChange}
+                        handleTimeClick={this.handleTimeClick}
+                        OKtime={this.state.OKtime}
+                        doctorNameOptions={this.state.doctorNameOptions}
+                        id={this.state.id}
+                        handleDoctorNameOptionsChange={this.handleDoctorNameOptionsChange}
+                        src={this.state.src}
+                        previewFile={this.previewFile}
+                      />
+                    </Tab.Pane>
+                  )
+                }
+              ]}
+            />
+          </Container>
+        </div>
       );
     } else {
       console.log("user is not sign in");
@@ -262,7 +272,7 @@ export class DataForm extends React.Component<any, any> {
     console.log('Handle Time Click');
     var id = e.target.parentElement.id
     var ntime = this.state.OKtime;
-    if(ntime[id].visibility == 'hidden'){
+    if (ntime[id].visibility == 'hidden') {
       ntime[id].visibility = 'visible';
     } else {
       ntime[id].visibility = 'hidden';
@@ -283,16 +293,16 @@ export class DataForm extends React.Component<any, any> {
     console.log(data);
 
     var user = firebase.auth().currentUser;
-    
+
     let uid = user.uid;
 
-    if(this.state.file){
-      storageRef.child('images/'+uid+'_'+this.state.name+'.jpg').put(this.state.file).then(snapshot=>{
+    if (this.state.file) {
+      storageRef.child('images/' + uid + '_' + this.state.name + '.jpg').put(this.state.file).then(snapshot => {
         data['src'] = snapshot.downloadURL;
       });
     }
 
-    if(this.state.id=='new'){
+    if (this.state.id == 'new') {
       try {
         db.collection("agency").doc(uid).collection("doctor").add(data);
       } catch (err) {
@@ -309,7 +319,7 @@ export class DataForm extends React.Component<any, any> {
         file: null,
         id: 'new'
       });
-    }else{
+    } else {
       try {
         db.collection("agency").doc(uid).collection("doctor").doc(this.state.id).set(data);
       } catch (err) {
@@ -328,10 +338,10 @@ export class DataForm extends React.Component<any, any> {
       });
     }
 
-    let newDoctorOptions = [ { key: 'new', value: 'new', text: '新增' } ];
-    db.collection("agency").doc(uid).collection('doctor').get().then(snapshot=>{
-      snapshot.forEach(doc=>{
-        newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.data().name});
+    let newDoctorOptions = [{ key: 'new', value: 'new', text: '新增' }];
+    db.collection("agency").doc(uid).collection('doctor').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        newDoctorOptions.push({ key: doc.id, value: doc.id, text: doc.data().name });
       })
     })
     this.setState({
@@ -360,7 +370,7 @@ export class DataForm extends React.Component<any, any> {
     console.log(data);
 
     var user = firebase.auth().currentUser;
-    
+
     let uid = user.uid;
     try {
       db.collection("agency").doc(uid).set(data);
@@ -389,105 +399,105 @@ export class DataForm extends React.Component<any, any> {
     });
   }
 
-  handleWebsiteChange(e){
+  handleWebsiteChange(e) {
     this.setState({
       website: e.target.value
     });
   }
 
-  handleAddressChange(e){
+  handleAddressChange(e) {
     this.setState({
       address: e.target.value
     })
   }
 
-  handleAreaChange(e, target){
+  handleAreaChange(e, target) {
     this.setState({
       area: target.value,
       location: ""
     })
   }
 
-  handleCheckboxChange(e, target){
+  handleCheckboxChange(e, target) {
     this.setState({
       checked: target.checked
     })
   }
 
-  handleBoyCheckboxChange(e, target){
+  handleBoyCheckboxChange(e, target) {
     this.setState({
       boyChecked: target.checked
     })
   }
 
-  handleGirlCheckboxChange(e, target){
+  handleGirlCheckboxChange(e, target) {
     this.setState({
       girlChecked: target.checked
     })
   }
 
-  handleE1CheckboxChange(e, target){
+  handleE1CheckboxChange(e, target) {
     this.setState({
       e1checked: target.checked
     })
   }
-  handleE2CheckboxChange(e, target){
+  handleE2CheckboxChange(e, target) {
     this.setState({
       e2checked: target.checked
     })
   }
-  handleE3CheckboxChange(e, target){
+  handleE3CheckboxChange(e, target) {
     this.setState({
       e3checked: target.checked
     })
   }
 
-  handleLocationChange(e, target){
+  handleLocationChange(e, target) {
     this.setState({
       location: target.value
     })
   }
 
-  handleDoctorNameOptionsChange(e, target){
+  handleDoctorNameOptionsChange(e, target) {
     this.setState({
       id: target.value
     })
-    if(target.value=='new'){
+    if (target.value == 'new') {
       this.setState({
         name: '',
         phone: '',
         intro: '',
         src: defaultProfile,
-        OKtime:{
-          'Sun1': {visibility: 'hidden'},
-          'Mon1': {visibility: 'hidden'},
-          'Tue1': {visibility: 'hidden'},
-          'Wed1': {visibility: 'hidden'},
-          'Thu1': {visibility: 'hidden'},
-          'Fri1': {visibility: 'hidden'},
-          'Sat1': {visibility: 'hidden'},
-          'Sun2': {visibility: 'hidden'},
-          'Mon2': {visibility: 'hidden'},
-          'Tue2': {visibility: 'hidden'},
-          'Wed2': {visibility: 'hidden'},
-          'Thu2': {visibility: 'hidden'},
-          'Fri2': {visibility: 'hidden'},
-          'Sat2': {visibility: 'hidden'},
-          'Sun3': {visibility: 'hidden'},
-          'Mon3': {visibility: 'hidden'},
-          'Tue3': {visibility: 'hidden'},
-          'Wed3': {visibility: 'hidden'},
-          'Thu3': {visibility: 'hidden'},
-          'Fri3': {visibility: 'hidden'},
-          'Sat3': {visibility: 'hidden'}
+        OKtime: {
+          'Sun1': { visibility: 'hidden' },
+          'Mon1': { visibility: 'hidden' },
+          'Tue1': { visibility: 'hidden' },
+          'Wed1': { visibility: 'hidden' },
+          'Thu1': { visibility: 'hidden' },
+          'Fri1': { visibility: 'hidden' },
+          'Sat1': { visibility: 'hidden' },
+          'Sun2': { visibility: 'hidden' },
+          'Mon2': { visibility: 'hidden' },
+          'Tue2': { visibility: 'hidden' },
+          'Wed2': { visibility: 'hidden' },
+          'Thu2': { visibility: 'hidden' },
+          'Fri2': { visibility: 'hidden' },
+          'Sat2': { visibility: 'hidden' },
+          'Sun3': { visibility: 'hidden' },
+          'Mon3': { visibility: 'hidden' },
+          'Tue3': { visibility: 'hidden' },
+          'Wed3': { visibility: 'hidden' },
+          'Thu3': { visibility: 'hidden' },
+          'Fri3': { visibility: 'hidden' },
+          'Sat3': { visibility: 'hidden' }
         }
       })
       return;
     }
     var user = firebase.auth().currentUser;
     let uid = user.uid;
-    try{
-      db.collection("agency").doc(uid).collection('doctor').doc(target.value).get().then(doc=>{
+    try {
+      db.collection("agency").doc(uid).collection('doctor').doc(target.value).get().then(doc => {
         var data = doc.data();
         this.setState({
           OKtime: data.OKtime,
@@ -495,60 +505,60 @@ export class DataForm extends React.Component<any, any> {
           name: data.name,
           phone: data.phone
         })
-        if(data.src){
+        if (data.src) {
           this.setState({
             src: data.src
           })
-        }else{
+        } else {
           this.setState({
-            src : defaultProfile
+            src: defaultProfile
           })
         }
       })
-    }catch{
+    } catch{
       return
     }
   }
 
   handleAddMethod(e) {
     let newItem = this.state.method;
-    newItem.push({0:'',1:''});
+    newItem.push({ 0: '', 1: '' });
     this.setState({
       method: newItem
     })
   }
 
-  handleAttritubeChange(e, target){
+  handleAttritubeChange(e, target) {
     this.setState({
       attritube: target.value
     })
   }
 
-  handleLBageChange(e, target){
+  handleLBageChange(e, target) {
     this.setState({
       LBage: target.value
     })
   }
 
-  handleUBageChange(e, target){
+  handleUBageChange(e, target) {
     this.setState({
       UBage: target.value
     })
   }
 
-  handleReligonChange(e, target){
+  handleReligonChange(e, target) {
     this.setState({
       religon: target.value
     })
   }
 
-  handleMethodChange(e){
+  handleMethodChange(e) {
     let PElem: any = e.target.parentElement;
     let i = PElem.id;
     let newMethod = this.state.method;
-    if(e.target.name == "first"){
+    if (e.target.name == "first") {
       newMethod[i][0] = e.target.value;
-    }else if(e.target.name == "second"){
+    } else if (e.target.name == "second") {
       newMethod[i][1] = e.target.value;
     }
     this.setState({
@@ -580,7 +590,7 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
-  handleTabChange(e){
+  handleTabChange(e) {
     this.setState({
       id: 'new',
       intro: "",
@@ -591,7 +601,7 @@ export class DataForm extends React.Component<any, any> {
       area: "",
       location: "",
       user: "",
-      method: [{0:'',1:''}],
+      method: [{ 0: '', 1: '' }],
       checked: true,
       boyChecked: false,
       girlChecked: false,
@@ -604,28 +614,28 @@ export class DataForm extends React.Component<any, any> {
       e1checked: false,
       e2checked: false,
       e3checked: false,
-      OKtime:{
-        'Sun1': {visibility: 'hidden'},
-        'Mon1': {visibility: 'hidden'},
-        'Tue1': {visibility: 'hidden'},
-        'Wed1': {visibility: 'hidden'},
-        'Thu1': {visibility: 'hidden'},
-        'Fri1': {visibility: 'hidden'},
-        'Sat1': {visibility: 'hidden'},
-        'Sun2': {visibility: 'hidden'},
-        'Mon2': {visibility: 'hidden'},
-        'Tue2': {visibility: 'hidden'},
-        'Wed2': {visibility: 'hidden'},
-        'Thu2': {visibility: 'hidden'},
-        'Fri2': {visibility: 'hidden'},
-        'Sat2': {visibility: 'hidden'},
-        'Sun3': {visibility: 'hidden'},
-        'Mon3': {visibility: 'hidden'},
-        'Tue3': {visibility: 'hidden'},
-        'Wed3': {visibility: 'hidden'},
-        'Thu3': {visibility: 'hidden'},
-        'Fri3': {visibility: 'hidden'},
-        'Sat3': {visibility: 'hidden'}
+      OKtime: {
+        'Sun1': { visibility: 'hidden' },
+        'Mon1': { visibility: 'hidden' },
+        'Tue1': { visibility: 'hidden' },
+        'Wed1': { visibility: 'hidden' },
+        'Thu1': { visibility: 'hidden' },
+        'Fri1': { visibility: 'hidden' },
+        'Sat1': { visibility: 'hidden' },
+        'Sun2': { visibility: 'hidden' },
+        'Mon2': { visibility: 'hidden' },
+        'Tue2': { visibility: 'hidden' },
+        'Wed2': { visibility: 'hidden' },
+        'Thu2': { visibility: 'hidden' },
+        'Fri2': { visibility: 'hidden' },
+        'Sat2': { visibility: 'hidden' },
+        'Sun3': { visibility: 'hidden' },
+        'Mon3': { visibility: 'hidden' },
+        'Tue3': { visibility: 'hidden' },
+        'Wed3': { visibility: 'hidden' },
+        'Thu3': { visibility: 'hidden' },
+        'Fri3': { visibility: 'hidden' },
+        'Sat3': { visibility: 'hidden' }
       }
     })
   }
@@ -663,12 +673,12 @@ export class DataForm extends React.Component<any, any> {
 
   componentDidMount() {
     var user = firebase.auth().currentUser;
-    if(user){
+    if (user) {
       let uid = user.uid;
-      let newDoctorOptions = [ { key: 'new', value: 'new', text: '新增' } ];
-      db.collection("agency").doc(uid).collection('doctor').get().then(snapshot=>{
-        snapshot.forEach(doc=>{
-          newDoctorOptions.push({key:doc.id, value:doc.id, text:doc.data().name});
+      let newDoctorOptions = [{ key: 'new', value: 'new', text: '新增' }];
+      db.collection("agency").doc(uid).collection('doctor').get().then(snapshot => {
+        snapshot.forEach(doc => {
+          newDoctorOptions.push({ key: doc.id, value: doc.id, text: doc.data().name });
         })
       })
       this.setState({
