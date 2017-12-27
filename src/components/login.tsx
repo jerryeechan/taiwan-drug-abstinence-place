@@ -31,6 +31,9 @@ export class Login extends React.Component<any, any> {
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then((user) => {
+        window.location.href = "./#/form";
+      })
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -40,7 +43,6 @@ export class Login extends React.Component<any, any> {
         alert(errorMessage);
         return;
       });
-    window.location.href = "./#/form";
   }
 
   redirectToRegister() {
