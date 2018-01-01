@@ -1,7 +1,18 @@
 import * as React from "react";
 import * as firebase from "firebase";
-import { Redirect } from 'react-router';
-import { Form, Checkbox, Button, Sidebar, Segment, Menu, Icon, Container, Header, Sticky } from 'semantic-ui-react';
+import { Redirect } from "react-router";
+import {
+  Form,
+  Checkbox,
+  Button,
+  Sidebar,
+  Segment,
+  Menu,
+  Icon,
+  Container,
+  Header,
+  Sticky
+} from "semantic-ui-react";
 
 export class Login extends React.Component<any, any> {
   constructor(props) {
@@ -24,17 +35,17 @@ export class Login extends React.Component<any, any> {
     }
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   handleLogin() {
     console.log("handle login");
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((user) => {
+      .then(user => {
         window.location.href = "./#/form";
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -59,7 +70,7 @@ export class Login extends React.Component<any, any> {
         <Sticky>
           <Menu inverted>
             <Menu.Item onClick={() => this.toIndex()}>
-              <Icon name='home' />
+              <Icon name="home" />
               戒毒好所在
             </Menu.Item>
           </Menu>
@@ -90,18 +101,15 @@ export class Login extends React.Component<any, any> {
                 placeholder="密碼"
               />
             </Form.Field>
-            <Form.Field>
-              <Checkbox label="I agree to the Terms and Conditions" />
-            </Form.Field>
             <Button type="submit" onClick={() => this.handleLogin()}>
               送出
             </Button>
-            <Button type="submit" onClick={() => this.redirectToRegister()} >
+            <Button type="submit" onClick={() => this.redirectToRegister()}>
               註冊帳號
             </Button>
-          </Form >
+          </Form>
         </Container>
-      </div >
+      </div>
     );
   }
 }

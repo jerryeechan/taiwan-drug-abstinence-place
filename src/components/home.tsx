@@ -13,7 +13,8 @@ import {
   Input,
   Select,
   Dropdown,
-  Card
+  Card,
+  Divider
 } from "semantic-ui-react";
 
 import FirebaseAuth from "react-firebase-auth";
@@ -2856,8 +2857,8 @@ const zoneOptions = [
 const zoneMap = {
   north: "北部",
   west: "西部",
-  south: "南部",
-}
+  south: "南部"
+};
 const religionOptions = [
   { key: "none", text: "無或不排斥", value: "none" },
   { key: "christian", text: "基督教", value: "christian" },
@@ -2868,7 +2869,7 @@ const religionOptions = [
 ];
 
 const segmentHeight = {
-  height: 550,
+  height: 550
 };
 
 const responseGoogle = response => {
@@ -2876,7 +2877,6 @@ const responseGoogle = response => {
 };
 
 export class Home extends React.Component<any, any> {
-
   constructor(props) {
     super(props);
 
@@ -2893,12 +2893,12 @@ export class Home extends React.Component<any, any> {
   scrollToSearch = () => {
     window.scrollTo(0, 300);
     // TODO : smoothly scroll
-  }
+  };
 
   handleFormChange = (e, { name, value }) => {
     console.log(name + ": " + value);
     this.setState({ [name]: value });
-  }
+  };
 
   recommendFacility = () => {
     console.log(this.state);
@@ -2906,11 +2906,11 @@ export class Home extends React.Component<any, any> {
     // TODO : 推薦場所 並產生資料
     // TODO : 搜尋 和 存檔，資料對應一致問題
 
-    let filted_data = json_data.filter((agency) => {
+    let filted_data = json_data.filter(agency => {
       return agency["縣市"] === "桃園市";
     });
     this.setState({ angencyResult: filted_data });
-  }
+  };
 
   render() {
     return (
@@ -2936,11 +2936,7 @@ export class Home extends React.Component<any, any> {
             <h2>
               協助成癮者或觀護人、家屬、個案管理師一起為成癮者找到適合戒毒的協助機構
             </h2>
-            <Button
-              primary
-              size="huge"
-              onClick={this.scrollToSearch}
-            >
+            <Button primary size="huge" onClick={this.scrollToSearch}>
               尋求協助<Icon className="right arrow" />
             </Button>
           </Segment>
@@ -3012,23 +3008,51 @@ export class Home extends React.Component<any, any> {
                 />
               </Form.Group>
             </Form>
-            <Button
-              primary
-              size="huge"
-              onClick={this.recommendFacility}
-            >
+            <Button primary size="huge" onClick={this.recommendFacility}>
               推薦我協助單位<Icon className="right arrow" />
             </Button>
           </Container>
         </Segment>
-        {this.state.angencyResult.map((item, index) => (
-          <Card
-            header={item["機構名稱"]}
-            meta={item["機構屬性"]}
-            description={item["地址"]}
-          />
-        ))}
-        <Segment />
+        <Segment>
+          <Header textAlign="center" centered as="h2">
+            推薦單位
+          </Header>
+          {this.state.angencyResult.length > 0 && (
+            <Container text>
+              <Header textAlign="center" centered dividing as="h3">
+                中途之家
+              </Header>
+              <p className="text container">
+                中途之家透過環境的隔離，接受人道關懷、諮商/治療活動、道德/精神教育、工作/技巧訓練、資訊提供、轉介服務、後續照顧等服務，使成癮者得以遠離原有的環境，重新建立新的生活模式。
+              </p>
+              <p className="bold centered">
+                ＊中途之家以心理戒癮為主要功能，求助者若為生理成癮者，應先轉介醫療戒癮。＊
+              </p>
+            </Container>
+          )}
+          <Divider hidden />
+          <Card.Group itemsPerRow={3}>
+            {this.state.angencyResult.map((item, index) => (
+              <Card
+                centered
+                header={item["機構名稱"]}
+                meta={item["機構屬性"]}
+                description={item["地址"]}
+              />
+            ))}
+          </Card.Group>
+          {this.state.angencyResult.length > 0 && (
+            <Container text>
+              <Header textAlign="center" centered dividing as="h3">
+                醫療
+              </Header>
+              <p className="text container">
+                停藥後的戒斷症狀是戒毒遇到的第一道難關，在醫療院所中，醫師會根據診斷提供適當的藥物以及配套服務幫助病人控制戒斷症狀，亦可以透過心理治療做妥善處理病人會想要吸毒的危險情境並建立新生活習慣。
+              </p>
+            </Container>
+          )}
+          <Divider hidden />
+        </Segment>
       </div>
     );
   }
