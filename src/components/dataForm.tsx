@@ -175,7 +175,7 @@ export class DataForm extends React.Component<any, any> {
       return (
         <div>
           <Sticky>
-            <Menu inverted>
+            <Menu inverted style={{zIndex:'1'}}>
               <Menu.Item onClick={() => this.toIndex()}>
                 <Icon name='home' />
                 戒毒好所在
