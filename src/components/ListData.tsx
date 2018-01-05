@@ -7,7 +7,8 @@ import '@firebase/firestore';
 
 import {
   Grid,
-  Dropdown
+  Dropdown,
+  Image
 } from "semantic-ui-react";
 
 import { TimeTable } from './TimeTable';
@@ -32,8 +33,8 @@ export class ListData extends React.Component<any,any>{
 
     this.state = {
       attritube: '',
-      NameOptions: [],
-      namevalue: '',
+      AgencyOptions: [],
+      agencyvalue: '',
       agency: '',
       Doctoroptions: [],
       doctorvalue: '',
@@ -41,7 +42,7 @@ export class ListData extends React.Component<any,any>{
     }
 
     this.handleAttritubeChange = this.handleAttritubeChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAgencyChange = this.handleAgencyChange.bind(this);
     this.handleDoctorChange = this.handleDoctorChange.bind(this);
   }
 
@@ -58,10 +59,10 @@ export class ListData extends React.Component<any,any>{
         <Grid.Row>
           <Grid.Column>
             <label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>機構名稱</label>
-            <Dropdown selection placeholder="名稱" options={this.state.NameOptions} onChange={this.handleNameChange} value={this.state.namevalue}/>
+            <Dropdown selection placeholder="名稱" options={this.state.AgencyOptions} onChange={this.handleAgencyChange} value={this.state.agencyvalue}/>
           </Grid.Column>
         </Grid.Row>}
-        {this.state.namevalue && 
+        {this.state.agencyvalue && 
         <Grid.Row>
           <Grid.Column>
             <Grid celled>
@@ -69,38 +70,38 @@ export class ListData extends React.Component<any,any>{
                 <Grid.Column width='16'><label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>資料簡介</label></Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>機構名稱</Grid.Column>
+                <Grid.Column width='4' style={item}>機構名稱</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.name}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>網站</Grid.Column>
+                <Grid.Column width='4' style={item}>網站</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.website}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>地區</Grid.Column>
+                <Grid.Column width='4' style={item}>地區</Grid.Column>
                 <Grid.Column width='12'>{Area[this.state.agency.area]} {Location[this.state.agency.location]}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>地址</Grid.Column>
+                <Grid.Column width='4' style={item}>地址</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.address}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>電話</Grid.Column>
+                <Grid.Column width='4' style={item}>電話</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.phone}</Grid.Column>
               </Grid.Row>
               <Grid.Row style={header}>
                 <Grid.Column width='16'>限制</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>性別</Grid.Column>
+                <Grid.Column width='4' style={item}>性別</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.boyChecked && "男" } {this.state.agency.girlChecked && "女" }</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>年齡</Grid.Column>
+                <Grid.Column width='4' style={item}>年齡</Grid.Column>
                 <Grid.Column width='12'>{this.state.agency.UBage==200 ? <div>不限</div>: <div>{this.state.agency.LBage}～{this.state.agency.UBage}</div>}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width='4'>宗教</Grid.Column>
+                <Grid.Column width='4' style={item}>宗教</Grid.Column>
                 <Grid.Column width='12'>{Religon[this.state.agency.religon]}</Grid.Column>
               </Grid.Row>
               <Grid.Row>
@@ -109,7 +110,7 @@ export class ListData extends React.Component<any,any>{
               <Grid.Row>
                 <Grid.Column width='16'>{this.state.agency.e1checked && "更生保護法"} {this.state.agency.e2checked && "非鴉片類補助"}</Grid.Column>
               </Grid.Row>
-              <Grid.Row style={header}>
+              <Grid.Row style={item}>
                 <Grid.Column width='8'>處置方式</Grid.Column>
                 <Grid.Column width='8'>費用</Grid.Column>
               </Grid.Row>
@@ -121,12 +122,58 @@ export class ListData extends React.Component<any,any>{
                   </Grid.Row>
                 );
               })}
-              <Grid.Row>
-                {this.state.agency.OKtime && <TimeTable OKtime={this.state.agency.OKtime} style={{padding:'5px'}}></TimeTable>}
-              </Grid.Row>
+              {this.state.agency.OKtime && 
+                <Grid.Row>
+                  <Grid.Column>
+                    <TimeTable OKtime={this.state.agency.OKtime} style={{padding:'5px'}}></TimeTable>
+                  </Grid.Column>
+                </Grid.Row>
+              }
               <Grid.Row style={header}>
                 <Grid.Column width='16'><label style={{textAlign: "left",fontSize: "1.5em",padding: "5px"}}>醫生資訊</label>  <Dropdown selection placeholder="醫生" options={this.state.Doctoroptions} onChange={this.handleDoctorChange} value={this.state.doctorvalue}></Dropdown></Grid.Column>
               </Grid.Row>
+              {this.state.doctor && (
+                <Grid celled>
+                  <Grid.Row verticalAlign='middle'>
+                    <Grid.Column width='4'>
+                      <Image src={this.state.doctor.src}></Image>
+                    </Grid.Column>
+                    <Grid.Column width='12'>
+                      <Grid celled>
+                        <Grid.Row >
+                          <Grid.Column width='4' style={item}><label style={{textAlign: "left",fontSize: "1.2em",padding: "5px"}}>姓名</label></Grid.Column>
+                          <Grid.Column width='12'>{this.state.doctor.name}</Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid.Column width='4' style={item}><label style={{textAlign: "left",fontSize: "1.2em",padding: "5px"}}>電話</label></Grid.Column>
+                          <Grid.Column width='12'>{this.state.doctor.phone}</Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column width='8'>
+                      <Grid celled>
+                        <Grid.Row style={item}>
+                          <Grid.Column width='16'>
+                            <label style={{textAlign: "left",fontSize: "1.2em",padding: "5px"}}>簡介</label>
+                          </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid.Column width='16'>
+                            <div style={{overflowWrap: 'break-word'}}>
+                              {this.state.doctor.intro}
+                            </div>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Grid.Column>
+                    <Grid.Column width='8' verticalAlign='middle'>
+                      {this.state.doctor.OKtime && <TimeTable OKtime={this.state.doctor.OKtime}/>}
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              )}
             </Grid>
           </Grid.Column>
         </Grid.Row>}
@@ -138,23 +185,23 @@ export class ListData extends React.Component<any,any>{
     this.setState({
       attritube: target.value
     })
-    let newNameOptions = []
+    let newAgencyOptions = []
     db.collection("agency").get().then(snapshot => {
       snapshot.forEach(doc => {
         let data = doc.data();
         if(data.attritube==target.value){
-          newNameOptions.push({ key: doc.id, value: doc.id, text: data.name });
+          newAgencyOptions.push({ key: doc.id, value: doc.id, text: data.name });
         }
       })
     })
     this.setState({
-      NameOptions: newNameOptions
+      AgencyOptions: newAgencyOptions
     })
   }
 
-  handleNameChange(e, target) {
+  handleAgencyChange(e, target) {
     this.setState({
-      namevalue: target.value
+      agencyvalue: target.value
     })
     db.collection("agency").doc(target.value).get().then(doc=>{
       this.setState({
@@ -162,19 +209,24 @@ export class ListData extends React.Component<any,any>{
       })
     })
     let newDoctorOptions = [];
-      db.collection("agency").doc(target.value).collection('doctor').get().then(snapshot => {
-        snapshot.forEach(doc => {
-          newDoctorOptions.push({ key: doc.id, value: doc.id, text: doc.data().name });
-        })
+    db.collection("agency").doc(target.value).collection('doctor').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        newDoctorOptions.push({ key: doc.id, value: doc.id, text: doc.data().name });
       })
-      this.setState({
-        Doctoroptions: newDoctorOptions
-      })
+    })
+    this.setState({
+      Doctoroptions: newDoctorOptions
+    })
   }
 
   handleDoctorChange(e, target){
     this.setState({
       doctorvalue: target.value
+    })
+    db.collection("agency").doc(this.state.agencyvalue).collection('doctor').doc(target.value).get().then(doc=>{
+      this.setState({
+        doctor: doc.data()
+      });
     })
   }
 
@@ -231,6 +283,10 @@ const Religon = {
 }
 
 const header = {
+  backgroundColor: "rgb(219,220,221)"
+}
+
+const item = {
   backgroundColor: "rgb(249,250,251)"
 }
 
