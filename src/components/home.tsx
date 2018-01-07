@@ -2924,6 +2924,12 @@ export class Home extends React.Component<any, any> {
               >
                 協助編輯戒毒場所資訊
               </Item>
+              <Item
+                as="a"
+                href="/#/list"
+              >
+                機構列表
+              </Item>
               <Item as="a" href="/#/Form" className="right">
                 服務機構入口
               </Item>

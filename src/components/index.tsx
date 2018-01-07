@@ -14,6 +14,7 @@ import { Home } from "./home";
 import { DataForm } from "./dataForm";
 import { Login } from "./login";
 import { Register } from "./register";
+import { ListData } from "./ListData";
 
 class MastHead extends React.Component<any, any> {
   render() {
@@ -23,6 +24,7 @@ class MastHead extends React.Component<any, any> {
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/list" component={ListData} />
             <Route path="/form" component={DataForm} />
             <Route path="/home" component={Home} />
             <Route path="/" component={Home} />
@@ -32,7 +34,7 @@ class MastHead extends React.Component<any, any> {
     );
   }
 }
-class SearchForm extends React.Component<any, any> { }
+class SearchForm extends React.Component<any, any> {}
 const Main = () => (
   <div>
     <MastHead />
