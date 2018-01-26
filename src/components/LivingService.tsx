@@ -86,13 +86,13 @@ export class LivingService extends React.Component<any, any> {
             <Input />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} />
+            <Input style={shortInput} type="number" />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} />
+            <Input style={shortInput} type="number" />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} />
+            <Input style={shortInput} type="number" />
           </Table.Cell>
         </Table.Row>
       );
@@ -104,9 +104,9 @@ export class LivingService extends React.Component<any, any> {
             <Input size="mini" type="text" placeholder="職稱" />
             <br />
             <label>專任</label>
-            <input type="text" /> 人，
+            <input type="number" /> 人，
             <label htmlFor="">兼任</label>
-            <input type="text" />人
+            <input type="number" />人
           </Form.Field>
         </Form.Group>
       );
@@ -213,13 +213,13 @@ export class LivingService extends React.Component<any, any> {
             />
           </fieldset>
           <fieldset style={fieldset}>
-            {/* TODO : 寬度調整 */}
             <legend className="ui dividing header">服務量能</legend>
             <Form.Group>
               <Form.Field>
                 <label>男性成年</label>
                 <Input
                   id="maleAdult"
+                  type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
                 />
@@ -228,6 +228,7 @@ export class LivingService extends React.Component<any, any> {
                 <label>女性成年</label>
                 <Input
                   id="femaleAdult"
+                  type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
                 />
@@ -238,6 +239,7 @@ export class LivingService extends React.Component<any, any> {
                 <label>男性未成年</label>
                 <Input
                   id="maleTeen"
+                  type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
                 />
@@ -246,6 +248,7 @@ export class LivingService extends React.Component<any, any> {
                 <label>女性未成年</label>
                 <Input
                   id="femaleTeen"
+                  type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
                 />
@@ -262,6 +265,7 @@ export class LivingService extends React.Component<any, any> {
                 ，限制安置時間為
                 <Input
                   id="settleLimitTime"
+                  type="number"
                   label={{ basic: true, content: "月" }}
                   labelPosition="right"
                 />
@@ -273,6 +277,7 @@ export class LivingService extends React.Component<any, any> {
                 ，每次安置處遇的期程預設為
                 <Input
                   id="predictSettleLimitTime"
+                  type="number"
                   label={{ basic: true, content: "月" }}
                   labelPosition="right"
                 />
@@ -285,7 +290,11 @@ export class LivingService extends React.Component<any, any> {
               <Form.Radio label="完全自費" value="settleLimit" />
               <Form.Field label="說明" control="textarea" rows="3" />
               <Form.Radio label="部分輔助" value="settleLimit" />
-              <Form.Field label="說明" control="textarea" rows="3" />
+              <Form.Field
+                label="說明（補助條件及補助額度）"
+                control="textarea"
+                rows="3"
+              />
               <Form.Radio label="全部免費" value="settleLimit" />
               <Form.Field label="說明" control="textarea" rows="3" />
               <Form.Radio label="其他" value="settleLimit" />
@@ -298,9 +307,9 @@ export class LivingService extends React.Component<any, any> {
             <Form.Group>
               <Form.Field inline>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <h3>處遇人員</h3>
@@ -309,73 +318,73 @@ export class LivingService extends React.Component<any, any> {
                 <h4>醫師</h4>
                 <label>專任</label>
                 <input type="text" /> 科
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
                 <input type="text" /> 科
-                <input type="text" /> 人
+                <input type="number" /> 人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>臨床心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>諮商心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>社會工作師/社工員</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>職能治療師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>護理師/護士</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>過來人</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>保全人員</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <h3>其他</h3>
@@ -393,7 +402,7 @@ export class LivingService extends React.Component<any, any> {
             <Form.Group>
               <Form.Field inline>
                 每年約提供安置
-                <input type="text" /> 人次
+                <input type="number" /> 人次
                 （注意：每次入住，無論住多久，若未中斷，則算１人次）
               </Form.Field>
             </Form.Group>
@@ -429,7 +438,7 @@ export class LivingService extends React.Component<any, any> {
             <Form.Group>
               <Form.Radio label="自籌(包括募款)" value="self" />
               <Form.Field inline>
-                <input type="text" /> 元
+                <input type="number" /> 元
               </Form.Field>
             </Form.Group>
             <Form.Group>

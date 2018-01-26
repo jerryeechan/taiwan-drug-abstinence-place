@@ -72,9 +72,9 @@ export class RegisterSocialService extends React.Component<any, any> {
             <Input size="mini" type="text" placeholder="職稱" />
             <br />
             <label>專任</label>
-            <input type="text" /> 人，
+            <input type="number" /> 人，
             <label htmlFor="">兼任</label>
-            <input type="text" />人
+            <input type="number" />人
           </Form.Field>
         </Form.Group>
       );
@@ -88,7 +88,7 @@ export class RegisterSocialService extends React.Component<any, any> {
             <Input size="mini" placeholder="服務名稱" />
           </Form.Group>
           <Form.Group inline>
-            每年約可提供<Form.Input type="text" />人次
+            每年約可提供<Form.Input type="number" />人次
           </Form.Group>
           <Form.Field
             label=""
@@ -137,7 +137,6 @@ export class RegisterSocialService extends React.Component<any, any> {
             <Form.Field>
               <label>地址</label>
               <Input id="address" placeholder="地址" />
-              {/* TODO : 防呆 */}
             </Form.Field>
             <Form.Field>
               <label>電子信箱</label>
@@ -188,8 +187,8 @@ export class RegisterSocialService extends React.Component<any, any> {
             </legend>
             <Form.Radio label="團體心理治療(諮商)" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="text" />團，每團<Form.Input type="text" />共約<Form.Input
-                type="text"
+              每年約可提供<Form.Input type="number" />團，每團<Form.Input type="number" />共約<Form.Input
+                type="number"
                 disabled
               />人次
             </Form.Group>
@@ -201,8 +200,8 @@ export class RegisterSocialService extends React.Component<any, any> {
             />
             <Form.Radio label="個別心理治療(諮商)" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="text" />人，每人<Form.Input type="text" />共約<Form.Input
-                type="text"
+              每年約可提供<Form.Input type="number" />人，每人<Form.Input type="number" />共約<Form.Input
+                type="number"
                 disabled
               />人次
             </Form.Group>
@@ -214,7 +213,7 @@ export class RegisterSocialService extends React.Component<any, any> {
             />
             <Form.Radio label="家族或家庭治療(諮商)" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="text" />人(家庭)，共約<Form.Input type="text" />人(家庭)次
+              每年約可提供<Form.Input type="number" />人(家庭)，共約<Form.Input type="number" />人(家庭)次
             </Form.Group>
             <Form.Field
               label=""
@@ -227,7 +226,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               value=""
             />
             <Form.Group inline>
-              可提供之個管案量比為１：<Form.Input type="text" />
+              可提供之個管案量比為１：<Form.Input type="number" />
             </Form.Group>
             <Form.Field
               label=""
@@ -237,8 +236,8 @@ export class RegisterSocialService extends React.Component<any, any> {
             />
             <Form.Radio label="家屬自助團體" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="text" />團，每團<Form.Input type="text" />共約<Form.Input
-                type="text"
+              每年約可提供<Form.Input type="number" />團，每團<Form.Input type="number" />共約<Form.Input
+                type="number"
                 disabled
               />人次
             </Form.Group>
@@ -250,8 +249,8 @@ export class RegisterSocialService extends React.Component<any, any> {
             />
             <Form.Radio label="毒品個案自助團體" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="text" />團，每團<Form.Input type="text" />共約<Form.Input
-                type="text"
+              每年約可提供<Form.Input type="number" />團，每團<Form.Input type="number" />共約<Form.Input
+                type="number"
                 disabled
               />人次
             </Form.Group>
@@ -294,27 +293,27 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Field inline>
                 <h4>臨床心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>諮商心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>社會工作師/社工員</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <input type="number" /> 人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <input type="number" />人
               </Form.Field>
             </Form.Group>
             <h3>其他領有專業證照者</h3>
