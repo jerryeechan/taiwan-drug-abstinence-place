@@ -51,6 +51,7 @@ export class LivingService extends React.Component<any, any> {
       isWithdral: false,
       isCourtTransfer: false,
       specialService: "",
+      //
       maleAdultBed: null,
       femaleAdultBed: null,
       maleTeenBed: null,
@@ -368,7 +369,7 @@ export class LivingService extends React.Component<any, any> {
                 value="false"
                 name="isCourtTransfer"
                 onChange={this.formDataRadioChecked}
-                checked={this.state.isCourtTransfer === "true"}
+                checked={this.state.isCourtTransfer === "false"}
               />
             </Form.Group>
             <Form.TextArea

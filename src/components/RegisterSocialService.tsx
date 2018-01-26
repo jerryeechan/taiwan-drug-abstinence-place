@@ -31,7 +31,28 @@ export class RegisterSocialService extends React.Component<any, any> {
 
     this.state = {
       otherPeopleNum: 1,
-      otherServiceNum: 0
+      otherServiceNum: 0,
+      // formData
+      name: "",
+      phone: "",
+      address: "",
+      email: "",
+      url: "",
+      alchohol: false,
+      opium: false,
+      stimulant: false,
+      otherDrug: false,
+      isMale: false,
+      isFemale: false,
+      isAdult: false,
+      isChild: false,
+      isIgnoreServere: false,
+      servereDisease: "",
+      isWithdral: false,
+      isCourtTransfer: false,
+      specialService: "",
+      feeType: "",
+      feeTypeDescription: ""
     };
   }
 
@@ -60,6 +81,39 @@ export class RegisterSocialService extends React.Component<any, any> {
     this.setState({
       otherPeopleNum: origin + 1
     });
+  };
+
+  formDataChange = (e, { name, value }) => {
+    console.log(name + ": " + value);
+    this.setState({ [name]: value });
+  };
+
+  textAreaChange = e => {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  formDataChecked = (e, data) => {
+    console.log(data);
+    this.setState({ [data.name]: data.checked });
+  };
+
+  formDataRadioChecked = (e, data) => {
+    console.log(data);
+    this.setState({ [data.name]: data.value });
+    console.log(this.state);
+  };
+
+  resourceContentChange = (e, { name, value }) => {
+    var elementName = name.split("_")[0];
+    var sequence = name.split("_")[1];
+    console.log(elementName + ": " + sequence);
+
+    var origin = this.state.resources;
+    origin[sequence] = value;
+    this.setState({ ["resources"]: origin });
+    console.log(this.state.resources);
   };
 
   render() {
@@ -125,60 +179,170 @@ export class RegisterSocialService extends React.Component<any, any> {
           <fieldset style={fieldset}>
             <legend className="ui dividing header">基本資料</legend>
             <Form.Field required>
-              <label>
-                機構或民間組織名稱(請填寫立案之機構全名，及治療所或工作室名稱)
-              </label>
-              <Input name="name" placeholder="機構名稱" />
+              <label>機構名稱 (請填寫立案之機構全名+安置單位名稱)</label>
+              <Input
+                name="name"
+                placeholder="機構名稱"
+                onChange={this.formDataChange}
+              />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>電話 (請加註區域碼，若需撥打分機，亦請註明)</label>
-              <Input id="phone" placeholder="電話" />
+              <Input
+                id="phone"
+                name="phone"
+                placeholder="電話"
+                onChange={this.formDataChange}
+              />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>地址</label>
-              <Input id="address" placeholder="地址" />
+              <Input
+                id="address"
+                name="address"
+                placeholder="地址"
+                onChange={this.formDataChange}
+              />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>電子信箱</label>
-              <Input id="email" placeholder="email" />
+              <Input
+                id="email"
+                name="email"
+                placeholder="email"
+                onChange={this.formDataChange}
+              />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>網站</label>
-              <input id="url" placeholder="http://google.com.tw" />
+              <Input
+                id="url"
+                name="url"
+                placeholder="http://google.com.tw"
+                onChange={this.formDataChange}
+              />
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
             <legend className="ui dividing header">個案屬性</legend>
             <Form.Group inline>
               <label>成癮物質</label>
-              <Checkbox label="酒精" />
-              <Checkbox label="鴉片類(如海洛因、鴉片、嗎啡)" />
-              <Checkbox label="中樞神經興奮劑(如古柯鹼、安非他命...) " />
-              <Checkbox label="其他(如凱他命、大麻、新興成癮物質…)" />
+              <Checkbox
+                label="酒精"
+                name="alchohol"
+                onChange={this.formDataChecked}
+              />
+              <Checkbox
+                label="鴉片類(如海洛因、鴉片、嗎啡)"
+                name="opium"
+                onChange={this.formDataChecked}
+              />
+              <Checkbox
+                label="中樞神經興奮劑(如古柯鹼、安非他命...)"
+                name="stimulant"
+                onChange={this.formDataChecked}
+              />
+              <Checkbox
+                label="其他(如凱他命、大麻、新興成癮物質…)"
+                name="otherDrug"
+                onChange={this.formDataChecked}
+              />
             </Form.Group>
 
             <Form.Group inline>
               <label>性別</label>
-              <Form.Radio label="男" value="man" />
-              <Form.Radio label="女" value="female" />
+              <Checkbox
+                label="男"
+                name="isMale"
+                onChange={this.formDataChecked}
+              />
+              <Checkbox
+                label="女"
+                name="isFemale"
+                onChange={this.formDataChecked}
+              />
             </Form.Group>
             <Form.Group inline>
               <label>年齡</label>
-              <Form.Radio label="成年" value="adult" />
-              <Form.Radio label="未成年" value="teen" />
+              <Checkbox
+                label="成年"
+                name="isAdult"
+                onChange={this.formDataChecked}
+              />
+              <Checkbox
+                label="未成年"
+                name="isChild"
+                onChange={this.formDataChecked}
+              />
             </Form.Group>
             <Form.Group inline>
               <label>是否排除重大身體疾病或精神疾病個案</label>
-              <Form.Radio label="是" value="disease" />
-              <Form.Radio label="否" value="" />
-              <Form.Field>
-                <label>請說明排除之疾病</label>
-                <Input id="excuse" placeholder="名稱" />
-              </Form.Field>
+              <Form.Radio
+                label="是"
+                value="true"
+                name="isIgnoreServere"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isIgnoreServere === "true"}
+              />
+              <Form.Radio
+                label="否"
+                name="isIgnoreServere"
+                value="false"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isIgnoreServere === "false"}
+              />
+              {this.state.isIgnoreServere === "true" && (
+                <Form.Field>
+                  <label>請說明排除之疾病</label>
+                  <Input
+                    name="servereDisease"
+                    placeholder="名稱"
+                    onChange={this.formDataChange}
+                    value={this.state.servereDisease}
+                  />
+                </Form.Field>
+              )}
+            </Form.Group>
+
+            <Form.Group inline>
+              <label>是否有生理戒斷處遇</label>
+              <Form.Radio
+                label="是"
+                value="true"
+                name="isWithdral"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isWithdral === "true"}
+              />
+              <Form.Radio
+                label="否"
+                value="false"
+                name="isWithdral"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isWithdral === "false"}
+              />
+            </Form.Group>
+            <Form.Group inline>
+              <label>是否接受法院裁定或地檢署轉介之個案</label>
+              <Form.Radio
+                label="是"
+                value="true"
+                name="isCourtTransfer"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isCourtTransfer === "true"}
+              />
+              <Form.Radio
+                label="否"
+                value="false"
+                name="isCourtTransfer"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.isCourtTransfer === "false"}
+              />
             </Form.Group>
             <Form.TextArea
               label="其他特殊服務(請說明，如可攜子同住、愛滋個案…等)"
               placeholder="其他特殊服務"
+              name="specialService"
+              onChange={this.formDataChange}
             />
           </fieldset>
           <fieldset style={fieldset}>
@@ -270,21 +434,77 @@ export class RegisterSocialService extends React.Component<any, any> {
               style={{ opacity: 0.5 }}
             />
           </fieldset>
-          <fieldset style={fieldset}>
+          <fieldset>
             <legend className="ui dividing header">服務費用收取方式</legend>
             <Form.Field>
-              <Form.Radio label="完全自費" value="settleLimit" />
-              <Form.Field label="說明" control="textarea" rows="3" />
-              <Form.Radio label="部分輔助" value="settleLimit" />
-              <Form.Field
-                label="說明（補助條件及補助額度）"
-                control="textarea"
-                rows="3"
+              <Form.Radio
+                label="完全自費"
+                value="total"
+                name="feeType"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.feeType === "total"}
               />
-              <Form.Radio label="全部免費" value="settleLimit" />
-              <Form.Field label="說明" control="textarea" rows="3" />
-              <Form.Radio label="其他" value="settleLimit" />
-              <Form.Field label="說明" control="textarea" rows="3" />
+              {this.state.feeType === "total" && (
+                <Form.Field
+                  label="說明"
+                  control="textarea"
+                  rows="3"
+                  name="feeTypeDescription"
+                  onChange={this.textAreaChange}
+                  value={this.state.feeTypeDescription}
+                />
+              )}
+              <Form.Radio
+                label="部分輔助"
+                value="part"
+                name="feeType"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.feeType === "part"}
+              />
+              {this.state.feeType === "part" && (
+                <Form.Field
+                  label="說明（補助條件及補助額度）"
+                  control="textarea"
+                  rows="3"
+                  name="feeTypeDescription"
+                  onChange={this.textAreaChange}
+                  value={this.state.feeTypeDescription}
+                />
+              )}
+              <Form.Radio
+                label="全部免費"
+                value="free"
+                name="feeType"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.feeType === "free"}
+              />
+              {this.state.feeType === "free" && (
+                <Form.Field
+                  label="說明"
+                  control="textarea"
+                  rows="3"
+                  name="feeTypeDescription"
+                  onChange={this.textAreaChange}
+                  value={this.state.feeTypeDescription}
+                />
+              )}
+              <Form.Radio
+                label="其他"
+                value="other"
+                name="feeType"
+                onChange={this.formDataRadioChecked}
+                checked={this.state.feeType === "other"}
+              />
+              {this.state.feeType === "other" && (
+                <Form.Field
+                  label="說明"
+                  control="textarea"
+                  rows="3"
+                  name="feeTypeDescription"
+                  onChange={this.textAreaChange}
+                  value={this.state.feeTypeDescription}
+                />
+              )}
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
