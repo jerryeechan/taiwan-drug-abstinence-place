@@ -33,6 +33,7 @@ export class RegisterSocialService extends React.Component<any, any> {
       otherPeopleNum: 1,
       otherServiceNum: 0,
       // formData
+      // 基本資料
       name: "",
       phone: "",
       address: "",
@@ -51,6 +52,7 @@ export class RegisterSocialService extends React.Component<any, any> {
       isWithdral: false,
       isCourtTransfer: false,
       specialService: "",
+      // 費用
       feeType: "",
       feeTypeDescription: ""
     };
