@@ -20,7 +20,8 @@ const shortInput = {
 };
 
 const fieldset = {
-  marginTop: 35
+  marginTop: 20,
+  marginBottom: 15
 };
 
 export class LivingService extends React.Component<any, any> {
@@ -100,7 +101,7 @@ export class LivingService extends React.Component<any, any> {
       otherPeopleRows.push(
         <Form.Group>
           <Form.Field inline>
-            <Input size="mini" type="text" />
+            <Input size="mini" type="text" placeholder="職稱" />
             <br />
             <label>專任</label>
             <input type="text" /> 人，
@@ -137,23 +138,23 @@ export class LivingService extends React.Component<any, any> {
           <fieldset style={fieldset}>
             <legend className="ui dividing header">基本資料</legend>
             <Form.Field required>
-              <label>機構名稱(請填寫立案之機構全名+安置單位名稱)</label>
+              <label>機構名稱 (請填寫立案之機構全名+安置單位名稱)</label>
               <Input name="name" placeholder="機構名稱" />
             </Form.Field>
-            <Form.Field>
-              <label>電話</label>
+            <Form.Field required>
+              <label>電話 (請加註區域碼，若需撥打分機，亦請註明)</label>
               <Input id="phone" placeholder="電話" />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>地址</label>
               <Input id="address" placeholder="地址" />
               {/* TODO : 防呆 */}
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>電子信箱</label>
               <Input id="email" placeholder="email" />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
               <label>網站</label>
               <input id="url" placeholder="http://google.com.tw" />
             </Form.Field>
@@ -292,7 +293,7 @@ export class LivingService extends React.Component<any, any> {
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
-            <legend className="ui dividing header">人力配置</legend>
+            <legend className="ui dividing header">專業人力配置</legend>
             <h3>行政人員</h3>
             <Form.Group>
               <Form.Field inline>
@@ -474,6 +475,9 @@ export class LivingService extends React.Component<any, any> {
               </Form.Field>
             </Form.Group>
           </fieldset>
+          <Button type="submit" size="massive" floated="right">
+            儲存
+          </Button>
         </Form>
       </Container>
     );
