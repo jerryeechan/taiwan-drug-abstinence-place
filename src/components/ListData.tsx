@@ -49,14 +49,13 @@ export class ListData extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <Sticky>
-          <Menu inverted style={{ zIndex: "1" }}>
-            <Menu.Item onClick={() => this.toIndex()}>
-              <Icon name="home" />
-              戒毒好所在
-            </Menu.Item>
-          </Menu>
-        </Sticky>
+        <Menu inverted className="fixed">
+          <Menu.Item onClick={() => this.toIndex()}>
+            <Icon name="home" />
+            戒毒好所在
+          </Menu.Item>
+        </Menu>
+        <h6>機構列表</h6>
         <Grid>
           <Grid.Row>
             <Grid.Column>
