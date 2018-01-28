@@ -37,7 +37,6 @@ export class OtherSocialService extends React.Component<any, any> {
       name: "",
       phone: "",
       address: "",
-      settleAddress: "",
       email: "",
       url: "",
       alchohol: false,
@@ -135,15 +134,6 @@ export class OtherSocialService extends React.Component<any, any> {
     console.log(this.state.resources);
   };
 
-  makeAddressThesame = (e, data) => {
-    console.log(data);
-    if (data.checked) {
-      this.setState({
-        settleAddress: this.state.address
-      });
-    }
-  };
-
   render() {
     var otherResourceRows = [];
     var moneyRows = [];
@@ -239,10 +229,10 @@ export class OtherSocialService extends React.Component<any, any> {
           <fieldset style={fieldset}>
             <legend className="ui dividing header">基本資料</legend>
             <Form.Field required>
-              <label>機構名稱 (請填寫立案之機構全名+安置單位名稱)</label>
+              <label>機構或組織名稱 (請填寫立案之機構全名)</label>
               <Input
                 name="name"
-                placeholder="機構名稱"
+                placeholder="名稱"
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -263,19 +253,6 @@ export class OtherSocialService extends React.Component<any, any> {
                 placeholder="地址"
                 onChange={this.formDataChange}
               />
-            </Form.Field>
-            <Form.Field required>
-              <label>安置單位地址</label>
-              <Input
-                id="settleAddress"
-                name="settleAddress"
-                value={this.state.settleAddress}
-                placeholder="安置單位地址"
-                onChange={this.formDataChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Checkbox label="同機構地址" onChange={this.makeAddressThesame} />
             </Form.Field>
             <Form.Field required>
               <label>電子信箱</label>
@@ -412,7 +389,7 @@ export class OtherSocialService extends React.Component<any, any> {
               />
             </Form.Group>
             <Form.TextArea
-              label="其他特殊服務(請說明，如可攜子同住、愛滋個案…等)"
+              label="其他特殊服務(請說明：如愛滋個案、合併家暴、合併精神疾病…等)"
               placeholder="其他特殊服務"
               name="specialService"
               onChange={this.formDataChange}
@@ -552,7 +529,7 @@ export class OtherSocialService extends React.Component<any, any> {
               rows="4"
             />
 
-            <h3>其他服務</h3>
+            <h3>其他(請參照上列服務說明方案名稱、方案內容及服務量能)</h3>
             {otherServiceRows}
             <Icon
               onClick={this.addOtherServiceNum}
@@ -640,7 +617,7 @@ export class OtherSocialService extends React.Component<any, any> {
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
-            <legend className="ui dividing header">專業人力配置</legend>
+            <legend className="ui dividing header">人力配置</legend>
             <h3>行政人員</h3>
             <Form.Group>
               <Form.Field inline>
@@ -765,7 +742,7 @@ export class OtherSocialService extends React.Component<any, any> {
               </Form.Field>
               {this.state.isSelfRaise && (
                 <Form.Field inline>
-                  <Input
+                  每年約新台幣<Input
                     type="number"
                     name="selfRaisaAmount"
                     onChange={this.formDataChange}
@@ -787,13 +764,13 @@ export class OtherSocialService extends React.Component<any, any> {
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell rowSpan="2">
-                          輔助單位
+                          補助單位
                         </Table.HeaderCell>
                         <Table.HeaderCell rowSpan="2">
-                          申請輔助項目
+                          申請補助項目
                         </Table.HeaderCell>
                         <Table.HeaderCell colSpan="3">
-                          每年輔助金額(元)
+                          每年補助金額(元)
                         </Table.HeaderCell>
                       </Table.Row>
                       <Table.Row>
