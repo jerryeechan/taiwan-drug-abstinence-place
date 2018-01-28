@@ -263,7 +263,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 onChange={this.formDataChange}
               />
             </Form.Field>
-            <Form.Field required>
+            <Form.Field>
               <label>網站</label>
               <Input
                 id="url"
