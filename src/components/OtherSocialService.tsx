@@ -574,7 +574,8 @@ export class OtherSocialService extends React.Component<any, any> {
               />
               {this.state.feeType === "total" && (
                 <Form.Field
-                  label="說明"
+                  required
+                  label="請說明收費項目及費用"
                   control="textarea"
                   rows="3"
                   name="feeTypeDescription"
@@ -583,7 +584,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 />
               )}
               <Form.Radio
-                label="部分輔助"
+                label="部分補助"
                 value="part"
                 name="feeType"
                 onChange={this.formDataRadioChecked}
@@ -591,7 +592,8 @@ export class OtherSocialService extends React.Component<any, any> {
               />
               {this.state.feeType === "part" && (
                 <Form.Field
-                  label="說明（補助條件及補助額度）"
+                  required
+                  label="請說明補助條件及補助額度"
                   control="textarea"
                   rows="3"
                   name="feeTypeDescription"
@@ -608,7 +610,8 @@ export class OtherSocialService extends React.Component<any, any> {
               />
               {this.state.feeType === "free" && (
                 <Form.Field
-                  label="說明"
+                  required
+                  label="請說明費用來源"
                   control="textarea"
                   rows="3"
                   name="feeTypeDescription"
@@ -625,7 +628,8 @@ export class OtherSocialService extends React.Component<any, any> {
               />
               {this.state.feeType === "other" && (
                 <Form.Field
-                  label="說明"
+                  required
+                  label="請說明收費方式及費用"
                   control="textarea"
                   rows="3"
                   name="feeTypeDescription"
