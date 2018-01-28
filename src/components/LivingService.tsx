@@ -36,6 +36,7 @@ export class LivingService extends React.Component<any, any> {
       name: "",
       phone: "",
       address: "",
+      settleAddress: "",
       email: "",
       url: "",
       alchohol: false,
@@ -137,6 +138,15 @@ export class LivingService extends React.Component<any, any> {
     console.log(this.state.resources);
   };
 
+  makeAddressThesame = (e, data) => {
+    console.log(data);
+    if (data.checked) {
+      this.setState({
+        settleAddress: this.state.address
+      });
+    }
+  };
+
   render() {
     var otherResourceRows = [];
     var moneyRows = [];
@@ -211,9 +221,12 @@ export class LivingService extends React.Component<any, any> {
         </Message>
         <Form>
           <fieldset style={fieldset}>
-            <legend className="ui dividing header">基本資料</legend>
+            <legend className="ui dividing header">機構基本資料</legend>
             <Form.Field required>
-              <label>機構名稱 (請填寫立案之機構全名+安置單位名稱)</label>
+              <label>
+                機構名稱 (請填寫立案之機構全名+安置單位名稱)
+                (範例：財團法人屏東縣私立基督教沐恩之家+亞當學園)
+              </label>
               <Input
                 name="name"
                 placeholder="機構名稱"
@@ -230,13 +243,26 @@ export class LivingService extends React.Component<any, any> {
               />
             </Form.Field>
             <Form.Field required>
-              <label>地址</label>
+              <label>機構地址</label>
               <Input
                 id="address"
                 name="address"
                 placeholder="地址"
                 onChange={this.formDataChange}
               />
+            </Form.Field>
+            <Form.Field required>
+              <label>安置單位地址</label>
+              <Input
+                id="settleAddress"
+                name="settleAddress"
+                value={this.state.settleAddress}
+                placeholder="安置單位地址"
+                onChange={this.formDataChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Checkbox label="同機構地址" onChange={this.makeAddressThesame} />
             </Form.Field>
             <Form.Field required>
               <label>電子信箱</label>
@@ -248,7 +274,7 @@ export class LivingService extends React.Component<any, any> {
               />
             </Form.Field>
             <Form.Field>
-              <label>網站</label>
+              <label>網站（請提供有安置機構介紹之網址）</label>
               <Input
                 id="url"
                 name="url"
@@ -258,7 +284,7 @@ export class LivingService extends React.Component<any, any> {
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
-            <legend className="ui dividing header">個案屬性</legend>
+            <legend className="ui dividing header">收置個案屬性</legend>
             <Form.Group inline>
               <label>成癮物質</label>
               <Checkbox

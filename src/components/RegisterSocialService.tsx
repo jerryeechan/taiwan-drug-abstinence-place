@@ -37,6 +37,7 @@ export class RegisterSocialService extends React.Component<any, any> {
       name: "",
       phone: "",
       address: "",
+      settleAddress: "",
       email: "",
       url: "",
       alchohol: false,
@@ -116,6 +117,15 @@ export class RegisterSocialService extends React.Component<any, any> {
     origin[sequence] = value;
     this.setState({ ["resources"]: origin });
     console.log(this.state.resources);
+  };
+
+  makeAddressThesame = (e, data) => {
+    console.log(data);
+    if (data.checked) {
+      this.setState({
+        settleAddress: this.state.address
+      });
+    }
   };
 
   render() {
@@ -205,6 +215,19 @@ export class RegisterSocialService extends React.Component<any, any> {
                 placeholder="地址"
                 onChange={this.formDataChange}
               />
+            </Form.Field>
+            <Form.Field required>
+              <label>安置單位地址</label>
+              <Input
+                id="settleAddress"
+                name="settleAddress"
+                value={this.state.settleAddress}
+                placeholder="安置單位地址"
+                onChange={this.formDataChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Checkbox label="同機構地址" onChange={this.makeAddressThesame} />
             </Form.Field>
             <Form.Field required>
               <label>電子信箱</label>
