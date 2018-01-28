@@ -694,7 +694,7 @@ export class LivingService extends React.Component<any, any> {
           </fieldset>
           <fieldset style={fieldset}>
             <legend className="ui dividing header">
-              外部合作或連結資源（請條例具體說明合作單位或連結之資源，及使用情況）
+              外部合作或連結資源（請條列說明合作單位或連結之資源，及使用情況）
             </legend>
             <Form.Group>
               <Form.Field>
@@ -730,7 +730,7 @@ export class LivingService extends React.Component<any, any> {
               </Form.Field>
               {this.state.isSelfRaise && (
                 <Form.Field inline>
-                  <Input
+                  每年約新台幣<Input
                     type="number"
                     name="selfRaisaAmount"
                     onChange={this.formDataChange}
@@ -752,13 +752,13 @@ export class LivingService extends React.Component<any, any> {
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell rowSpan="2">
-                          輔助單位
+                          補助單位
                         </Table.HeaderCell>
                         <Table.HeaderCell rowSpan="2">
-                          申請輔助項目
+                          申請補助項目
                         </Table.HeaderCell>
                         <Table.HeaderCell colSpan="3">
-                          每年輔助金額(元)
+                          每年補助金額(元)
                         </Table.HeaderCell>
                       </Table.Row>
                       <Table.Row>
