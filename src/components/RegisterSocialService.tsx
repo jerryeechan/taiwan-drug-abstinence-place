@@ -191,7 +191,9 @@ export class RegisterSocialService extends React.Component<any, any> {
           <fieldset style={fieldset}>
             <legend className="ui dividing header">基本資料</legend>
             <Form.Field required>
-              <label>機構名稱 (請填寫立案之機構全名+安置單位名稱)</label>
+              <label>
+                機構或民間組織名稱 (請填寫立案之機構全名及治療所或工作室名稱)
+              </label>
               <Input
                 name="name"
                 placeholder="機構名稱"
@@ -208,7 +210,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               />
             </Form.Field>
             <Form.Field required>
-              <label>地址</label>
+              <label>機構地址</label>
               <Input
                 id="address"
                 name="address"
@@ -217,17 +219,20 @@ export class RegisterSocialService extends React.Component<any, any> {
               />
             </Form.Field>
             <Form.Field required>
-              <label>安置單位地址</label>
+              <label>治療所或工作室地址</label>
               <Input
                 id="settleAddress"
                 name="settleAddress"
                 value={this.state.settleAddress}
-                placeholder="安置單位地址"
+                placeholder="地址"
                 onChange={this.formDataChange}
               />
             </Form.Field>
             <Form.Field>
-              <Checkbox label="同機構地址" onChange={this.makeAddressThesame} />
+              <Checkbox
+                label="同立案機構地址"
+                onChange={this.makeAddressThesame}
+              />
             </Form.Field>
             <Form.Field required>
               <label>電子信箱</label>
@@ -364,7 +369,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               />
             </Form.Group>
             <Form.TextArea
-              label="其他特殊服務(請說明，如可攜子同住、愛滋個案…等)"
+              label="其他特殊服務(請說明：如愛滋個案、合併家暴、合併精神疾病…等)"
               placeholder="其他特殊服務"
               name="specialService"
               onChange={this.formDataChange}
@@ -376,7 +381,7 @@ export class RegisterSocialService extends React.Component<any, any> {
             </legend>
             <Form.Radio label="團體心理治療(諮商)" value="" />
             <Form.Group inline>
-              每年約可提供<Form.Input type="number" />團，每團<Form.Input type="number" />共約<Form.Input
+              每年約可提供<Form.Input type="number" />個團體，每團<Form.Input type="number" />共約<Form.Input
                 type="number"
                 disabled
               />人次
@@ -537,7 +542,9 @@ export class RegisterSocialService extends React.Component<any, any> {
             </Form.Field>
           </fieldset>
           <fieldset style={fieldset}>
-            <legend className="ui dividing header">專業人力配置</legend>
+            <legend className="ui dividing header">
+              機構內實際提供施用毒品或藥癮者服務之專業人力配置
+            </legend>
             <Form.Group>
               <Form.Field inline>
                 <h4>臨床心理師</h4>
