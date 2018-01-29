@@ -82,11 +82,41 @@ export class RegisterSocialService extends React.Component<any, any> {
       socialWorkerPart: null,
       // 服務
       isGroupConsult: false,
+      groupConsultGroupNum: null,
+      groupConsultGroupTimes: null,
+      groupConsultPeoplePerGroup: null,
+      groupConsultPeoplePerYear: null,
+      groupConsultGroupPerYear: null,
+      groupConsultDescription: null,
+
       isPersonConsult: false,
+      personConsultPeopleNum: null,
+      personConsultPeopleTimes: null,
+      personConsultPeoplePerYear: null,
+      personConsultDescription: null,
+
       isFamilyConsult: false,
+      familyConsultFamilyNum: null,
+      familyConsultFamilytimes: null,
+      familyConsultDescription: null,
+
       isCaseManage: false,
+      caseManageNum: null,
+      caseManageDescription: null,
+
       isFamilyCase: false,
-      isDrugCase: false
+      familyCaseGroupNum: null,
+      familyCasePeoplePerGroup: null,
+      familyCasePeoplePerYear: null,
+      familyCaseGroupPerYear: null,
+      familyCaseGDescription: null,
+
+      isDrugCase: false,
+      drugCaseGroupNum: null,
+      drugCasePeoplePerGroup: null,
+      drugCasePeoplePerYear: null,
+      drugCaseGroupPerYear: null,
+      drugCaseDescription: null
     };
   }
 
@@ -500,18 +530,36 @@ export class RegisterSocialService extends React.Component<any, any> {
                     style={shortInput}
                     type="number"
                     size="small"
+                    name="groupConsultGroupNum"
+                    value={this.state.groupConsultGroupNum}
+                    onChange={this.formDataChange}
                   />個團體，每個團體療程約<Form.Input
                     style={shortInput}
                     type="number"
+                    name="groupConsultGroupTimes"
+                    value={this.state.groupConsultGroupTimes}
+                    onChange={this.formDataChange}
                   />次，每個團體約<Form.Input
                     style={shortInput}
                     type="number"
+                    name="groupConsultPeoplePerGroup"
+                    value={this.state.groupConsultPeoplePerGroup}
+                    onChange={this.formDataChange}
                   />人
                 </Form.Group>
                 <Form.Group inline>
-                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                  一年約服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="groupConsultPeoplePerYear"
+                    value={this.state.groupConsultPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="groupConsultGroupPerYear"
+                    value={this.state.groupConsultGroupPerYear}
+                    onChange={this.formDataChange}
                   />團次
                 </Form.Group>
                 <Form.Field
@@ -520,6 +568,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
                   rows="4"
                   required
+                  name="groupConsultDescription"
+                  value={this.state.groupConsultDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -534,12 +585,24 @@ export class RegisterSocialService extends React.Component<any, any> {
             {this.state.isPersonConsult === true && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />人，每人每次療程約<Form.Input
+                  每年約可服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="personConsultPeopleNum"
+                    value={this.state.personConsultPeopleNum}
+                    onChange={this.formDataChange}
+                  />人，每人每次療程約<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="personConsultPeopleTimes"
+                    value={this.state.personConsultPeopleTimes}
+                    onChange={this.formDataChange}
                   />次，一年約服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="personConsultPeoplePerYear"
+                    value={this.state.personConsultPeoplePerYear}
+                    onChange={this.formDataChange}
                   />人次
                 </Form.Group>
                 <Form.Field
@@ -548,6 +611,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
                   rows="4"
+                  name="personConsultDescription"
+                  value={this.state.personConsultDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -562,9 +628,18 @@ export class RegisterSocialService extends React.Component<any, any> {
             {this.state.isFamilyConsult && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年約服務<Form.Input
+                  每年約可服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="familyConsultFamilyNum"
+                    value={this.state.familyConsultFamilyNum}
+                    onChange={this.formDataChange}
+                  />個家庭，一年約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familyConsultFamilytimes"
+                    value={this.state.familyConsultFamilytimes}
+                    onChange={this.formDataChange}
                   />家庭次
                 </Form.Group>
                 <Form.Field
@@ -573,6 +648,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
                   rows="4"
+                  name="familyConsultDescription"
+                  value={this.state.familyConsultDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -590,6 +668,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   可提供之個管案量比為１：<Form.Input
                     style={shortInput}
                     type="number"
+                    name="caseManageNum"
+                    value={this.state.caseManageNum}
+                    onChange={this.formDataChange}
                   />
                 </Form.Group>
                 <Form.Field
@@ -598,6 +679,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
                   rows="4"
+                  name="caseManageDescription"
+                  value={this.state.caseManageDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -612,13 +696,31 @@ export class RegisterSocialService extends React.Component<any, any> {
             {this.state.isFamilyCase && (
               <div>
                 <Form.Group inline>
-                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                  每年約可提供<Form.Input
                     style={shortInput}
                     type="number"
+                    name="familyCaseGroupNum"
+                    value={this.state.familyCaseGroupNum}
+                    onChange={this.formDataChange}
+                  />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familyCasePeoplePerGroup"
+                    value={this.state.familyCasePeoplePerGroup}
+                    onChange={this.formDataChange}
                   />人，一年約服務<Form.Input
                     type="number"
                     style={shortInput}
-                  />人次或<Form.Input type="number" style={shortInput} />團次
+                    name="familyCasePeoplePerYear"
+                    value={this.state.familyCasePeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次或<Form.Input
+                    type="number"
+                    style={shortInput}
+                    name="familyCaseGroupPerYear"
+                    value={this.state.familyCaseGroupPerYear}
+                    onChange={this.formDataChange}
+                  />團次
                 </Form.Group>
                 <Form.Field
                   required
@@ -626,6 +728,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
                   rows="4"
+                  name="familyCaseGDescription"
+                  value={this.state.familyCaseGDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -640,13 +745,31 @@ export class RegisterSocialService extends React.Component<any, any> {
             {this.state.isDrugCase && (
               <div>
                 <Form.Group inline>
-                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                  每年約可提供<Form.Input
                     style={shortInput}
                     type="number"
+                    name="drugCaseGroupNum"
+                    value={this.state.drugCaseGroupNum}
+                    onChange={this.formDataChange}
+                  />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="drugCasePeoplePerGroup"
+                    value={this.state.drugCasePeoplePerGroup}
+                    onChange={this.formDataChange}
                   />人，一年約服務<Form.Input
                     type="number"
                     style={shortInput}
-                  />人次或<Form.Input type="number" style={shortInput} />團次
+                    name="drugCasePeoplePerYear"
+                    value={this.state.drugCasePeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次或<Form.Input
+                    type="number"
+                    style={shortInput}
+                    name="drugCaseGroupPerYear"
+                    value={this.state.drugCaseGroupPerYear}
+                    onChange={this.formDataChange}
+                  />團次
                 </Form.Group>
                 <Form.Field
                   required
@@ -654,6 +777,9 @@ export class RegisterSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
                   rows="4"
+                  name="drugCaseDescription"
+                  value={this.state.drugCaseDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
