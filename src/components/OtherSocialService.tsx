@@ -779,11 +779,11 @@ export class OtherSocialService extends React.Component<any, any> {
               <Checkbox
                 label="福利服務、經濟扶助或急難救助"
                 name="isEconomyService"
-                checked={this.state.isCaseManage}
+                checked={this.state.isEconomyService}
                 onChange={this.formDataChecked}
               />
             </Form.Field>
-            {this.state.isCaseManage && (
+            {this.state.isEconomyService && (
               <div>
                 <Form.Group inline>
                   扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
