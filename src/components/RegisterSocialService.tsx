@@ -55,7 +55,8 @@ export class RegisterSocialService extends React.Component<any, any> {
       specialService: "",
       // 費用
       feeType: "",
-      feeTypeDescription: ""
+      feeTypeDescription: "",
+      otherResourceNum: 1
     };
   }
 
@@ -84,6 +85,16 @@ export class RegisterSocialService extends React.Component<any, any> {
     this.setState({
       otherPeopleNum: origin + 1
     });
+  };
+
+  addOtherResourceNum = () => {
+    var origin = this.state.otherResourceNum;
+    this.setState({
+      otherResourceNum: origin + 1
+    });
+    var origin = this.state.resources;
+    origin.push("");
+    this.setState({ ["resources"]: origin });
   };
 
   formDataChange = (e, { name, value }) => {
@@ -129,6 +140,7 @@ export class RegisterSocialService extends React.Component<any, any> {
   };
 
   render() {
+    var otherResourceRows = [];
     var otherPeopleRows = [];
     var otherServiceRows = [];
     for (var i = 0; i < this.state.otherPeopleNum; i++) {
@@ -143,6 +155,17 @@ export class RegisterSocialService extends React.Component<any, any> {
             <input type="number" />人
           </Form.Field>
         </Form.Group>
+      );
+    }
+
+    for (var i = 0; i < this.state.otherResourceNum; i++) {
+      var elementName = "resources_" + i.toString();
+      otherResourceRows.push(
+        <Input
+          type="text"
+          name={elementName}
+          onChange={this.resourceContentChange}
+        />
       );
     }
 
@@ -581,6 +604,26 @@ export class RegisterSocialService extends React.Component<any, any> {
               className="add-button"
               style={{ opacity: 0.5 }}
             />
+          </fieldset>
+          <fieldset style={fieldset}>
+            <legend className="ui dividing header">
+              外部合作或連結資源（請說明合作單位或連結之資源，及使用情況或量能）
+            </legend>
+            <Form.Group>
+              <Form.Field>
+                <h4>範例一：有固定就業協力廠商____家，每年提供____個職缺</h4>
+                <h4>範例二：與地ＯＯＯ地檢署合作，辦理…………………………….</h4>
+                <h4>範例三：與OOO醫院(診所)合作，建立有相互OOO轉介機制</h4>
+                {otherResourceRows}
+                <Icon
+                  onClick={this.addOtherResourceNum}
+                  name="add circle"
+                  size="big"
+                  className="add-button"
+                  style={{ opacity: 0.5 }}
+                />
+              </Form.Field>
+            </Form.Group>
           </fieldset>
           <Button type="submit" size="massive" floated="right">
             儲存
