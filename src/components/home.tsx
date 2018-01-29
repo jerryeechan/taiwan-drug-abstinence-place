@@ -2918,12 +2918,12 @@ export class Home extends React.Component<any, any> {
         <Segment inverted textAlign="center" className="masthead" vertical>
           <Segment inverted vertical>
             <Menu pointing secondary inverted>
-              <Item
+              {/* <Item
                 as="a"
                 href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286"
               >
                 協助編輯戒毒場所資訊
-              </Item>
+              </Item> */}
               <Item
                 as="a"
                 href="/#/list"
