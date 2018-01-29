@@ -67,9 +67,42 @@ export class OtherSocialService extends React.Component<any, any> {
       isWithdral: false,
       isCourtTransfer: false,
       specialService: "",
+      resources: [""],
       // 費用
       feeType: "",
-      feeTypeDescription: ""
+      feeTypeDescription: "",
+      // 人員
+      doctorProType: null,
+      doctorPro: null,
+      doctorPartType: null,
+      doctorPart: null,
+      clinicalPsyPro: null,
+      clinicalPsyPart: null,
+      conselorPro: null,
+      conselorPart: null,
+      socialWorkerPro: null,
+      socialWorkerPart: null,
+      functionalTherapistPro: null,
+      functionalTherapistPart: null,
+      nursePro: null,
+      nursePart: null,
+      pastPro: null,
+      pastPart: null,
+      securityPro: null,
+      securityPart: null,
+      // 服務
+      isFamilySupport: false,
+      isHouseSupport: false,
+      isFamilyCase: false,
+      isDrugCase: false,
+      isLifeServiceCase: false,
+      isCareerTrain: false,
+      isCareerSupport: false,
+      isWorkSelf: false,
+      isFoundSupport: false,
+      isAfterClassSupport: false,
+      isCaseManage: false,
+      isEconomyService: false
     };
   }
 
@@ -196,6 +229,7 @@ export class OtherSocialService extends React.Component<any, any> {
         <Input
           type="text"
           name={elementName}
+          value={this.state.resources[i]}
           onChange={this.resourceContentChange}
         />
       );
@@ -287,6 +321,7 @@ export class OtherSocialService extends React.Component<any, any> {
               <Input
                 name="name"
                 placeholder="名稱"
+                value={this.state.name}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -296,6 +331,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 id="phone"
                 name="phone"
                 placeholder="電話"
+                value={this.state.phone}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -305,6 +341,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 id="address"
                 name="address"
                 placeholder="地址"
+                value={this.state.address}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -314,6 +351,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 id="email"
                 name="email"
                 placeholder="email"
+                value={this.state.email}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -323,6 +361,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 id="url"
                 name="url"
                 placeholder="http://google.com.tw"
+                value={this.state.url}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -334,21 +373,25 @@ export class OtherSocialService extends React.Component<any, any> {
               <Checkbox
                 label="酒精"
                 name="alchohol"
+                checked={this.state.alchohol}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="鴉片類(如海洛因、鴉片、嗎啡)"
                 name="opium"
+                checked={this.state.opium}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="中樞神經興奮劑(如古柯鹼、安非他命...)"
                 name="stimulant"
+                checked={this.state.stimulant}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="其他(如凱他命、大麻、新興成癮物質…)"
                 name="otherDrug"
+                checked={this.state.otherDrug}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -358,11 +401,13 @@ export class OtherSocialService extends React.Component<any, any> {
               <Checkbox
                 label="男"
                 name="isMale"
+                checked={this.state.isMale}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="女"
                 name="isFemale"
+                checked={this.state.isFemale}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -371,11 +416,13 @@ export class OtherSocialService extends React.Component<any, any> {
               <Checkbox
                 label="成年"
                 name="isAdult"
+                checked={this.state.isAdult}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="未成年"
                 name="isChild"
+                checked={this.state.isChild}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -446,6 +493,7 @@ export class OtherSocialService extends React.Component<any, any> {
               label="其他特殊服務(請說明：如愛滋個案、合併家暴、合併精神疾病…等)"
               placeholder="其他特殊服務"
               name="specialService"
+              value={this.state.specialService}
               onChange={this.formDataChange}
             />
           </fieldset>
@@ -453,176 +501,305 @@ export class OtherSocialService extends React.Component<any, any> {
             <legend className="ui dividing header">
               服務項目與服務量能(可複選)
             </legend>
-            <Checkbox label="家屬支持服務方案" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年共約服務<Form.Input
-                style={shortInput}
-                type="number"
-              />家庭次、<Form.Input style={shortInput} type="number" />人次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="居家關懷服務方案" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />人，一年共約服務<Form.Input
-                style={shortInput}
-                type="number"
-              />人次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="個案家屬自助團體" value="" />
-            <Form.Group inline>
-              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
-                style={shortInput}
-                type="number"
-              />人
-            </Form.Group>
-            <Form.Group inline>
-              一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
-                style={shortInput}
-                type="number"
-              />團次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="毒品個案自助團體" value="" />
-            <Form.Group inline>
-              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
-                style={shortInput}
-                type="number"
-              />人
-            </Form.Group>
-            <Form.Group inline>
-              一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
-                style={shortInput}
-                type="number"
-              />團次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="個案自立生活服務及租屋津貼方案" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />人，每名個案每月補助<Form.Input
-                style={shortInput}
-                type="number"
-              />元，補助<Form.Input style={shortInput} type="number" />個月
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、補助費用等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="職業訓練方案" value="" />
-            <Form.Group inline>
-              每年約可培訓<Form.Input style={shortInput} type="number" />人
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、培訓時間等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="支持或陪伴就業服務方案" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />人
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、服務人員、時間等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="就業培力方案" value="" />
-            <Form.Group inline>
-              每年約可協助<Form.Input style={shortInput} type="number" />人
-              穩定就業
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、培力地點等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="創業輔導方案" value="" />
-            <Form.Group inline>
-              每年約可協助<Form.Input style={shortInput} type="number" />人
-              順利創業
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="課後輔導方案" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" /> 人
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該方案，如方式、內容、對象、地點、服務人員等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox
-              label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
-              value=""
-            />
-            <Form.Group inline>
-              可提供之個管案量比為１：<Form.Input
-                style={shortInput}
-                type="number"
+            <Form.Field>
+              <Checkbox
+                label="家屬支持服務方案"
+                name="isFamilySupport"
+                checked={this.state.isFamilySupport}
+                onChange={this.formDataChecked}
               />
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="福利服務、經濟扶助或急難救助" value="" />
-            <Form.Group inline>
-              扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
-                style={shortInput}
-                type="number"
-              />人/年
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該項服務，如方式、內容、申請流程或金額等，俾利宣導"
-              rows="4"
-            />
+            </Form.Field>
+            {this.state.isFamilySupport && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年共約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />家庭次、<Form.Input style={shortInput} type="number" />人次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="居家關懷服務方案"
+                name="isHouseSupport"
+                checked={this.state.isHouseSupport}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isHouseSupport && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />人，一年共約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個案家屬自助團體"
+                name="isFamilyCase"
+                checked={this.state.isFamilyCase}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isFamilyCase && (
+              <div>
+                <Form.Group inline>
+                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人
+                </Form.Group>
+                <Form.Group inline>
+                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />團次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="毒品個案自助團體"
+                name="isDrugCase"
+                checked={this.state.isDrugCase}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isDrugCase && (
+              <div>
+                <Form.Group inline>
+                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人
+                </Form.Group>
+                <Form.Group inline>
+                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />團次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個案自立生活服務及租屋津貼方案"
+                name="isLifeServiceCase"
+                checked={this.state.isLifeServiceCase}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isLifeServiceCase && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />人，每名個案每月補助<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />元，補助<Form.Input style={shortInput} type="number" />個月
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、補助費用等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="職業訓練方案"
+                name="isCareerTrain"
+                checked={this.state.isCareerTrain}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isCareerTrain && (
+              <div>
+                <Form.Group inline>
+                  每年約可培訓<Form.Input style={shortInput} type="number" />人
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、培訓時間等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="支持或陪伴就業服務方案"
+                name="isCareerSupport"
+                checked={this.state.isCareerSupport}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isCareerSupport && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />人
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、服務人員、時間等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="就業培力方案"
+                name="isWorkSelf"
+                checked={this.state.isWorkSelf}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isWorkSelf && (
+              <div>
+                <Form.Group inline>
+                  每年約可協助<Form.Input style={shortInput} type="number" />人
+                  穩定就業
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、培力地點等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="創業輔導方案"
+                name="isFoundSupport"
+                checked={this.state.isFoundSupport}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isFoundSupport && (
+              <div>
+                <Form.Group inline>
+                  每年約可協助<Form.Input style={shortInput} type="number" />人
+                  順利創業
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="課後輔導方案"
+                name="isAfterClassSupport"
+                checked={this.state.isAfterClassSupport}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isAfterClassSupport && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" /> 人
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該方案，如方式、內容、對象、地點、服務人員等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
+                name="isCaseManage"
+                checked={this.state.isCaseManage}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isCaseManage && (
+              <div>
+                <Form.Group inline>
+                  可提供之個管案量比為１：<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="福利服務、經濟扶助或急難救助"
+                name="isEconomyService"
+                checked={this.state.isCaseManage}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isCaseManage && (
+              <div>
+                <Form.Group inline>
+                  扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人/年
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該項服務，如方式、內容、申請流程或金額等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
             <h3>其他（請參照上列服務說明方案名稱、方案內容及服務量能）</h3>
             {otherServiceRows}
             <Icon
@@ -716,9 +893,21 @@ export class OtherSocialService extends React.Component<any, any> {
             <Form.Group>
               <Form.Field inline>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="adminPro"
+                  value={this.state.adminPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="adminPart"
+                  value={this.state.adminPart}
+                  onChange={this.formDataChange}
+                />
+                人
               </Form.Field>
             </Form.Group>
             <h3>處遇人員</h3>
@@ -726,74 +915,175 @@ export class OtherSocialService extends React.Component<any, any> {
               <Form.Field inline>
                 <h4>醫師</h4>
                 <label>專任</label>
-                <input type="text" /> 科
-                <input type="text" /> 人，
+                <Input
+                  type="text"
+                  name="doctorProType"
+                  value={this.state.doctorProType}
+                  onChange={this.formDataChange}
+                />
+                科
+                <Input
+                  type="number"
+                  name="doctorPro"
+                  value={this.state.doctorPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" /> 科
-                <input type="text" /> 人
+                <Input
+                  type="text"
+                  name="doctorPartType"
+                  value={this.state.doctorPartType}
+                  onChange={this.formDataChange}
+                />
+                科
+                <Input
+                  type="number"
+                  name="doctorPart"
+                  value={this.state.doctorPart}
+                  onChange={this.formDataChange}
+                />
+                人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>臨床心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="clinicalPsyPro"
+                  value={this.state.clinicalPsyPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="clinicalPsyPart"
+                  value={this.state.clinicalPsyPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>諮商心理師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="conselorPro"
+                  value={this.state.conselorPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="conselorPart"
+                  value={this.state.conselorPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>社會工作師/社工員</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="socialWorkerPro"
+                  value={this.state.socialWorkerPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="socialWorkerPart"
+                  value={this.state.socialWorkerPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>職能治療師</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="functionalTherapistPro"
+                  value={this.state.functionalTherapistPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="functionalTherapistPart"
+                  value={this.state.functionalTherapistPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>護理師/護士</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="nursePro"
+                  value={this.state.nursePro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="nursePart"
+                  value={this.state.nursePart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>過來人</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="pastPro"
+                  value={this.state.pastPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="pastPart"
+                  value={this.state.pastPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>保全人員</h4>
                 <label>專任</label>
-                <input type="text" /> 人，
+                <Input
+                  type="number"
+                  name="securityPro"
+                  value={this.state.securityPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" />人
+                <Input
+                  type="number"
+                  name="securityPart"
+                  value={this.state.securityPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <h3>其他</h3>
@@ -831,6 +1121,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 <Checkbox
                   label="自籌(包括募款)"
                   name="isSelfRaise"
+                  checked={this.state.isSelfRaise}
                   onChange={this.formDataChecked}
                 />
               </Form.Field>
@@ -839,8 +1130,8 @@ export class OtherSocialService extends React.Component<any, any> {
                   每年約新台幣<Input
                     type="number"
                     name="selfRaisaAmount"
-                    onChange={this.formDataChange}
                     value={this.state.selfRaisaAmount}
+                    onChange={this.formDataChange}
                   />
                   元
                 </Form.Field>
@@ -851,6 +1142,7 @@ export class OtherSocialService extends React.Component<any, any> {
                 <Checkbox
                   label="向公部門申請補助(請提供近3年補助單位及受補助額度)"
                   name="isSupplementory"
+                  checked={this.state.isSupplementory}
                   onChange={this.formDataChecked}
                 />
                 {this.state.isSupplementory && (
