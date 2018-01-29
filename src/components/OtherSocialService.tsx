@@ -92,17 +92,64 @@ export class OtherSocialService extends React.Component<any, any> {
       securityPart: null,
       // 服務
       isFamilySupport: false,
+      familySupportFamilyNum: null,
+      familySupportFamilyTimes: null,
+      familySupportPeoplePerYear: null,
+      familySupportDescription: null,
+
       isHouseSupport: false,
+      houseSupportPeopleNum: null,
+      houseSupportPeoplePerYear: null,
+      houseSupportDescription: null,
+
       isFamilyCase: false,
+      familyCaseGroupNum: null,
+      familyCasePeoplePerGroup: null,
+      familyCasePeoplePerYear: null,
+      familyCaseGroupPerYear: null,
+      familyCaseDescription: null,
+
       isDrugCase: false,
+      drugCaseGroupNum: null,
+      drugCasePeoplePerGroup: null,
+      drugCasePeoplePerYear: null,
+      drugCaseGroupPerYear: null,
+      drugCaseDescription: null,
+
       isLifeServiceCase: false,
+      lifeServiceCasePeoplePerYear: null,
+      lifeServiceCaseMoneySupport: null,
+      lifeServiceCaseMoneySupportMonth: null,
+      lifeServiceCaseDescription: null,
+
       isCareerTrain: false,
+      careerTrainPeoplePerYear: null,
+      careerTrainDescription: null,
+
       isCareerSupport: false,
+      careerSupportPeoplePerYear: null,
+      careerSupportDescription: null,
+
       isWorkSelf: false,
+      workSelfPeoplePerYear: null,
+      workSelfDescription: null,
+
       isFoundSupport: false,
+      foundSupportPeoplePerYear: null,
+      foundSupportDescription: null,
+
       isAfterClassSupport: false,
+      afterClassSupportPeoplePerYear: null,
+      afterClassSupportDescription: null,
+
       isCaseManage: false,
-      isEconomyService: false
+      caseManageNum: null,
+      caseManageDescription: null,
+
+      isEconomyService: false,
+      economyServiceMoneyPerPerson: null,
+      economyServicePersonPerYear: null,
+      economyServiceDescription: null
     };
   }
 
@@ -512,10 +559,25 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isFamilySupport && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年共約服務<Form.Input
+                  每年約可服務<Form.Input
                     style={shortInput}
                     type="number"
-                  />家庭次、<Form.Input style={shortInput} type="number" />人次
+                    name="familySupportFamilyNum"
+                    value={this.state.familySupportFamilyNum}
+                    onChange={this.formDataChange}
+                  />個家庭，一年共約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familySupportFamilyTimes"
+                    value={this.state.familySupportFamilyTimes}
+                    onChange={this.formDataChange}
+                  />家庭次、<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familySupportPeoplePerYear"
+                    value={this.state.familySupportPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次
                 </Form.Group>
                 <Form.Field
                   required
@@ -523,6 +585,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
                   rows="4"
+                  name="familySupportDescription"
+                  value={this.state.familySupportDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -537,9 +602,18 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isHouseSupport && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />人，一年共約服務<Form.Input
+                  每年約可服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="houseSupportPeopleNum"
+                    value={this.state.houseSupportPeopleNum}
+                    onChange={this.formDataChange}
+                  />人，一年共約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="houseSupportPeoplePerYear"
+                    value={this.state.houseSupportPeoplePerYear}
+                    onChange={this.formDataChange}
                   />人次
                 </Form.Group>
                 <Form.Field
@@ -548,6 +622,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
                   rows="4"
+                  name="houseSupportDescription"
+                  value={this.state.houseSupportDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -562,15 +639,33 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isFamilyCase && (
               <div>
                 <Form.Group inline>
-                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                  每年約可提供<Form.Input
                     style={shortInput}
                     type="number"
+                    name="familyCaseGroupNum"
+                    value={this.state.familyCaseGroupNum}
+                    onChange={this.formDataChange}
+                  />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familyCasePeoplePerGroup"
+                    value={this.state.familyCasePeoplePerGroup}
+                    onChange={this.formDataChange}
                   />人
                 </Form.Group>
                 <Form.Group inline>
-                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                  一年約服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="familyCasePeoplePerYear"
+                    value={this.state.familyCasePeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="familyCaseGroupPerYear"
+                    value={this.state.familyCaseGroupPerYear}
+                    onChange={this.formDataChange}
                   />團次
                 </Form.Group>
                 <Form.Field
@@ -579,6 +674,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
                   rows="4"
+                  name="familyCaseDescription"
+                  value={this.state.familyCaseDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -593,15 +691,33 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isDrugCase && (
               <div>
                 <Form.Group inline>
-                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                  每年約可提供<Form.Input
                     style={shortInput}
                     type="number"
+                    name="drugCaseGroupNum"
+                    value={this.state.drugCaseGroupNum}
+                    onChange={this.formDataChange}
+                  />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="drugCasePeoplePerGroup"
+                    value={this.state.drugCasePeoplePerGroup}
+                    onChange={this.formDataChange}
                   />人
                 </Form.Group>
                 <Form.Group inline>
-                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                  一年約服務<Form.Input
                     style={shortInput}
                     type="number"
+                    name="drugCasePeoplePerYear"
+                    value={this.state.drugCasePeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="drugCaseGroupPerYear"
+                    value={this.state.drugCaseGroupPerYear}
+                    onChange={this.formDataChange}
                   />團次
                 </Form.Group>
                 <Form.Field
@@ -610,6 +726,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
                   rows="4"
+                  name="drugCaseDescription"
+                  value={this.state.drugCaseDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -624,10 +743,25 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isLifeServiceCase && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />人，每名個案每月補助<Form.Input
+                  每年約可服務<Form.Input
                     style={shortInput}
                     type="number"
-                  />元，補助<Form.Input style={shortInput} type="number" />個月
+                    name="lifeServiceCasePeoplePerYear"
+                    value={this.state.lifeServiceCasePeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人，每名個案每月補助<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="lifeServiceCaseMoneySupport"
+                    value={this.state.lifeServiceCaseMoneySupport}
+                    onChange={this.formDataChange}
+                  />元，補助<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="lifeServiceCaseMoneySupportMonth"
+                    value={this.state.lifeServiceCaseMoneySupportMonth}
+                    onChange={this.formDataChange}
+                  />個月
                 </Form.Group>
                 <Form.Field
                   required
@@ -635,6 +769,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、補助費用等，俾利宣導"
                   rows="4"
+                  name="lifeServiceCaseDescription"
+                  value={this.state.lifeServiceCaseDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -649,7 +786,13 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isCareerTrain && (
               <div>
                 <Form.Group inline>
-                  每年約可培訓<Form.Input style={shortInput} type="number" />人
+                  每年約可培訓<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="careerTrainPeoplePerYear"
+                    value={this.state.careerTrainPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人
                 </Form.Group>
                 <Form.Field
                   required
@@ -657,6 +800,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、培訓時間等，俾利宣導"
                   rows="4"
+                  name="careerTrainDescription"
+                  value={this.state.careerTrainDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -671,7 +817,13 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isCareerSupport && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" />人
+                  每年約可服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="careerSupportPeoplePerYear"
+                    value={this.state.careerSupportPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人
                 </Form.Group>
                 <Form.Field
                   required
@@ -679,6 +831,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、服務人員、時間等，俾利宣導"
                   rows="4"
+                  name="careerSupportDescription"
+                  value={this.state.careerSupportDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -693,8 +848,13 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isWorkSelf && (
               <div>
                 <Form.Group inline>
-                  每年約可協助<Form.Input style={shortInput} type="number" />人
-                  穩定就業
+                  每年約可協助<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="workSelfPeoplePerYear"
+                    value={this.state.workSelfPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人 穩定就業
                 </Form.Group>
                 <Form.Field
                   required
@@ -702,6 +862,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、培力地點等，俾利宣導"
                   rows="4"
+                  name="workSelfDescription"
+                  value={this.state.workSelfDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -716,8 +879,13 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isFoundSupport && (
               <div>
                 <Form.Group inline>
-                  每年約可協助<Form.Input style={shortInput} type="number" />人
-                  順利創業
+                  每年約可協助<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="foundSupportPeoplePerYear"
+                    value={this.state.foundSupportPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />人 順利創業
                 </Form.Group>
                 <Form.Field
                   required
@@ -725,6 +893,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象等，俾利宣導"
                   rows="4"
+                  name="foundSupportDescription"
+                  value={this.state.foundSupportDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -739,7 +910,14 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isAfterClassSupport && (
               <div>
                 <Form.Group inline>
-                  每年約可服務<Form.Input style={shortInput} type="number" /> 人
+                  每年約可服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="afterClassSupportPeoplePerYear"
+                    value={this.state.afterClassSupportPeoplePerYear}
+                    onChange={this.formDataChange}
+                  />
+                  人
                 </Form.Group>
                 <Form.Field
                   required
@@ -747,6 +925,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該方案，如方式、內容、對象、地點、服務人員等，俾利宣導"
                   rows="4"
+                  name="afterClassSupportDescription"
+                  value={this.state.afterClassSupportDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -764,6 +945,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   可提供之個管案量比為１：<Form.Input
                     style={shortInput}
                     type="number"
+                    name="caseManageNum"
+                    value={this.state.caseManageNum}
+                    onChange={this.formDataChange}
                   />
                 </Form.Group>
                 <Form.Field
@@ -772,6 +956,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
                   rows="4"
+                  name="caseManageDescription"
+                  value={this.state.caseManageDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
@@ -786,9 +973,18 @@ export class OtherSocialService extends React.Component<any, any> {
             {this.state.isEconomyService && (
               <div>
                 <Form.Group inline>
-                  扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
+                  扶助額度<Form.Input
                     style={shortInput}
                     type="number"
+                    name="economyServiceMoneyPerPerson"
+                    value={this.state.economyServiceMoneyPerPerson}
+                    onChange={this.formDataChange}
+                  />元/人，約<Form.Input
+                    style={shortInput}
+                    type="number"
+                    name="economyServicePersonPerYear"
+                    value={this.state.economyServicePersonPerYear}
+                    onChange={this.formDataChange}
                   />人/年
                 </Form.Group>
                 <Form.Field
@@ -797,6 +993,9 @@ export class OtherSocialService extends React.Component<any, any> {
                   control="textarea"
                   placeholder="請以300字介紹該項服務，如方式、內容、申請流程或金額等，俾利宣導"
                   rows="4"
+                  name="economyServiceDescription"
+                  value={this.state.economyServiceDescription}
+                  onChange={this.textAreaChange}
                 />
               </div>
             )}
