@@ -16,6 +16,20 @@ import {
   Radio
 } from "semantic-ui-react";
 
+const config = {
+  apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+  authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+  databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+  projectId: "taiwan-drug-abstinence-p-2edf5",
+  storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+  messagingSenderId: "933584242007"
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
+let db = firebase.firestore();
+let storageRef = firebase.storage().ref();
+
 const shortInput = {
   width: 100
 };
@@ -69,6 +83,22 @@ export class OtherSocialService extends React.Component<any, any> {
         iElem.style.opacity = 0.5;
       };
     });
+    var user = firebase.auth().currentUser;
+    if (user) {
+      let uid = user.uid;
+
+      db
+        .collection("OtherSocialService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            let data = doc.data();
+            console.log(data);
+            this.setState(data);
+          }
+        });
+    }
   }
 
   addOtherResourceNum = () => {
@@ -133,6 +163,26 @@ export class OtherSocialService extends React.Component<any, any> {
     origin[sequence] = value;
     this.setState({ ["resources"]: origin });
     console.log(this.state.resources);
+  };
+
+  handleSubmit = e => {
+    var user = firebase.auth().currentUser;
+
+    let uid = user.uid;
+
+    var data = this.state;
+    console.log(data);
+    try {
+      db
+        .collection("OtherSocialService")
+        .doc(uid)
+        .set(data);
+    } catch (err) {
+      console.log(err);
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
   };
 
   render() {
@@ -844,7 +894,12 @@ export class OtherSocialService extends React.Component<any, any> {
               </Form.Field>
             </Form.Group>
           </fieldset>
-          <Button type="submit" size="massive" floated="right">
+          <Button
+            type="submit"
+            size="massive"
+            floated="right"
+            onClick={this.handleSubmit}
+          >
             儲存
           </Button>
         </Form>

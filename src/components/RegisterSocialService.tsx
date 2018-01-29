@@ -17,6 +17,20 @@ import {
   Message
 } from "semantic-ui-react";
 
+const config = {
+  apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+  authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+  databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+  projectId: "taiwan-drug-abstinence-p-2edf5",
+  storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+  messagingSenderId: "933584242007"
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
+let db = firebase.firestore();
+let storageRef = firebase.storage().ref();
+
 const shortInput = {
   width: 100
 };
@@ -54,10 +68,25 @@ export class RegisterSocialService extends React.Component<any, any> {
       isWithdral: false,
       isCourtTransfer: false,
       specialService: "",
+      resources: [""],
       // 費用
       feeType: "",
       feeTypeDescription: "",
-      otherResourceNum: 1
+      otherResourceNum: 1,
+      // 人員
+      clinicalPsyPro: null,
+      clinicalPsyPart: null,
+      conselorPro: null,
+      conselorPart: null,
+      socialWorkerPro: null,
+      socialWorkerPart: null,
+      // 服務
+      isGroupConsult: false,
+      isPersonConsult: false,
+      isFamilyConsult: false,
+      isCaseManage: false,
+      isFamilyCase: false,
+      isDrugCase: false
     };
   }
 
@@ -72,6 +101,23 @@ export class RegisterSocialService extends React.Component<any, any> {
         iElem.style.opacity = 0.5;
       };
     });
+
+    var user = firebase.auth().currentUser;
+    if (user) {
+      let uid = user.uid;
+
+      db
+        .collection("RegisterSocialService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            let data = doc.data();
+            console.log(data);
+            this.setState(data);
+          }
+        });
+    }
   }
 
   addOtherServiceNum = () => {
@@ -140,6 +186,26 @@ export class RegisterSocialService extends React.Component<any, any> {
     }
   };
 
+  handleSubmit = e => {
+    var user = firebase.auth().currentUser;
+
+    let uid = user.uid;
+
+    var data = this.state;
+    console.log(data);
+    try {
+      db
+        .collection("RegisterSocialService")
+        .doc(uid)
+        .set(data);
+    } catch (err) {
+      console.log(err);
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
+  };
+
   render() {
     var otherResourceRows = [];
     var otherPeopleRows = [];
@@ -151,9 +217,9 @@ export class RegisterSocialService extends React.Component<any, any> {
             <Input size="mini" type="text" placeholder="職稱" />
             <br />
             <label>專任</label>
-            <input type="number" /> 人，
+            <Input type="number" /> 人，
             <label htmlFor="">兼任</label>
-            <input type="number" />人
+            <Input type="number" />人
           </Form.Field>
         </Form.Group>
       );
@@ -165,6 +231,7 @@ export class RegisterSocialService extends React.Component<any, any> {
         <Input
           type="text"
           name={elementName}
+          value={this.state.resources[i]}
           onChange={this.resourceContentChange}
         />
       );
@@ -222,6 +289,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Input
                 name="name"
                 placeholder="機構名稱"
+                value={this.state.name}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -231,6 +299,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 id="phone"
                 name="phone"
                 placeholder="電話"
+                value={this.state.phone}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -240,6 +309,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 id="address"
                 name="address"
                 placeholder="地址"
+                value={this.state.address}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -265,6 +335,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 id="email"
                 name="email"
                 placeholder="email"
+                value={this.state.email}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -274,6 +345,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 id="url"
                 name="url"
                 placeholder="http://google.com.tw"
+                value={this.state.url}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -285,21 +357,25 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Checkbox
                 label="酒精"
                 name="alchohol"
+                checked={this.state.alchohol}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="鴉片類(如海洛因、鴉片、嗎啡)"
                 name="opium"
+                checked={this.state.opium}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="中樞神經興奮劑(如古柯鹼、安非他命...)"
                 name="stimulant"
+                checked={this.state.stimulant}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="其他(如凱他命、大麻、新興成癮物質…)"
                 name="otherDrug"
+                checked={this.state.otherDrug}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -309,11 +385,13 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Checkbox
                 label="男"
                 name="isMale"
+                checked={this.state.isMale}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="女"
                 name="isFemale"
+                checked={this.state.isFemale}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -322,11 +400,13 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Checkbox
                 label="成年"
                 name="isAdult"
+                checked={this.state.isAdult}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="未成年"
                 name="isChild"
+                checked={this.state.isChild}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -397,6 +477,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               label="其他特殊服務(請說明：如愛滋個案、合併家暴、合併精神疾病…等)"
               placeholder="其他特殊服務"
               name="specialService"
+              value={this.state.specialService}
               onChange={this.formDataChange}
             />
           </fieldset>
@@ -404,109 +485,178 @@ export class RegisterSocialService extends React.Component<any, any> {
             <legend className="ui dividing header">
               針對施用毒品或藥癮者提供之服務項目與服務量能(可複選)
             </legend>
-            <Checkbox label="團體心理治療(諮商)" value="" />
-            <Form.Group inline>
-              每年約可提供<Form.Input
-                style={shortInput}
-                type="number"
-                size="small"
-              />個團體，每個團體療程約<Form.Input
-                style={shortInput}
-                type="number"
-              />次，每個團體約<Form.Input style={shortInput} type="number" />人
-            </Form.Group>
-            <Form.Group inline>
-              一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
-                style={shortInput}
-                type="number"
-              />團次
-            </Form.Group>
-            <Form.Field
-              label="說明"
-              control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
-              rows="4"
-              required
-            />
-            <Checkbox label="個別心理治療(諮商)" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />人，每人每次療程約<Form.Input
-                style={shortInput}
-                type="number"
-              />次，一年約服務<Form.Input style={shortInput} type="number" />人次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="家族或家庭治療(諮商)" value="" />
-            <Form.Group inline>
-              每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年約服務<Form.Input
-                style={shortInput}
-                type="number"
-              />家庭次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
-              rows="4"
-            />
-            <Checkbox
-              label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
-              value=""
-            />
-            <Form.Group inline>
-              可提供之個管案量比為１：<Form.Input
-                style={shortInput}
-                type="number"
+            <Form.Field>
+              <Checkbox
+                label="團體心理治療(諮商)"
+                name="isGroupConsult"
+                checked={this.state.isGroupConsult}
+                onChange={this.formDataChecked}
               />
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="個案家屬自助團體" value="" />
-            <Form.Group inline>
-              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
-                style={shortInput}
-                type="number"
-              />人，一年約服務<Form.Input type="number" style={shortInput} />人次或<Form.Input
-                type="number"
-                style={shortInput}
-              />團次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
-              rows="4"
-            />
-            <Checkbox label="毒品個案自助團體" value="" />
-            <Form.Group inline>
-              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
-                style={shortInput}
-                type="number"
-              />人，一年約服務<Form.Input type="number" style={shortInput} />人次或<Form.Input
-                type="number"
-                style={shortInput}
-              />團次
-            </Form.Group>
-            <Form.Field
-              required
-              label="說明"
-              control="textarea"
-              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
-              rows="4"
-            />
+            </Form.Field>
+            {this.state.isGroupConsult === true && (
+              <div>
+                <Form.Group inline>
+                  每年約可提供<Form.Input
+                    style={shortInput}
+                    type="number"
+                    size="small"
+                  />個團體，每個團體療程約<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />次，每個團體約<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人
+                </Form.Group>
+                <Form.Group inline>
+                  一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />團次
+                </Form.Group>
+                <Form.Field
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
+                  rows="4"
+                  required
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個別心理治療(諮商)"
+                name="isPersonConsult"
+                checked={this.state.isPersonConsult}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isPersonConsult === true && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />人，每人每次療程約<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />次，一年約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="家族或家庭治療(諮商)"
+                name="isFamilyConsult"
+                checked={this.state.isFamilyConsult}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isFamilyConsult && (
+              <div>
+                <Form.Group inline>
+                  每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年約服務<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />家庭次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字說明療程之理論、方式、內容、對象、次數、時間及頻次等資訊，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
+                name="isCaseManage"
+                checked={this.state.isCaseManage}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isCaseManage && (
+              <div>
+                <Form.Group inline>
+                  可提供之個管案量比為１：<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="個案家屬自助團體"
+                name="isFamilyCase"
+                checked={this.state.isFamilyCase}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isFamilyCase && (
+              <div>
+                <Form.Group inline>
+                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人，一年約服務<Form.Input
+                    type="number"
+                    style={shortInput}
+                  />人次或<Form.Input type="number" style={shortInput} />團次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
+            <Form.Field>
+              <Checkbox
+                label="毒品個案自助團體"
+                name="isDrugCase"
+                checked={this.state.isDrugCase}
+                onChange={this.formDataChecked}
+              />
+            </Form.Field>
+            {this.state.isDrugCase && (
+              <div>
+                <Form.Group inline>
+                  每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                    style={shortInput}
+                    type="number"
+                  />人，一年約服務<Form.Input
+                    type="number"
+                    style={shortInput}
+                  />人次或<Form.Input type="number" style={shortInput} />團次
+                </Form.Group>
+                <Form.Field
+                  required
+                  label="說明"
+                  control="textarea"
+                  placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
+                  rows="4"
+                />
+              </div>
+            )}
             <h3>
               其他服務(請參照上列各項服務，說明服務項目名稱、服務內容及服務量能)
             </h3>
@@ -604,27 +754,60 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Field inline>
                 <h4>臨床心理師</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="clinicalPsyPro"
+                  value={this.state.clinicalPsyPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="clinicalPsyPart"
+                  value={this.state.clinicalPsyPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>諮商心理師</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="conselorPro"
+                  value={this.state.conselorPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="conselorPart"
+                  value={this.state.conselorPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>社會工作師/社工員</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="socialWorkerPro"
+                  value={this.state.socialWorkerPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="socialWorkerPart"
+                  value={this.state.socialWorkerPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <h3>其他領有專業證照者</h3>
@@ -657,7 +840,12 @@ export class RegisterSocialService extends React.Component<any, any> {
               </Form.Field>
             </Form.Group>
           </fieldset>
-          <Button type="submit" size="massive" floated="right">
+          <Button
+            type="submit"
+            size="massive"
+            floated="right"
+            onClick={this.handleSubmit}
+          >
             儲存
           </Button>
         </Form>
