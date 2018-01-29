@@ -537,7 +537,7 @@ export class OtherSocialService extends React.Component<any, any> {
               size="big"
               className="add-button"
               style={{ opacity: 0.5 }}
-            />
+            />請點選"+"，新增說明內容
           </fieldset>
           <fieldset>
             <legend className="ui dividing header">服務費用收取方式</legend>
@@ -710,7 +710,7 @@ export class OtherSocialService extends React.Component<any, any> {
               size="big"
               className="add-button"
               style={{ opacity: 0.5 }}
-            />
+            />請點選"+"，新增說明內容
           </fieldset>
           <fieldset style={fieldset}>
             <legend className="ui dividing header">
@@ -726,7 +726,7 @@ export class OtherSocialService extends React.Component<any, any> {
                   size="big"
                   className="add-button"
                   style={{ opacity: 0.5 }}
-                />
+                />請點選"+"，新增說明內容
               </Form.Field>
             </Form.Group>
           </fieldset>
@@ -788,7 +788,7 @@ export class OtherSocialService extends React.Component<any, any> {
                           size="big"
                           className="add-button"
                           style={{ opacity: 0.5 }}
-                        />
+                        />請點選"+"，新增說明內容
                       </Table.Cell>
                       <Table.Cell />
                       <Table.Cell />

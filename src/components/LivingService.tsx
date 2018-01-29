@@ -676,7 +676,7 @@ export class LivingService extends React.Component<any, any> {
               size="big"
               className="add-button"
               style={{ opacity: 0.5 }}
-            />
+            />請點選"+"，新增說明內容
           </fieldset>
           <fieldset style={fieldset}>
             <legend className="ui dividing header">安置單位服務狀況</legend>
@@ -714,7 +714,7 @@ export class LivingService extends React.Component<any, any> {
                   size="big"
                   className="add-button"
                   style={{ opacity: 0.5 }}
-                />
+                />請點選"+"，新增說明內容
               </Form.Field>
             </Form.Group>
           </fieldset>
@@ -776,7 +776,7 @@ export class LivingService extends React.Component<any, any> {
                           size="big"
                           className="add-button"
                           style={{ opacity: 0.5 }}
-                        />
+                        />請點選"+"，新增說明內容
                       </Table.Cell>
                       <Table.Cell />
                       <Table.Cell />
