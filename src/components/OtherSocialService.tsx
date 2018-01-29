@@ -188,7 +188,7 @@ export class OtherSocialService extends React.Component<any, any> {
       otherServiceRows.push(
         <div>
           <Form.Group inline>
-            <Form.Radio checked />
+            <Checkbox checked />
             <Input size="mini" placeholder="服務項目名稱" />
           </Form.Group>
           <Form.Group inline>
@@ -402,7 +402,7 @@ export class OtherSocialService extends React.Component<any, any> {
             <legend className="ui dividing header">
               服務項目與服務量能(可複選)
             </legend>
-            <Form.Radio label="家屬支持服務方案" value="" />
+            <Checkbox label="家屬支持服務方案" value="" />
             <Form.Group inline>
               每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年共約服務<Form.Input
                 style={shortInput}
@@ -416,7 +416,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="居家關懷服務方案" value="" />
+            <Checkbox label="居家關懷服務方案" value="" />
             <Form.Group inline>
               每年約可服務<Form.Input style={shortInput} type="number" />人，一年共約服務<Form.Input
                 style={shortInput}
@@ -430,7 +430,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="個案家屬自助團體" value="" />
+            <Checkbox label="個案家屬自助團體" value="" />
             <Form.Group inline>
               每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
                 style={shortInput}
@@ -450,7 +450,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="毒品個案自助團體" value="" />
+            <Checkbox label="毒品個案自助團體" value="" />
             <Form.Group inline>
               每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
                 style={shortInput}
@@ -470,7 +470,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="個案自立生活服務及租屋津貼方案" value="" />
+            <Checkbox label="個案自立生活服務及租屋津貼方案" value="" />
             <Form.Group inline>
               每年約可服務<Form.Input style={shortInput} type="number" />人，每名個案每月補助<Form.Input
                 style={shortInput}
@@ -484,7 +484,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、補助費用等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="職業訓練方案" value="" />
+            <Checkbox label="職業訓練方案" value="" />
             <Form.Group inline>
               每年約可培訓<Form.Input style={shortInput} type="number" />人
             </Form.Group>
@@ -495,7 +495,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、培訓時間等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="支持或陪伴就業服務方案" value="" />
+            <Checkbox label="支持或陪伴就業服務方案" value="" />
             <Form.Group inline>
               每年約可服務<Form.Input style={shortInput} type="number" />人
             </Form.Group>
@@ -506,7 +506,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、服務人員、時間等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="就業培力方案" value="" />
+            <Checkbox label="就業培力方案" value="" />
             <Form.Group inline>
               每年約可協助<Form.Input style={shortInput} type="number" />人
               穩定就業
@@ -518,7 +518,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、培力地點等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="創業輔導方案" value="" />
+            <Checkbox label="創業輔導方案" value="" />
             <Form.Group inline>
               每年約可協助<Form.Input style={shortInput} type="number" />人
               順利創業
@@ -530,7 +530,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="課後輔導方案" value="" />
+            <Checkbox label="課後輔導方案" value="" />
             <Form.Group inline>
               每年約可服務<Form.Input style={shortInput} type="number" /> 人
             </Form.Group>
@@ -541,7 +541,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹該方案，如方式、內容、對象、地點、服務人員等，俾利宣導"
               rows="4"
             />
-            <Form.Radio
+            <Checkbox
               label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
               value=""
             />
@@ -558,7 +558,7 @@ export class OtherSocialService extends React.Component<any, any> {
               placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
               rows="4"
             />
-            <Form.Radio label="福利服務、經濟扶助或急難救助" value="" />
+            <Checkbox label="福利服務、經濟扶助或急難救助" value="" />
             <Form.Group inline>
               扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
                 style={shortInput}
