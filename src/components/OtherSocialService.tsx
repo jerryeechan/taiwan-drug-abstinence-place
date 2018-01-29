@@ -189,15 +189,18 @@ export class OtherSocialService extends React.Component<any, any> {
         <div>
           <Form.Group inline>
             <Form.Radio checked />
-            <Input size="mini" placeholder="服務名稱" />
+            <Input size="mini" placeholder="服務項目名稱" />
           </Form.Group>
           <Form.Group inline>
-            每年約可提供<Form.Input type="number" />人次
+            每年約可提供<Form.Input style={shortInput} type="number" />人，<Form.Input
+              style={shortInput}
+              type="number"
+            />人次
           </Form.Group>
           <Form.Field
             label=""
             control="textarea"
-            placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+            placeholder="請以300字介紹該方案，俾利宣導"
             rows="4"
           />
         </div>
@@ -401,108 +404,141 @@ export class OtherSocialService extends React.Component<any, any> {
             </legend>
             <Form.Radio label="家屬支持服務方案" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />個家庭，一年共約<Form.Input type="number" />人次
+              每年約可服務<Form.Input style={shortInput} type="number" />個家庭，一年共約服務<Form.Input
+                style={shortInput}
+                type="number"
+              />家庭次、<Form.Input style={shortInput} type="number" />人次
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
               rows="4"
             />
             <Form.Radio label="居家關懷服務方案" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />個家庭，一年共約<Form.Input type="number" />人次
+              每年約可服務<Form.Input style={shortInput} type="number" />人，一年共約服務<Form.Input
+                style={shortInput}
+                type="number"
+              />人次
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、理念、次數、時間、頻次等資訊，俾利宣導"
               rows="4"
             />
             <Form.Radio label="個案家屬自助團體" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />團，每團<Form.Input type="number" />人，共約<Form.Input
+              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                style={shortInput}
                 type="number"
-                disabled
-              />人次
+              />人
+            </Form.Group>
+            <Form.Group inline>
+              一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                style={shortInput}
+                type="number"
+              />團次
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="毒品個案自助團體" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />團，每團<Form.Input type="number" />人，共約<Form.Input
+              每年約可提供<Form.Input style={shortInput} type="number" />個團體，每個團體<Form.Input
+                style={shortInput}
                 type="number"
-                disabled
-              />人次
+              />人
+            </Form.Group>
+            <Form.Group inline>
+              一年約服務<Form.Input style={shortInput} type="number" />人次或<Form.Input
+                style={shortInput}
+                type="number"
+              />團次
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該團體方案，如方式、內容、對象、理念、次數、時間及頻次等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="個案自立生活服務及租屋津貼方案" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />人
+              每年約可服務<Form.Input style={shortInput} type="number" />人，每名個案每月補助<Form.Input
+                style={shortInput}
+                type="number"
+              />元，補助<Form.Input style={shortInput} type="number" />個月
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、補助費用等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="職業訓練方案" value="" />
             <Form.Group inline>
-              每年約可培訓<Form.Input type="number" />人
+              每年約可培訓<Form.Input style={shortInput} type="number" />人
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、培訓時間等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="支持或陪伴就業服務方案" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" />人
+              每年約可服務<Form.Input style={shortInput} type="number" />人
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、服務人員、時間等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="就業培力方案" value="" />
             <Form.Group inline>
-              每年約可協助<Form.Input type="number" />人 穩定就業
+              每年約可協助<Form.Input style={shortInput} type="number" />人
+              穩定就業
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、培力地點等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="創業輔導方案" value="" />
             <Form.Group inline>
-              每年約可協助<Form.Input type="number" />人 順利創業
+              每年約可協助<Form.Input style={shortInput} type="number" />人
+              順利創業
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="課後輔導方案" value="" />
             <Form.Group inline>
-              每年約可服務<Form.Input type="number" /> 人
+              每年約可服務<Form.Input style={shortInput} type="number" /> 人
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該方案，如方式、內容、對象、地點、服務人員等，俾利宣導"
               rows="4"
             />
             <Form.Radio
@@ -510,26 +546,33 @@ export class OtherSocialService extends React.Component<any, any> {
               value=""
             />
             <Form.Group inline>
-              可提供之個管案量比為１：<Form.Input type="number" />
+              可提供之個管案量比為１：<Form.Input
+                style={shortInput}
+                type="number"
+              />
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹個管服務模式，如方式、內容、流程或頻次等，俾利宣導"
               rows="4"
             />
             <Form.Radio label="福利服務、經濟扶助或急難救助" value="" />
             <Form.Group inline>
-              扶助額度<Form.Input type="number" />元/人，約<Input type="number" />人/年
+              扶助額度<Form.Input style={shortInput} type="number" />元/人，約<Form.Input
+                style={shortInput}
+                type="number"
+              />人/年
             </Form.Group>
             <Form.Field
-              label=""
+              required
+              label="說明"
               control="textarea"
-              placeholder="請以300字說明療程之理論、方式、內容、對象等資訊，俾利宣導"
+              placeholder="請以300字介紹該項服務，如方式、內容、申請流程或金額等，俾利宣導"
               rows="4"
             />
-
-            <h3>其他(請參照上列服務說明方案名稱、方案內容及服務量能)</h3>
+            <h3>其他（請參照上列服務說明方案名稱、方案內容及服務量能）</h3>
             {otherServiceRows}
             <Icon
               onClick={this.addOtherServiceNum}
