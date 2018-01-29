@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as firebase from "firebase";
 import {
   Container,
   Form,

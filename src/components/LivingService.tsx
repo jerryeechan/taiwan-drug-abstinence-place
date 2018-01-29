@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as firebase from "firebase";
 import {
   Container,
   Form,
@@ -14,6 +15,20 @@ import {
   Message,
   Radio
 } from "semantic-ui-react";
+
+const config = {
+  apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
+  authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
+  databaseURL: "https://taiwan-drug-abstinence-p-2edf5.firebaseio.com",
+  projectId: "taiwan-drug-abstinence-p-2edf5",
+  storageBucket: "taiwan-drug-abstinence-p-2edf5.appspot.com",
+  messagingSenderId: "933584242007"
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
+let db = firebase.firestore();
+let storageRef = firebase.storage().ref();
 
 const shortInput = {
   width: 100
@@ -65,7 +80,26 @@ export class LivingService extends React.Component<any, any> {
       resources: [""],
       isSelfRaise: false,
       selfRaisaAmount: null,
-      isSupplementory: false
+      isSupplementory: false,
+      // 人員
+      doctorProType: null,
+      doctorPro: null,
+      doctorPartType: null,
+      doctorPart: null,
+      clinicalPsyPro: null,
+      clinicalPsyPart: null,
+      conselorPro: null,
+      conselorPart: null,
+      socialWorkerPro: null,
+      socialWorkerPart: null,
+      functionalTherapistPro: null,
+      functionalTherapistPart: null,
+      nursePro: null,
+      nursePart: null,
+      pastPro: null,
+      pastPart: null,
+      securityPro: null,
+      securityPart: null
     };
   }
 
@@ -79,6 +113,22 @@ export class LivingService extends React.Component<any, any> {
         iElem.style.opacity = 0.5;
       };
     });
+
+    var user = firebase.auth().currentUser;
+    if (user) {
+      let uid = user.uid;
+
+      db
+        .collection("livingService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            let data = doc.data();
+            this.setState(data);
+          }
+        });
+    }
   }
 
   addOtherResourceNum = () => {
@@ -106,25 +156,19 @@ export class LivingService extends React.Component<any, any> {
   };
 
   formDataChange = (e, { name, value }) => {
-    console.log(name + ": " + value);
     this.setState({ [name]: value });
   };
 
   textAreaChange = e => {
-    console.log(e.target.name);
-    console.log(e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
   formDataChecked = (e, data) => {
-    console.log(data);
     this.setState({ [data.name]: data.checked });
   };
 
   formDataRadioChecked = (e, data) => {
-    console.log(data);
     this.setState({ [data.name]: data.value });
-    console.log(this.state);
   };
 
   resourceContentChange = (e, { name, value }) => {
@@ -147,6 +191,26 @@ export class LivingService extends React.Component<any, any> {
     }
   };
 
+  handleSubmit = e => {
+    var user = firebase.auth().currentUser;
+
+    let uid = user.uid;
+
+    var data = this.state;
+    console.log(data);
+    try {
+      db
+        .collection("livingService")
+        .doc(uid)
+        .set(data);
+    } catch (err) {
+      console.log(err);
+      alert("系統錯誤，請稍後在試");
+      return;
+    }
+    alert("儲存成功");
+  };
+
   render() {
     var otherResourceRows = [];
     var moneyRows = [];
@@ -157,6 +221,7 @@ export class LivingService extends React.Component<any, any> {
         <Input
           type="text"
           name={elementName}
+          value={this.state.resources[i]}
           onChange={this.resourceContentChange}
         />
       );
@@ -228,8 +293,10 @@ export class LivingService extends React.Component<any, any> {
                 (範例：財團法人屏東縣私立基督教沐恩之家+亞當學園)
               </label>
               <Input
+                required
                 name="name"
                 placeholder="機構名稱"
+                value={this.state.name}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -239,6 +306,7 @@ export class LivingService extends React.Component<any, any> {
                 id="phone"
                 name="phone"
                 placeholder="電話"
+                value={this.state.phone}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -248,6 +316,7 @@ export class LivingService extends React.Component<any, any> {
                 id="address"
                 name="address"
                 placeholder="地址"
+                value={this.state.address}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -270,6 +339,7 @@ export class LivingService extends React.Component<any, any> {
                 id="email"
                 name="email"
                 placeholder="email"
+                value={this.state.email}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -279,6 +349,7 @@ export class LivingService extends React.Component<any, any> {
                 id="url"
                 name="url"
                 placeholder="http://google.com.tw"
+                value={this.state.url}
                 onChange={this.formDataChange}
               />
             </Form.Field>
@@ -290,21 +361,25 @@ export class LivingService extends React.Component<any, any> {
               <Checkbox
                 label="酒精"
                 name="alchohol"
+                checked={this.state.alchohol}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="鴉片類(如海洛因、鴉片、嗎啡)"
                 name="opium"
+                checked={this.state.opium}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="中樞神經興奮劑(如古柯鹼、安非他命...)"
                 name="stimulant"
+                checked={this.state.stimulant}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="其他(如凱他命、大麻、新興成癮物質…)"
                 name="otherDrug"
+                checked={this.state.otherDrug}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -314,11 +389,13 @@ export class LivingService extends React.Component<any, any> {
               <Checkbox
                 label="男"
                 name="isMale"
+                checked={this.state.isMale}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="女"
                 name="isFemale"
+                checked={this.state.isFemale}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -327,11 +404,13 @@ export class LivingService extends React.Component<any, any> {
               <Checkbox
                 label="成年"
                 name="isAdult"
+                checked={this.state.isAdult}
                 onChange={this.formDataChecked}
               />
               <Checkbox
                 label="未成年"
                 name="isChild"
+                checked={this.state.isChild}
                 onChange={this.formDataChecked}
               />
             </Form.Group>
@@ -357,8 +436,8 @@ export class LivingService extends React.Component<any, any> {
                   <Input
                     name="servereDisease"
                     placeholder="名稱"
-                    onChange={this.formDataChange}
                     value={this.state.servereDisease}
+                    onChange={this.formDataChange}
                   />
                 </Form.Field>
               )}
@@ -402,6 +481,7 @@ export class LivingService extends React.Component<any, any> {
               label="其他特殊服務(請說明，如可攜子同住、愛滋個案…等)"
               placeholder="其他特殊服務"
               name="specialService"
+              value={this.state.specialService}
               onChange={this.formDataChange}
             />
           </fieldset>
@@ -415,7 +495,8 @@ export class LivingService extends React.Component<any, any> {
                   type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
-                  onChange={this.formDataChecked}
+                  value={this.state.maleAdultBed}
+                  onChange={this.formDataChange}
                 />
               </Form.Field>
               <Form.Field>
@@ -425,7 +506,8 @@ export class LivingService extends React.Component<any, any> {
                   type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
-                  onChange={this.formDataChecked}
+                  value={this.state.femaleAdultBed}
+                  onChange={this.formDataChange}
                 />
               </Form.Field>
             </Form.Group>
@@ -437,7 +519,8 @@ export class LivingService extends React.Component<any, any> {
                   type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
-                  onChange={this.formDataChecked}
+                  value={this.state.maleTeenBed}
+                  onChange={this.formDataChange}
                 />
               </Form.Field>
               <Form.Field>
@@ -447,7 +530,8 @@ export class LivingService extends React.Component<any, any> {
                   type="number"
                   label={{ basic: true, content: "床" }}
                   labelPosition="right"
-                  onChange={this.formDataChecked}
+                  value={this.state.femaleTeenBed}
+                  onChange={this.formDataChange}
                 />
               </Form.Field>
             </Form.Group>
@@ -588,9 +672,21 @@ export class LivingService extends React.Component<any, any> {
             <Form.Group>
               <Form.Field inline>
                 <label>專任</label>
-                <Input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="adminPro"
+                  value={this.state.adminPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <Input type="number" /> 人
+                <Input
+                  type="number"
+                  name="adminPart"
+                  value={this.state.adminPart}
+                  onChange={this.formDataChange}
+                />
+                人
               </Form.Field>
             </Form.Group>
             <h3>處遇人員</h3>
@@ -598,74 +694,175 @@ export class LivingService extends React.Component<any, any> {
               <Form.Field inline>
                 <h4>醫師</h4>
                 <label>專任</label>
-                <input type="text" /> 科
-                <input type="number" /> 人，
+                <Input
+                  type="text"
+                  name="doctorProType"
+                  value={this.state.doctorProType}
+                  onChange={this.formDataChange}
+                />
+                科
+                <Input
+                  type="number"
+                  name="doctorPro"
+                  value={this.state.doctorPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="text" /> 科
-                <input type="number" /> 人
+                <Input
+                  type="text"
+                  name="doctorPartType"
+                  value={this.state.doctorPartType}
+                  onChange={this.formDataChange}
+                />
+                科
+                <Input
+                  type="number"
+                  name="doctorPart"
+                  value={this.state.doctorPart}
+                  onChange={this.formDataChange}
+                />
+                人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>臨床心理師</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="clinicalPsyPro"
+                  value={this.state.clinicalPsyPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="clinicalPsyPart"
+                  value={this.state.clinicalPsyPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>諮商心理師</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="conselorPro"
+                  value={this.state.conselorPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="conselorPart"
+                  value={this.state.conselorPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>社會工作師/社工員</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="socialWorkerPro"
+                  value={this.state.socialWorkerPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="socialWorkerPart"
+                  value={this.state.socialWorkerPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>職能治療師</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="functionalTherapistPro"
+                  value={this.state.functionalTherapistPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="functionalTherapistPart"
+                  value={this.state.functionalTherapistPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>護理師/護士</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="nursePro"
+                  value={this.state.nursePro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="nursePart"
+                  value={this.state.nursePart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>過來人</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="pastPro"
+                  value={this.state.pastPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="pastPart"
+                  value={this.state.pastPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <Form.Group>
               <Form.Field inline>
                 <h4>保全人員</h4>
                 <label>專任</label>
-                <input type="number" /> 人，
+                <Input
+                  type="number"
+                  name="securityPro"
+                  value={this.state.securityPro}
+                  onChange={this.formDataChange}
+                />
+                人，
                 <label htmlFor="">兼任</label>
-                <input type="number" />人
+                <Input
+                  type="number"
+                  name="securityPart"
+                  value={this.state.securityPart}
+                  onChange={this.formDataChange}
+                />人
               </Form.Field>
             </Form.Group>
             <h3>其他</h3>
@@ -686,6 +883,7 @@ export class LivingService extends React.Component<any, any> {
                 <Input
                   type="number"
                   name="settlePeopleAmount"
+                  value={this.state.settlePeopleAmount}
                   onChange={this.formDataChange}
                 />
                 人次 （注意：每次入住，無論住多久，若未中斷，則算１人次）
@@ -725,11 +923,12 @@ export class LivingService extends React.Component<any, any> {
                 <Checkbox
                   label="自籌(包括募款)"
                   name="isSelfRaise"
+                  checked={this.state.isSelfRaise}
                   onChange={this.formDataChecked}
                 />
               </Form.Field>
               {this.state.isSelfRaise && (
-                <Form.Field inline>
+                <Form.Field inline required>
                   每年約新台幣<Input
                     type="number"
                     name="selfRaisaAmount"
@@ -745,6 +944,7 @@ export class LivingService extends React.Component<any, any> {
                 <Checkbox
                   label="向公部門申請補助(請提供近3年補助單位及受補助額度)"
                   name="isSupplementory"
+                  checked={this.state.isSupplementory}
                   onChange={this.formDataChecked}
                 />
                 {this.state.isSupplementory && (
@@ -788,7 +988,12 @@ export class LivingService extends React.Component<any, any> {
               </Form.Field>
             </Form.Group>
           </fieldset>
-          <Button type="submit" size="massive" floated="right">
+          <Button
+            type="submit"
+            size="massive"
+            floated="right"
+            onClick={this.handleSubmit}
+          >
             儲存
           </Button>
         </Form>
