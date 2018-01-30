@@ -50,6 +50,9 @@ export class OtherSocialService extends React.Component<any, any> {
       otherPeopleNum: 1,
       otherPeople: [{ name: "", pro: null, part: null }],
       otherServiceNum: 0,
+      otherService: [
+        { name: "", people: "", peoplePerYear: "", description: "" }
+      ],
       // 基本資料
       name: "",
       phone: "",
@@ -229,6 +232,20 @@ export class OtherSocialService extends React.Component<any, any> {
     this.setState({
       otherServiceNum: origin + 1
     });
+    var origin = this.state.otherPeople;
+    origin.push({ name: "", people: "", peoplePerYear: "", description: "" });
+    this.setState({ ["otherService"]: origin });
+  };
+
+  otherServiceChange = e => {
+    let elementName = e.target.name.split("_")[0];
+    let subjectName = e.target.name.split("_")[1];
+    let sequence = e.target.name.split("_")[2];
+    console.log(subjectName + ": " + sequence);
+
+    let origin = this.state.otherService;
+    origin[sequence][subjectName] = e.target.value;
+    this.setState({ ["otherService"]: origin });
   };
 
   formDataChange = (e, { name, value }) => {
@@ -401,16 +418,36 @@ export class OtherSocialService extends React.Component<any, any> {
       );
     }
     for (var i = 0; i < this.state.otherServiceNum; i++) {
+      let serviceName = "otherService_name_" + i.toString();
+      let numName = "otherService_people_" + i.toString();
+      let peoplePerYearName = "otherService_peoplePerYear_" + i.toString();
+      let descriptionName = "otherService_description_" + i.toString();
+
       otherServiceRows.push(
         <div>
           <Form.Group inline>
             <Checkbox checked />
-            <Input size="mini" placeholder="服務項目名稱" />
+            <Input
+              size="mini"
+              placeholder="服務項目名稱"
+              name={serviceName}
+              value={this.state.otherService[i].name}
+              onChange={this.otherServiceChange}
+            />
           </Form.Group>
           <Form.Group inline>
-            每年約可提供<Form.Input style={shortInput} type="number" />人，<Form.Input
+            每年約可提供<Form.Input
               style={shortInput}
               type="number"
+              name={numName}
+              value={this.state.otherService[i].people}
+              onChange={this.otherServiceChange}
+            />人，<Form.Input
+              style={shortInput}
+              type="number"
+              name={peoplePerYearName}
+              value={this.state.otherService[i].peoplePerYear}
+              onChange={this.otherServiceChange}
             />人次
           </Form.Group>
           <Form.Field
@@ -418,6 +455,9 @@ export class OtherSocialService extends React.Component<any, any> {
             control="textarea"
             placeholder="請以300字介紹該方案，俾利宣導"
             rows="4"
+            name={descriptionName}
+            value={this.state.otherService[i].description}
+            onChange={this.otherServiceChange}
           />
         </div>
       );

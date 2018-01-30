@@ -47,6 +47,7 @@ export class RegisterSocialService extends React.Component<any, any> {
     this.state = {
       otherPeopleNum: 1,
       otherServiceNum: 0,
+      otherService: [{ name: "", people: "", description: "" }],
       otherPeople: [{ name: "", pro: null, part: null }],
       // formData
       // 基本資料
@@ -156,6 +157,9 @@ export class RegisterSocialService extends React.Component<any, any> {
     this.setState({
       otherServiceNum: origin + 1
     });
+    var origin = this.state.otherPeople;
+    origin.push({ name: "", people: "", description: "" });
+    this.setState({ ["otherService"]: origin });
   };
 
   otherPeopleChange = (e, { name, value }) => {
@@ -167,6 +171,17 @@ export class RegisterSocialService extends React.Component<any, any> {
     let origin = this.state.otherPeople;
     origin[sequence][subjectName] = value;
     this.setState({ ["otherPeople"]: origin });
+  };
+
+  otherServiceChange = e => {
+    let elementName = e.target.name.split("_")[0];
+    let subjectName = e.target.name.split("_")[1];
+    let sequence = e.target.name.split("_")[2];
+    console.log(subjectName + ": " + sequence);
+
+    let origin = this.state.otherService;
+    origin[sequence][subjectName] = e.target.value;
+    this.setState({ ["otherService"]: origin });
   };
 
   addOtherPeopleNum = () => {
@@ -306,14 +321,28 @@ export class RegisterSocialService extends React.Component<any, any> {
     }
 
     for (var i = 0; i < this.state.otherServiceNum; i++) {
+      let serviceName = "otherService_name_" + i.toString();
+      let numName = "otherService_people_" + i.toString();
+      let descriptionName = "otherService_description_" + i.toString();
       otherServiceRows.push(
         <div>
           <Form.Group inline>
             <Checkbox checked />
-            <Input size="mini" placeholder="服務名稱" />
+            <Input
+              size="mini"
+              placeholder="服務名稱"
+              name={serviceName}
+              value={this.state.otherService[i].name}
+              onChange={this.otherServiceChange}
+            />
           </Form.Group>
           <Form.Group inline>
-            每年約可提供<Form.Input type="number" />人次
+            每年約可提供<Form.Input
+              type="number"
+              name={numName}
+              value={this.state.otherService[i].people}
+              onChange={this.otherServiceChange}
+            />人次
           </Form.Group>
           <Form.Field
             required
@@ -321,6 +350,9 @@ export class RegisterSocialService extends React.Component<any, any> {
             control="textarea"
             placeholder="請以300字介紹該方案，俾利宣導"
             rows="4"
+            name={descriptionName}
+            value={this.state.otherService[i].description}
+            onChange={this.otherServiceChange}
           />
         </div>
       );
