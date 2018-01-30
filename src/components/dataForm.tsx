@@ -809,6 +809,42 @@ export class DataForm extends React.Component<any, any> {
     var user = firebase.auth().currentUser;
     if (user) {
       let uid = user.uid;
+
+      // 判斷類別
+      db
+        .collection("livingService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.setState({
+              agencyType: "livingService"
+            });
+          }
+        });
+      db
+        .collection("registerSocialService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.setState({
+              agencyType: "registerSocialService"
+            });
+          }
+        });
+      db
+        .collection("otherSocialService")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.setState({
+              agencyType: "otherSocialService"
+            });
+          }
+        });
+
       let newDoctorOptions = [{ key: "new", value: "new", text: "新增" }];
       db
         .collection("agency")
@@ -899,10 +935,4 @@ export class DataForm extends React.Component<any, any> {
         });
     }
   }
-
-  // componentWillUnmount() {
-  //   if(this.countdownId){
-  //     clearInterval(this.countdownId);
-  //   }
-  // }
 }
