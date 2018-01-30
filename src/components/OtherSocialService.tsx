@@ -47,6 +47,7 @@ export class OtherSocialService extends React.Component<any, any> {
       otherResourceNum: 1,
       moneyNum: 1,
       otherPeopleNum: 1,
+      otherPeople: [{ name: "", pro: null, part: null }],
       otherServiceNum: 0,
       // 基本資料
       name: "",
@@ -203,6 +204,10 @@ export class OtherSocialService extends React.Component<any, any> {
     this.setState({
       otherPeopleNum: origin + 1
     });
+
+    var origin = this.state.otherPeople;
+    origin.push({ name: "", pro: null, part: null });
+    this.setState({ ["otherPeople"]: origin });
   };
 
   addOtherServiceNum = () => {
@@ -243,6 +248,17 @@ export class OtherSocialService extends React.Component<any, any> {
     origin[sequence] = value;
     this.setState({ ["resources"]: origin });
     console.log(this.state.resources);
+  };
+
+  otherPeopleChange = (e, { name, value }) => {
+    let elementName = name.split("_")[0];
+    let subjectName = name.split("_")[1];
+    let sequence = name.split("_")[2];
+    console.log(subjectName + ": " + sequence);
+
+    let origin = this.state.otherPeople;
+    origin[sequence][subjectName] = value;
+    this.setState({ ["otherPeople"]: origin });
   };
 
   handleSubmit = e => {
@@ -303,15 +319,37 @@ export class OtherSocialService extends React.Component<any, any> {
       );
     }
     for (var i = 0; i < this.state.otherPeopleNum; i++) {
+      let jobName = "otherPeople_name_" + i.toString();
+      let proName = "otherPeople_pro_" + i.toString();
+      let partName = "otherPeople_part_" + i.toString();
+
       otherPeopleRows.push(
         <Form.Group>
           <Form.Field inline>
-            <Input size="mini" type="text" placeholder="職稱" />
+            <Input
+              size="mini"
+              type="text"
+              placeholder="職稱"
+              name={jobName}
+              value={this.state.otherPeople[i].name}
+              onChange={this.otherPeopleChange}
+            />
             <br />
             <label>專任</label>
-            <input type="text" /> 人，
+            <Input
+              type="number"
+              name={proName}
+              value={this.state.otherPeople[i].pro}
+              onChange={this.otherPeopleChange}
+            />
+            人，
             <label htmlFor="">兼任</label>
-            <input type="text" />人
+            <Input
+              type="number"
+              name={partName}
+              value={this.state.otherPeople[i].part}
+              onChange={this.otherPeopleChange}
+            />人
           </Form.Field>
         </Form.Group>
       );
