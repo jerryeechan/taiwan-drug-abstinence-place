@@ -46,6 +46,7 @@ export class LivingService extends React.Component<any, any> {
     this.state = {
       otherResourceNum: 1,
       moneyNum: 1,
+      money: [{ agency: "", subject: "", four: null, five: null, six: null }],
       otherPeopleNum: 1,
       otherPeople: [{ name: "", pro: null, part: null }],
       // formData
@@ -147,6 +148,9 @@ export class LivingService extends React.Component<any, any> {
     this.setState({
       moneyNum: origin + 1
     });
+    var origin = this.state.money;
+    origin.push({ agency: "", subject: "", four: null, five: null, six: null });
+    this.setState({ ["money"]: origin });
   };
 
   addOtherPeopleNum = () => {
@@ -198,6 +202,16 @@ export class LivingService extends React.Component<any, any> {
     this.setState({ ["otherPeople"]: origin });
   };
 
+  moneyChange = (e, { name, value }) => {
+    let elementName = name.split("_")[0];
+    let subjectName = name.split("_")[1];
+    let sequence = name.split("_")[2];
+
+    let origin = this.state.money;
+    origin[sequence][subjectName] = value;
+    this.setState({ ["money"]: origin });
+  };
+
   makeAddressThesame = (e, data) => {
     console.log(data);
     if (data.checked) {
@@ -243,22 +257,54 @@ export class LivingService extends React.Component<any, any> {
       );
     }
     for (var i = 0; i < this.state.moneyNum; i++) {
+      let agencyName = "money_agency_" + i.toString();
+      let subjectName = "money_subject_" + i.toString();
+      let fourName = "money_four_" + i.toString();
+      let fiveName = "money_five_" + i.toString();
+      let sixName = "money_six_" + i.toString();
+
       moneyRows.push(
         <Table.Row>
           <Table.Cell>
-            <Input />
+            <Input
+              name={agencyName}
+              value={this.state.money[i].agency}
+              onChange={this.moneyChange}
+            />
           </Table.Cell>
           <Table.Cell>
-            <Input />
+            <Input
+              name={subjectName}
+              value={this.state.money[i].subject}
+              onChange={this.moneyChange}
+            />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} type="number" />
+            <Input
+              style={shortInput}
+              type="number"
+              name={fourName}
+              value={this.state.money[i].four}
+              onChange={this.moneyChange}
+            />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} type="number" />
+            <Input
+              style={shortInput}
+              type="number"
+              name={fiveName}
+              value={this.state.money[i].five}
+              onChange={this.moneyChange}
+            />
           </Table.Cell>
           <Table.Cell>
-            <Input style={shortInput} type="number" />
+            <Input
+              style={shortInput}
+              type="number"
+              name={sixName}
+              value={this.state.money[i].six}
+              onChange={this.moneyChange}
+            />
           </Table.Cell>
         </Table.Row>
       );
