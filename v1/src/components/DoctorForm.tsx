@@ -74,7 +74,6 @@ export class DoctorForm extends React.Component<any, any> {
                         <textarea style={{width:"98%", margin:"5px"}} placeholder="tell us more" onChange={this.props.handleChange} value={this.props.intro}/>
                       </Form.Field>
                     </Grid.Column>
-
                     <Grid.Column mobile={16} tablet={8} computer={8}>
                       <TimeTable OKtime={this.props.OKtime} handleTimeClick={this.props.handleTimeClick}/>
                     </Grid.Column>

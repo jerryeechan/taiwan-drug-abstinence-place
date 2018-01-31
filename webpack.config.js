@@ -1,91 +1,67 @@
-var path = require("path");
-var webpack = require("webpack");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var node_modules_dir = path.resolve(__dirname, "node_modules");
-var devtool = "eval-source-map"; //["eval-source-map"]
-console.log(process.env.arg);
-console.log(process.env.NODE_ENV);
-if (process.env.arg === "p" || process.env.NODE_ENV === "p") devtool = false;
-var PROD = true; // JSON.parse(process.env.NODE_ENV)==="production";
-var plugins = [
-  new webpack.optimize.CommonsChunkPlugin({
-    names: ["vendors"], //"app"
-    minChunks: Infinity
-  }),
-  new HtmlWebpackPlugin({
-    template: "./src/index.html",
-    filename: "index.html",
-    inject: "body"
-  }),
-  new webpack.ProvidePlugin({
-    React: "react"
-  })
-];
-// if(PROD)
-// {
-//   plugins.push(new webpack.optimize.UglifyJsPlugin({
-//     compress: { warnings: false }
-//   }))
-// }
+const path = require('path');
+const webpack = require('webpack');
 
-var config = {
+const srcPath = path.resolve(__dirname, 'src');
+const distPath = path.resolve(__dirname, 'dist');
+
+module.exports = {
+  context: srcPath,
+  resolve: {
+    alias: {
+      components: path.resolve(srcPath, 'components'),
+    }
+  },
   entry: {
-    app: "./src/components/index.tsx",
-    vendors: ["mobx", "mobx-react", "firebase"]
+    index: './index.jsx',
+    vendor: ['react', 'react-dom']
   },
   output: {
-    filename: "[name].js",
-    path: __dirname + "/public/dist"
+    path: distPath,
+    filename: '[name].bundle.js'
   },
-
-  // plugins: [
-  //   new webpack.optimize.UglifyJsPlugin({
-  //     minimize: true,
-  //     compress: false
-  //   })
-  // ],
-
-  // Enable sourcemaps for debugging webpack's output.
-  devtool: devtool,
-  //--optimize-minimize
-  devServer: {
-    contentBase: "./public/dist",
-    hot: false
-  },
-  resolve: {
-    modules: ["node_modules", "./src"],
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json", ".css"]
-  },
-
   module: {
     rules: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
-      { test: /\.css?$/, loader: "style-loader!css-loader" }
+      {
+        test: /\.(js|jsx)$/,
+        exclude: [/node_modules/],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  'es2015', {
+                    modules: false
+                  }
+                ],
+                'react'
+              ],
+              plugins: [
+                'babel-plugin-transform-class-properties',
+                'transform-object-rest-spread'
+              ]
+            }
+          }
+        ]
+      }, {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options : {
+              url: false
+            }
+          }
+        ]
+      }
     ]
   },
-
-  plugins: plugins
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  // externals: [
-  //   {
-  //     react: "React",
-  //     "react-dom": "ReactDOM",
-  //     "semantic-ui-react": "semanticUIReact",
-  //     redux: "Redux",
-  //     "react-router-dom": "ReactRouterDOM",
-  //     firebase: "firebase"
-  //   }
-  // ]
+  plugins: [new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js', minChunks: 2})],
+  devServer: {
+      contentBase: distPath,
+      compress: true,
+      port: 8080
+  },
+  devtool: 'cheap-source-map'
 };
-module.exports = config;
-
-//if Can't find webpack do the following
-//npm link webpack
