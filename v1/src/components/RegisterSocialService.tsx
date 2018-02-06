@@ -154,6 +154,9 @@ export class RegisterSocialService extends React.Component<any, any> {
   }
 
   addOtherServiceNum = () => {
+    if (this.props.disable) {
+      return;
+    }
     var origin = this.state.otherServiceNum;
     this.setState({
       otherServiceNum: origin + 1
@@ -186,6 +189,9 @@ export class RegisterSocialService extends React.Component<any, any> {
   };
 
   addOtherPeopleNum = () => {
+    if (this.props.disable) {
+      return;
+    }
     var origin = this.state.otherPeopleNum;
     this.setState({
       otherPeopleNum: origin + 1
@@ -197,6 +203,9 @@ export class RegisterSocialService extends React.Component<any, any> {
   };
 
   addOtherResourceNum = () => {
+    if (this.props.disable) {
+      return;
+    }
     var origin = this.state.otherResourceNum;
     this.setState({
       otherResourceNum: origin + 1
@@ -328,7 +337,7 @@ export class RegisterSocialService extends React.Component<any, any> {
       otherServiceRows.push(
         <div>
           <Form.Group inline>
-            <Checkbox checked />
+            <Checkbox checked disabled={this.props.disable} />
             <Input
               size="mini"
               placeholder="服務名稱"
@@ -360,7 +369,7 @@ export class RegisterSocialService extends React.Component<any, any> {
     }
 
     return (
-      <Modal trigger={<Button>編輯</Button>}>
+      <Modal trigger={<Button>詳細</Button>}>
         <Modal.Header>{this.state.name}</Modal.Header>
         <Modal.Content>
           <Message positive>
@@ -383,7 +392,7 @@ export class RegisterSocialService extends React.Component<any, any> {
             </ul>
           </Message>
           <Form>
-            <fieldset style={fieldset}>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">基本資料</legend>
               <Form.Field required>
                 <label>
@@ -428,6 +437,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               </Form.Field>
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="同立案機構地址"
                   onChange={this.makeAddressThesame}
                 />
@@ -453,29 +463,33 @@ export class RegisterSocialService extends React.Component<any, any> {
                 />
               </Form.Field>
             </fieldset>
-            <fieldset style={fieldset}>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">個案屬性</legend>
               <Form.Group inline>
                 <label>成癮物質</label>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="酒精"
                   name="alchohol"
                   checked={this.state.alchohol}
                   onChange={this.formDataChecked}
                 />
                 <Checkbox
+                  disabled={this.props.disable}
                   label="鴉片類(如海洛因、鴉片、嗎啡)"
                   name="opium"
                   checked={this.state.opium}
                   onChange={this.formDataChecked}
                 />
                 <Checkbox
+                  disabled={this.props.disable}
                   label="中樞神經興奮劑(如古柯鹼、安非他命...)"
                   name="stimulant"
                   checked={this.state.stimulant}
                   onChange={this.formDataChecked}
                 />
                 <Checkbox
+                  disabled={this.props.disable}
                   label="其他(如凱他命、大麻、新興成癮物質…)"
                   name="otherDrug"
                   checked={this.state.otherDrug}
@@ -486,12 +500,14 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Group inline>
                 <label>性別</label>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="男"
                   name="isMale"
                   checked={this.state.isMale}
                   onChange={this.formDataChecked}
                 />
                 <Checkbox
+                  disabled={this.props.disable}
                   label="女"
                   name="isFemale"
                   checked={this.state.isFemale}
@@ -501,12 +517,14 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Group inline>
                 <label>年齡</label>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="成年"
                   name="isAdult"
                   checked={this.state.isAdult}
                   onChange={this.formDataChecked}
                 />
                 <Checkbox
+                  disabled={this.props.disable}
                   label="未成年"
                   name="isChild"
                   checked={this.state.isChild}
@@ -516,6 +534,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Group inline>
                 <label>是否排除重大身體疾病或精神疾病個案</label>
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="是"
                   value="true"
                   name="isIgnoreServere"
@@ -523,6 +542,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   checked={this.state.isIgnoreServere === "true"}
                 />
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="否"
                   name="isIgnoreServere"
                   value="false"
@@ -545,6 +565,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Group inline>
                 <label>是否有生理戒斷處遇</label>
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="是"
                   value="true"
                   name="isWithdral"
@@ -552,6 +573,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   checked={this.state.isWithdral === "true"}
                 />
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="否"
                   value="false"
                   name="isWithdral"
@@ -562,6 +584,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               <Form.Group inline>
                 <label>是否接受法院裁定或地檢署轉介之個案</label>
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="是"
                   value="true"
                   name="isCourtTransfer"
@@ -569,6 +592,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   checked={this.state.isCourtTransfer === "true"}
                 />
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="否"
                   value="false"
                   name="isCourtTransfer"
@@ -584,12 +608,13 @@ export class RegisterSocialService extends React.Component<any, any> {
                 onChange={this.formDataChange}
               />
             </fieldset>
-            <fieldset style={fieldset}>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">
                 針對施用毒品或藥癮者提供之服務項目與服務量能(可複選)
               </legend>
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="團體心理治療(諮商)"
                   name="isGroupConsult"
                   checked={this.state.isGroupConsult}
@@ -649,6 +674,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               )}
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="個別心理治療(諮商)"
                   name="isPersonConsult"
                   checked={this.state.isPersonConsult}
@@ -692,6 +718,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               )}
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="家族或家庭治療(諮商)"
                   name="isFamilyConsult"
                   checked={this.state.isFamilyConsult}
@@ -729,6 +756,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               )}
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="個案管理服務（包括個案需求評估、資源連結、轉介及轉介後之追蹤）"
                   name="isCaseManage"
                   checked={this.state.isCaseManage}
@@ -760,6 +788,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               )}
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="個案家屬自助團體"
                   name="isFamilyCase"
                   checked={this.state.isFamilyCase}
@@ -809,6 +838,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               )}
               <Form.Field>
                 <Checkbox
+                  disabled={this.props.disable}
                   label="毒品個案自助團體"
                   name="isDrugCase"
                   checked={this.state.isDrugCase}
@@ -868,10 +898,11 @@ export class RegisterSocialService extends React.Component<any, any> {
                 style={{ opacity: 0.5 }}
               />請點選"+"，新增說明內容
             </fieldset>
-            <fieldset>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">服務費用收取方式</legend>
               <Form.Field>
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="完全自費"
                   value="total"
                   name="feeType"
@@ -890,6 +921,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   />
                 )}
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="部分補助"
                   value="part"
                   name="feeType"
@@ -908,6 +940,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   />
                 )}
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="全部免費"
                   value="free"
                   name="feeType"
@@ -926,6 +959,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                   />
                 )}
                 <Form.Radio
+                  disabled={this.props.disable}
                   label="其他"
                   value="other"
                   name="feeType"
@@ -945,7 +979,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 )}
               </Form.Field>
             </fieldset>
-            <fieldset style={fieldset}>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">
                 機構內實際提供施用毒品或藥癮者服務之專業人力配置
               </legend>
@@ -1019,7 +1053,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 style={{ opacity: 0.5 }}
               />請點選"+"，新增說明內容
             </fieldset>
-            <fieldset style={fieldset}>
+            <fieldset style={fieldset} disabled={this.props.disable}>
               <legend className="ui dividing header">
                 外部合作或連結資源（請說明合作單位或連結之資源，及使用情況或量能）
               </legend>
@@ -1040,6 +1074,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               </Form.Group>
             </fieldset>
             <Button
+              disabled={this.props.disable}
               type="submit"
               size="massive"
               floated="right"

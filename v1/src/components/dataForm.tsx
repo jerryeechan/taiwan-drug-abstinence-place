@@ -89,6 +89,7 @@ export class DataForm extends React.Component<any, any> {
     super(props);
 
     this.state = {
+      listAdmin: false,
       agencyType: "",
       livingServices: [],
       livingServicesNum: 0,
@@ -171,6 +172,10 @@ export class DataForm extends React.Component<any, any> {
 
   toIndex() {
     window.location.href = "./#/";
+  }
+
+  toList() {
+    window.location.href = "./#/Lists";
   }
 
   handleSave = () => {
@@ -409,6 +414,12 @@ export class DataForm extends React.Component<any, any> {
               <Icon name="home" />
               戒毒好所在
             </Menu.Item>
+            {this.state.listAdmin && (
+              <Menu.Item onClick={() => this.toList()}>
+                <Icon name="list" />
+                機構列表
+              </Menu.Item>
+            )}
             <Menu.Item position="right" onClick={() => this.signOut()}>
               <Icon name="sign out" />
               登出
@@ -1044,8 +1055,27 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
+  checkAdmin(user) {
+    console.log(user.email);
+
+    db
+      .collection("UserProfiles")
+      .doc(user.email)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          console.log("exist");
+          this.setState({
+            listAdmin: true
+          });
+        }
+      });
+  }
+
   componentDidMount() {
     var user = firebase.auth().currentUser;
+
+    this.checkAdmin(user);
     if (user) {
       let uid = user.uid;
 
