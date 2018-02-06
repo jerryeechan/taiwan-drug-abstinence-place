@@ -11,7 +11,8 @@ import {
   Icon,
   Sidebar,
   Sticky,
-  Select
+  Select,
+  Table
 } from "semantic-ui-react";
 import { Redirect } from "react-router";
 
@@ -84,22 +85,17 @@ const defaultOKtime = {
 };
 
 export class DataForm extends React.Component<any, any> {
-  // static initCount = 5;
-
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   count: Main.initCount,
-    //   inputValue: ""
-    // };
-
-    // this.countdownId = null;
-    // this.handleSet = this.handleSet.bind(this);
-    // this.handleInputChange = this.handleInputChange.bind(this);
-
     this.state = {
       agencyType: "",
+      livingServices: [],
+      livingServicesNum: 0,
+      registerSocialServices: [],
+      registerSocialServicesNum: 0,
+      otherSocialServices: [],
+      otherSocialServicesNum: 0,
       id: "new",
       intro: "",
       name: "",
@@ -203,10 +199,207 @@ export class DataForm extends React.Component<any, any> {
 
   agencyTypeChange = (e, { name, value }) => {
     this.setState({ agencyType: value });
+
+    let user = firebase.auth().currentUser;
+    if (value === "livingService") {
+      var temData = new Array();
+      db
+        .collection("LivingServices")
+        .where("uid", "==", user.uid)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              temData.push({
+                id: doc.id,
+                name: doc.data().name
+              });
+            });
+            this.setState({
+              livingServicesNum: querySnapshot.size,
+              livingServices: temData
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    } else if (value == "registerSocialService") {
+      var temData = new Array();
+      db
+        .collection("RegisterSocialServices")
+        .where("uid", "==", user.uid)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              temData.push({
+                id: doc.id,
+                name: doc.data().name
+              });
+            });
+            this.setState({
+              registerSocialServicesNum: querySnapshot.size,
+              registerSocialServices: temData
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    } else if (value === "otherSocialService") {
+      var temData = new Array();
+      db
+        .collection("OtherSocialServices")
+        .where("uid", "==", user.uid)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              temData.push({
+                id: doc.id,
+                name: doc.data().name
+              });
+            });
+            this.setState({
+              otherSocialServicesNum: querySnapshot.size,
+              otherSocialServices: temData
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+  };
+
+  addAgencyNum = () => {
+    let uid = firebase.auth().currentUser.uid;
+
+    if (this.state.agencyType == "livingService") {
+      var dataId;
+      db
+        .collection("LivingServices")
+        .add({
+          uid: uid
+        })
+        .then(function(docRef) {
+          dataId = docRef.id;
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+          return;
+        });
+      let origin = this.state.livingServices;
+      origin.push({
+        id: dataId,
+        name: ""
+      });
+      let originNum = this.state.livingServicesNum;
+      this.setState({
+        livingServicesNum: originNum + 1,
+        livingServices: origin
+      });
+    } else if (this.state.agencyType == "registerSocialService") {
+      var dataId;
+      db
+        .collection("RegisterSocialServices")
+        .add({
+          uid: uid
+        })
+        .then(function(docRef) {
+          dataId = docRef.id;
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+          return;
+        });
+      let origin = this.state.registerSocialServices;
+      origin.push({
+        id: dataId,
+        name: ""
+      });
+      let originNum = this.state.registerSocialServicesNum;
+      this.setState({
+        registerSocialServicesNum: originNum + 1,
+        registerSocialServices: origin
+      });
+    } else if (this.state.agencyType == "otherSocialService") {
+      var dataId;
+      db
+        .collection("OtherSocialServices")
+        .add({
+          uid: uid
+        })
+        .then(function(docRef) {
+          dataId = docRef.id;
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+          return;
+        });
+      let origin = this.state.otherSocialServices;
+      origin.push({
+        id: dataId,
+        name: ""
+      });
+      let originNum = this.state.otherSocialServicesNum;
+      this.setState({
+        otherSocialServicesNum: originNum + 1,
+        otherSocialServices: origin
+      });
+    }
   };
 
   render() {
     var user = firebase.auth().currentUser;
+    var livingServiceRows = [];
+    var registerSocialRows = [];
+    var otherSocialServiceRows = [];
+
+    if (this.state.agencyType === "livingService") {
+      for (var i = 0; i < this.state.livingServicesNum; i++) {
+        livingServiceRows.push(
+          <Table.Row>
+            <Table.Cell>{i + 1}</Table.Cell>
+            <Table.Cell>{this.state.livingServices[i].name}</Table.Cell>
+            <Table.Cell>
+              <LivingService id={this.state.livingServices[i].id} />
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    } else if (this.state.agencyType === "registerSocialService") {
+      for (var i = 0; i < this.state.registerSocialServicesNum; i++) {
+        registerSocialRows.push(
+          <Table.Row>
+            <Table.Cell>{i + 1}</Table.Cell>
+            <Table.Cell>{this.state.registerSocialServices[i].name}</Table.Cell>
+            <Table.Cell>
+              <RegisterSocialService
+                id={this.state.registerSocialServices[i].id}
+              />
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    } else if (this.state.agencyType === "otherSocialService") {
+      for (var i = 0; i < this.state.otherSocialServicesNum; i++) {
+        console.log(this.state.otherSocialServices[i].id);
+        otherSocialServiceRows.push(
+          <Table.Row>
+            <Table.Cell>{i + 1}</Table.Cell>
+            <Table.Cell>{this.state.otherSocialServices[i].name}</Table.Cell>
+            <Table.Cell>
+              <OtherSocialService id={this.state.otherSocialServices[i].id} />
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
 
     if (user) {
       return (
@@ -230,12 +423,95 @@ export class DataForm extends React.Component<any, any> {
               onChange={this.agencyTypeChange}
             />
           </Container>
-          {this.state.agencyType === "livingService" && <LivingService />}
+          {this.state.agencyType === "livingService" && (
+            <div>
+              <Container>
+                <Table celled structured>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>#</Table.HeaderCell>
+                      <Table.HeaderCell>名稱</Table.HeaderCell>
+                      <Table.HeaderCell>動作</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {livingServiceRows}
+                    <Table.Row>
+                      <Table.Cell colSpan={2}>
+                        <Icon
+                          onClick={this.addAgencyNum}
+                          name="add circle"
+                          size="big"
+                          className="add-button"
+                          style={{ opacity: 0.5 }}
+                        />點選"+"，新增機構
+                      </Table.Cell>
+                      <Table.Cell />
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Container>
+            </div>
+          )}
           {this.state.agencyType === "registerSocialService" && (
-            <RegisterSocialService />
+            <div>
+              <Container>
+                <Table celled structured>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>#</Table.HeaderCell>
+                      <Table.HeaderCell>名稱</Table.HeaderCell>
+                      <Table.HeaderCell>動作</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {registerSocialRows}
+                    <Table.Row>
+                      <Table.Cell colSpan={2}>
+                        <Icon
+                          onClick={this.addAgencyNum}
+                          name="add circle"
+                          size="big"
+                          className="add-button"
+                          style={{ opacity: 0.5 }}
+                        />點選"+"，新增機構
+                      </Table.Cell>
+                      <Table.Cell />
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Container>
+            </div>
           )}
           {this.state.agencyType === "otherSocialService" && (
-            <OtherSocialService />
+            <div>
+              <Container>
+                <Table celled structured>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>#</Table.HeaderCell>
+                      <Table.HeaderCell>名稱</Table.HeaderCell>
+                      <Table.HeaderCell>動作</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {otherSocialServiceRows}
+                    <Table.Row>
+                      <Table.Cell colSpan={2}>
+                        <Icon
+                          onClick={this.addAgencyNum}
+                          name="add circle"
+                          size="big"
+                          className="add-button"
+                          style={{ opacity: 0.5 }}
+                        />點選"+"，新增機構
+                      </Table.Cell>
+                      <Table.Cell />
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Container>
+            </div>
           )}
           {this.state.agencyType === "other" && (
             <Container>
@@ -323,13 +599,11 @@ export class DataForm extends React.Component<any, any> {
         </div>
       );
     } else {
-      console.log("user is not sign in");
       return <Redirect to="/login" />;
     }
   }
 
   handleTimeClick(e) {
-    console.log("Handle Time Click");
     var id = e.target.parentElement.id;
     var ntime = this.state.OKtime;
     if (ntime[id].visibility == "hidden") {
@@ -350,7 +624,6 @@ export class DataForm extends React.Component<any, any> {
       OKtime: this.state.OKtime,
       src: this.state.src
     };
-    console.log(data);
 
     var user = firebase.auth().currentUser;
 
@@ -457,7 +730,6 @@ export class DataForm extends React.Component<any, any> {
       data["LBage"] = this.state.LBage;
       data["UBage"] = this.state.UBage;
     }
-    console.log(data);
 
     var user = firebase.auth().currentUser;
 
@@ -668,7 +940,6 @@ export class DataForm extends React.Component<any, any> {
   }
 
   handleTabChange(e) {
-    console.log(e.target.text);
     if (e.target.text == "Doctor") {
       this.setState({
         id: "new",
@@ -773,77 +1044,10 @@ export class DataForm extends React.Component<any, any> {
     }
   }
 
-  // tick() {
-  //   if(this.state.count > 0){
-  //     this.setState((prevState, props) => ({
-  //       count: prevState.count - 0.01
-  //     }));
-  //   } else {
-  //     clearInterval(this.countdownId);
-  //     this.setState({
-  //       count: 0
-  //     });
-  //     this.countdownId = null;
-  //   }
-  // }
-
-  // handleInputChange(e) {
-  //   this.setState({
-  //     inputValue: e.target.value
-  //   });
-  // }
-
-  // handleSet(e) {
-  //   clearInterval(this.countdownId);
-  //   this.setState({
-  //     count: Number(this.state.inputValue),
-  //     inputValue: ""
-  //     }, () =>
-  //     this.countdownId = setInterval(() => this.tick(), 10)
-  //   );
-  //   return false;
-  // }
-
   componentDidMount() {
-    console.log("React Perect!!!");
     var user = firebase.auth().currentUser;
     if (user) {
       let uid = user.uid;
-
-      // 判斷類別
-      db
-        .collection("livingService")
-        .doc(uid)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            this.setState({
-              agencyType: "livingService"
-            });
-          }
-        });
-      db
-        .collection("registerSocialService")
-        .doc(uid)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            this.setState({
-              agencyType: "registerSocialService"
-            });
-          }
-        });
-      db
-        .collection("otherSocialService")
-        .doc(uid)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            this.setState({
-              agencyType: "otherSocialService"
-            });
-          }
-        });
 
       let newDoctorOptions = [{ key: "new", value: "new", text: "新增" }];
       db
