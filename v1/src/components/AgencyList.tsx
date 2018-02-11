@@ -34,7 +34,7 @@ const agencyTypes = [
     key: "registerSocialService",
     value: "registerSocialService",
     text:
-      "社區藥癮(藥物濫用)治療及社會工作等專業服務（特指立案開業之心理治療所、諮商治療所、社會工作室）"
+      "社區藥癮(藥物濫用)治療及社會工作等專業服務（特指立案開業之心理治療所、諮商治療所、社會工作師事務所）"
   },
   {
     key: "otherSocialService",
