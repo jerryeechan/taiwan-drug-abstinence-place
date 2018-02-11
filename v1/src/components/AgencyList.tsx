@@ -246,13 +246,16 @@ export class AgencyList extends React.Component<any, any> {
         .then(
           function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-              temData.push({
-                id: doc.id,
-                name: doc.data().name
-              });
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
             });
             this.setState({
-              livingServicesNum: querySnapshot.size,
+              livingServicesNum: temData.length,
               livingServices: temData
             });
           }.bind(this)
@@ -268,13 +271,16 @@ export class AgencyList extends React.Component<any, any> {
         .then(
           function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-              temData.push({
-                id: doc.id,
-                name: doc.data().name
-              });
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
             });
             this.setState({
-              registerSocialServicesNum: querySnapshot.size,
+              registerSocialServicesNum: temData.length,
               registerSocialServices: temData
             });
           }.bind(this)
@@ -290,13 +296,16 @@ export class AgencyList extends React.Component<any, any> {
         .then(
           function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-              temData.push({
-                id: doc.id,
-                name: doc.data().name
-              });
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
             });
             this.setState({
-              otherSocialServicesNum: querySnapshot.size,
+              otherSocialServicesNum: temData.length,
               otherSocialServices: temData
             });
           }.bind(this)

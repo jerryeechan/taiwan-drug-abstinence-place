@@ -2923,15 +2923,15 @@ export class Home extends React.Component<any, any> {
                 href="https://docs.google.com/spreadsheets/d/1dtw1b7XKx6y8VdusKTvCZd4Fp19yMZWTHO9t1QJQ5SE/edit#gid=838766286"
               >
                 協助編輯戒毒場所資訊
-              </Item> */}
+              </Item>
               <Item
                 as="a"
                 href="/#/list"
               >
                 機構列表
-              </Item>
-              <Item as="a" href="/#/Form" className="right">
-                服務機構入口
+              </Item> */}
+              <Item as="a" href="/#/Form" className="right large">
+                <h1>服務機構入口</h1>
               </Item>
             </Menu>
           </Segment>
