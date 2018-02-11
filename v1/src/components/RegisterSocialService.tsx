@@ -391,7 +391,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 <li>本盤點不包含醫療機構（即醫院、診所）</li>
               </ul>
               <li>
-                若民間基金會、學協會等民間組織，依法亦設有前開治療所或工作室，則亦請填寫該表
+                若民間基金會、學協會等民間組織，依法亦設有前開治療所或事務所，則亦請填寫該表
               </li>
             </ul>
           </Message>
@@ -400,7 +400,7 @@ export class RegisterSocialService extends React.Component<any, any> {
               <legend className="ui dividing header">基本資料</legend>
               <Form.Field required>
                 <label>
-                  機構或民間組織名稱 (請填寫立案之機構全名及治療所或工作室名稱)
+                  機構或民間組織名稱 (請填寫立案之機構全名及治療所或事務所名稱)
                 </label>
                 <Input
                   name="name"
@@ -430,7 +430,7 @@ export class RegisterSocialService extends React.Component<any, any> {
                 />
               </Form.Field>
               <Form.Field required>
-                <label>治療所或工作室地址</label>
+                <label>治療所或事務所地址</label>
                 <Input
                   id="settleAddress"
                   name="settleAddress"
