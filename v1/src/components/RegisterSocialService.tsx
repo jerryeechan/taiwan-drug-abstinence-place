@@ -263,6 +263,10 @@ export class RegisterSocialService extends React.Component<any, any> {
     let uid = user.uid;
 
     var data = this.state;
+    if (!data.name) {
+      alert("機構名稱 必填");
+      return;
+    }
     console.log(data);
     try {
       db

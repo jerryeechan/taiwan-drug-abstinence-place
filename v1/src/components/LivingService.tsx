@@ -232,6 +232,11 @@ export class LivingService extends React.Component<any, any> {
     let uid = user.uid;
 
     var data = this.state;
+
+    if (!data.name) {
+      alert("機構名稱 必填");
+      return;
+    }
     try {
       db
         .collection("LivingServices")
