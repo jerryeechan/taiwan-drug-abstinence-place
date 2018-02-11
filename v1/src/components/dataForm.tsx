@@ -12,7 +12,9 @@ import {
   Sidebar,
   Sticky,
   Select,
-  Table
+  Table,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import { Redirect } from "react-router";
 
@@ -89,6 +91,7 @@ export class DataForm extends React.Component<any, any> {
     super(props);
 
     this.state = {
+      typeChangeReady: false,
       listAdmin: false,
       agencyType: "",
       livingServices: [],
@@ -203,7 +206,10 @@ export class DataForm extends React.Component<any, any> {
   };
 
   agencyTypeChange = (e, { name, value }) => {
-    this.setState({ agencyType: value });
+    this.setState({
+      agencyType: value,
+      typeChangeReady: false
+    });
 
     let user = firebase.auth().currentUser;
     if (value === "livingService") {
@@ -222,7 +228,8 @@ export class DataForm extends React.Component<any, any> {
             });
             this.setState({
               livingServicesNum: querySnapshot.size,
-              livingServices: temData
+              livingServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
@@ -245,7 +252,8 @@ export class DataForm extends React.Component<any, any> {
             });
             this.setState({
               registerSocialServicesNum: querySnapshot.size,
-              registerSocialServices: temData
+              registerSocialServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
@@ -268,7 +276,8 @@ export class DataForm extends React.Component<any, any> {
             });
             this.setState({
               otherSocialServicesNum: querySnapshot.size,
-              otherSocialServices: temData
+              otherSocialServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
@@ -304,7 +313,8 @@ export class DataForm extends React.Component<any, any> {
       let originNum = this.state.livingServicesNum;
       this.setState({
         livingServicesNum: originNum + 1,
-        livingServices: origin
+        livingServices: origin,
+        typeChangeReady: true
       });
     } else if (this.state.agencyType == "registerSocialService") {
       var dataId;
@@ -446,19 +456,26 @@ export class DataForm extends React.Component<any, any> {
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    {livingServiceRows}
-                    <Table.Row>
-                      <Table.Cell colSpan={2}>
-                        <Icon
-                          onClick={this.addAgencyNum}
-                          name="add circle"
-                          size="big"
-                          className="add-button"
-                          style={{ opacity: 0.5 }}
-                        />點選"+"，新增機構
-                      </Table.Cell>
-                      <Table.Cell />
-                    </Table.Row>
+                    {!this.state.typeChangeReady && (
+                      <Dimmer active inverted>
+                        <Loader size="large">Loading</Loader>
+                      </Dimmer>
+                    )}
+                    {this.state.typeChangeReady && livingServiceRows}
+                    {this.state.typeChangeReady && (
+                      <Table.Row>
+                        <Table.Cell colSpan={2}>
+                          <Icon
+                            onClick={this.addAgencyNum}
+                            name="add circle"
+                            size="big"
+                            className="add-button"
+                            style={{ opacity: 0.5 }}
+                          />點選"+"，新增機構
+                        </Table.Cell>
+                        <Table.Cell />
+                      </Table.Row>
+                    )}
                   </Table.Body>
                 </Table>
               </Container>
@@ -476,19 +493,26 @@ export class DataForm extends React.Component<any, any> {
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    {registerSocialRows}
-                    <Table.Row>
-                      <Table.Cell colSpan={2}>
-                        <Icon
-                          onClick={this.addAgencyNum}
-                          name="add circle"
-                          size="big"
-                          className="add-button"
-                          style={{ opacity: 0.5 }}
-                        />點選"+"，新增機構
-                      </Table.Cell>
-                      <Table.Cell />
-                    </Table.Row>
+                    {!this.state.typeChangeReady && (
+                      <Dimmer active inverted>
+                        <Loader size="large">Loading</Loader>
+                      </Dimmer>
+                    )}
+                    {this.state.typeChangeReady && registerSocialRows}
+                    {this.state.typeChangeReady && (
+                      <Table.Row>
+                        <Table.Cell colSpan={2}>
+                          <Icon
+                            onClick={this.addAgencyNum}
+                            name="add circle"
+                            size="big"
+                            className="add-button"
+                            style={{ opacity: 0.5 }}
+                          />點選"+"，新增機構
+                        </Table.Cell>
+                        <Table.Cell />
+                      </Table.Row>
+                    )}
                   </Table.Body>
                 </Table>
               </Container>
@@ -506,19 +530,26 @@ export class DataForm extends React.Component<any, any> {
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    {otherSocialServiceRows}
-                    <Table.Row>
-                      <Table.Cell colSpan={2}>
-                        <Icon
-                          onClick={this.addAgencyNum}
-                          name="add circle"
-                          size="big"
-                          className="add-button"
-                          style={{ opacity: 0.5 }}
-                        />點選"+"，新增機構
-                      </Table.Cell>
-                      <Table.Cell />
-                    </Table.Row>
+                    {!this.state.typeChangeReady && (
+                      <Dimmer active inverted>
+                        <Loader size="large">Loading</Loader>
+                      </Dimmer>
+                    )}
+                    {this.state.typeChangeReady && otherSocialServiceRows}
+                    {this.state.typeChangeReady && (
+                      <Table.Row>
+                        <Table.Cell colSpan={2}>
+                          <Icon
+                            onClick={this.addAgencyNum}
+                            name="add circle"
+                            size="big"
+                            className="add-button"
+                            style={{ opacity: 0.5 }}
+                          />點選"+"，新增機構
+                        </Table.Cell>
+                        <Table.Cell />
+                      </Table.Row>
+                    )}
                   </Table.Body>
                 </Table>
               </Container>
