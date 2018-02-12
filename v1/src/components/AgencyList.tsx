@@ -16,7 +16,9 @@ import {
   Radio,
   Modal,
   Menu,
-  Select
+  Select,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import { Redirect } from "react-router";
 import { AgencyForm } from "./AgencyForm";
@@ -63,6 +65,7 @@ export class AgencyList extends React.Component<any, any> {
     super(props);
 
     this.state = {
+      typeChangeReady: false,
       livingServicesNum: 0,
       livingServices: [],
       registerSocialServicesNum: 0,
@@ -164,7 +167,14 @@ export class AgencyList extends React.Component<any, any> {
                       <Table.HeaderCell>動作</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
-                  <Table.Body>{livingServiceRows}</Table.Body>
+                  {!this.state.typeChangeReady && (
+                    <Dimmer active inverted>
+                      <Loader size="large">Loading</Loader>
+                    </Dimmer>
+                  )}
+                  <Table.Body>
+                    {this.state.typeChangeReady && livingServiceRows}
+                  </Table.Body>
                 </Table>
               </Container>
             </div>
@@ -180,7 +190,14 @@ export class AgencyList extends React.Component<any, any> {
                       <Table.HeaderCell>動作</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
-                  <Table.Body>{registerSocialRows}</Table.Body>
+                  {!this.state.typeChangeReady && (
+                    <Dimmer active inverted>
+                      <Loader size="large">Loading</Loader>
+                    </Dimmer>
+                  )}
+                  <Table.Body>
+                    {this.state.typeChangeReady && registerSocialRows}
+                  </Table.Body>
                 </Table>
               </Container>
             </div>
@@ -196,7 +213,14 @@ export class AgencyList extends React.Component<any, any> {
                       <Table.HeaderCell>動作</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
-                  <Table.Body>{otherSocialServiceRows}</Table.Body>
+                  {!this.state.typeChangeReady && (
+                    <Dimmer active inverted>
+                      <Loader size="large">Loading</Loader>
+                    </Dimmer>
+                  )}
+                  <Table.Body>
+                    {this.state.typeChangeReady && otherSocialServiceRows}
+                  </Table.Body>
                 </Table>
               </Container>
             </div>
@@ -235,7 +259,10 @@ export class AgencyList extends React.Component<any, any> {
   };
 
   agencyTypeChange = (e, { name, value }) => {
-    this.setState({ agencyType: value });
+    this.setState({
+      agencyType: value,
+      typeChangeReady: false
+    });
 
     let user = firebase.auth().currentUser;
     if (value === "livingService") {
@@ -256,7 +283,8 @@ export class AgencyList extends React.Component<any, any> {
             });
             this.setState({
               livingServicesNum: temData.length,
-              livingServices: temData
+              livingServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
@@ -281,7 +309,8 @@ export class AgencyList extends React.Component<any, any> {
             });
             this.setState({
               registerSocialServicesNum: temData.length,
-              registerSocialServices: temData
+              registerSocialServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
@@ -306,7 +335,8 @@ export class AgencyList extends React.Component<any, any> {
             });
             this.setState({
               otherSocialServicesNum: temData.length,
-              otherSocialServices: temData
+              otherSocialServices: temData,
+              typeChangeReady: true
             });
           }.bind(this)
         )
