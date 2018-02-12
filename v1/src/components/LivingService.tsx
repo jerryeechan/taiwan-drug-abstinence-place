@@ -238,6 +238,7 @@ export class LivingService extends React.Component<any, any> {
       return;
     }
     try {
+      console.log(this.props.id);
       db
         .collection("LivingServices")
         .doc(this.props.id)

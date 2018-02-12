@@ -297,25 +297,27 @@ export class DataForm extends React.Component<any, any> {
         .add({
           uid: uid
         })
-        .then(function(docRef) {
-          dataId = docRef.id;
-          console.log("Document written with ID: ", docRef.id);
-        })
+        .then(
+          function(docRef) {
+            dataId = docRef.id;
+            console.log("Document written with ID: ", docRef.id);
+            let origin = this.state.livingServices;
+            origin.push({
+              id: dataId,
+              name: ""
+            });
+            let originNum = this.state.livingServicesNum;
+            this.setState({
+              livingServicesNum: originNum + 1,
+              livingServices: origin,
+              typeChangeReady: true
+            });
+          }.bind(this)
+        )
         .catch(function(error) {
           console.error("Error adding document: ", error);
           return;
         });
-      let origin = this.state.livingServices;
-      origin.push({
-        id: dataId,
-        name: ""
-      });
-      let originNum = this.state.livingServicesNum;
-      this.setState({
-        livingServicesNum: originNum + 1,
-        livingServices: origin,
-        typeChangeReady: true
-      });
     } else if (this.state.agencyType == "registerSocialService") {
       var dataId;
       db
@@ -323,24 +325,26 @@ export class DataForm extends React.Component<any, any> {
         .add({
           uid: uid
         })
-        .then(function(docRef) {
-          dataId = docRef.id;
-          console.log("Document written with ID: ", docRef.id);
-        })
+        .then(
+          function(docRef) {
+            dataId = docRef.id;
+            console.log("Document written with ID: ", docRef.id);
+            let origin = this.state.registerSocialServices;
+            origin.push({
+              id: dataId,
+              name: ""
+            });
+            let originNum = this.state.registerSocialServicesNum;
+            this.setState({
+              registerSocialServicesNum: originNum + 1,
+              registerSocialServices: origin
+            });
+          }.bind(this)
+        )
         .catch(function(error) {
           console.error("Error adding document: ", error);
           return;
         });
-      let origin = this.state.registerSocialServices;
-      origin.push({
-        id: dataId,
-        name: ""
-      });
-      let originNum = this.state.registerSocialServicesNum;
-      this.setState({
-        registerSocialServicesNum: originNum + 1,
-        registerSocialServices: origin
-      });
     } else if (this.state.agencyType == "otherSocialService") {
       var dataId;
       db
@@ -348,24 +352,26 @@ export class DataForm extends React.Component<any, any> {
         .add({
           uid: uid
         })
-        .then(function(docRef) {
-          dataId = docRef.id;
-          console.log("Document written with ID: ", docRef.id);
-        })
+        .then(
+          function(docRef) {
+            dataId = docRef.id;
+            console.log("Document written with ID: ", docRef.id);
+            let origin = this.state.otherSocialServices;
+            origin.push({
+              id: dataId,
+              name: ""
+            });
+            let originNum = this.state.otherSocialServicesNum;
+            this.setState({
+              otherSocialServicesNum: originNum + 1,
+              otherSocialServices: origin
+            });
+          }.bind(this)
+        )
         .catch(function(error) {
           console.error("Error adding document: ", error);
           return;
         });
-      let origin = this.state.otherSocialServices;
-      origin.push({
-        id: dataId,
-        name: ""
-      });
-      let originNum = this.state.otherSocialServicesNum;
-      this.setState({
-        otherSocialServicesNum: originNum + 1,
-        otherSocialServices: origin
-      });
     }
   };
 
