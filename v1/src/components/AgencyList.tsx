@@ -46,6 +46,117 @@ const agencyTypes = [
   { key: "other", value: "other", text: "其他" }
 ];
 
+const cityTypes = [
+  // 6直轄市
+  {
+    key: "桃園市",
+    value: "桃園市",
+    text: "桃園市"
+  },
+  {
+    key: "台北市",
+    value: "台北市",
+    text: "台北市"
+  },
+  {
+    key: "新北市",
+    value: "新北市",
+    text: "新北市"
+  },
+  {
+    key: "高雄市",
+    value: "高雄市",
+    text: "高雄市"
+  },
+  {
+    key: "台中市",
+    value: "台中市",
+    text: "台中市"
+  },
+  {
+    key: "台南市",
+    value: "台南市",
+    text: "台南市"
+  },
+  // 11縣
+  {
+    key: "新竹縣",
+    value: "新竹縣",
+    text: "新竹縣"
+  },
+  {
+    key: "苗栗縣",
+    value: "苗栗縣",
+    text: "苗栗縣"
+  },
+  {
+    key: "彰化縣",
+    value: "彰化縣",
+    text: "彰化縣"
+  },
+  {
+    key: "南投縣",
+    value: "南投縣",
+    text: "南投縣"
+  },
+  {
+    key: "雲林縣",
+    value: "雲林縣",
+    text: "雲林縣"
+  },
+  {
+    key: "嘉義縣",
+    value: "嘉義縣",
+    text: "嘉義縣"
+  },
+  {
+    key: "屏東縣",
+    value: "屏東縣",
+    text: "屏東縣"
+  },
+  {
+    key: "宜蘭縣",
+    value: "宜蘭縣",
+    text: "宜蘭縣"
+  },
+  {
+    key: "花蓮縣",
+    value: "花蓮縣",
+    text: "花蓮縣"
+  },
+  {
+    key: "臺東縣",
+    value: "臺東縣",
+    text: "臺東縣"
+  },
+  {
+    key: "澎湖縣",
+    value: "澎湖縣",
+    text: "澎湖縣"
+  },
+  // 3市
+  {
+    key: "基隆市",
+    value: "基隆市",
+    text: "基隆市"
+  },
+  {
+    key: "新竹市",
+    value: "新竹市",
+    text: "新竹市"
+  },
+  {
+    key: "嘉義市",
+    value: "嘉義市",
+    text: "嘉義市"
+  },
+  {
+    key: "其他",
+    value: "其他",
+    text: "其他"
+  }
+];
+
 const config = {
   apiKey: "AIzaSyAYfnhC1GbxA7q-HQYDWI_6fHWNArNQ-y0",
   authDomain: "taiwan-drug-abstinence-p-2edf5.firebaseapp.com",
@@ -72,7 +183,8 @@ export class AgencyList extends React.Component<any, any> {
       registerSocialServices: [],
       otherSocialServicesNum: 0,
       otherSocialServices: [],
-      agencyType: ""
+      agencyType: "",
+      citySelected: null
     };
   }
 
@@ -154,6 +266,15 @@ export class AgencyList extends React.Component<any, any> {
               placeholder="選擇類型"
               options={agencyTypes}
               onChange={this.agencyTypeChange}
+            />
+            <br />
+            <span>區域：</span>
+            <Select
+              disabled={this.state.agencyType === ""}
+              placeholder="選擇區域"
+              options={cityTypes}
+              onChange={this.cityChange}
+              value={this.state.citySelected}
             />
           </Container>
           {this.state.agencyType === "livingService" && (
@@ -258,13 +379,103 @@ export class AgencyList extends React.Component<any, any> {
       );
   };
 
-  agencyTypeChange = (e, { name, value }) => {
+  cityChange = (e, { name, value }) => {
     this.setState({
-      agencyType: value,
+      citySelected: value,
       typeChangeReady: false
     });
 
-    let user = firebase.auth().currentUser;
+    if (this.state.agencyType === "livingService") {
+      var temData = new Array();
+      db
+        .collection("LivingServices")
+        .where("city", "==", value)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
+            });
+            this.setState({
+              livingServicesNum: temData.length,
+              livingServices: temData,
+              typeChangeReady: true
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    } else if (this.state.agencyType == "registerSocialService") {
+      var temData = new Array();
+      db
+        .collection("RegisterSocialServices")
+        .where("city", "==", value)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
+            });
+            this.setState({
+              registerSocialServicesNum: temData.length,
+              registerSocialServices: temData,
+              typeChangeReady: true
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    } else if (this.state.agencyType === "otherSocialService") {
+      var temData = new Array();
+      db
+        .collection("OtherSocialServices")
+        .where("city", "==", value)
+        .get()
+        .then(
+          function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              let name = doc.data().name;
+              if (name) {
+                temData.push({
+                  id: doc.id,
+                  name: name
+                });
+              }
+            });
+            this.setState({
+              otherSocialServicesNum: temData.length,
+              otherSocialServices: temData,
+              typeChangeReady: true
+            });
+          }.bind(this)
+        )
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+  };
+
+  agencyTypeChange = (e, { name, value }) => {
+    this.setState({
+      agencyType: value,
+      typeChangeReady: false,
+      citySelected: null
+    });
+
     if (value === "livingService") {
       var temData = new Array();
       db
