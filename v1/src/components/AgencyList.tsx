@@ -329,7 +329,7 @@ export class AgencyList extends React.Component<any, any> {
                   </Table.Header>
                   {!this.state.typeChangeReady && (
                     <Dimmer active inverted>
-                      <Loader size="large">Loading</Loader>
+                      <Loader size="large">載入中</Loader>
                     </Dimmer>
                   )}
                   <Table.Body>
@@ -352,7 +352,7 @@ export class AgencyList extends React.Component<any, any> {
                   </Table.Header>
                   {!this.state.typeChangeReady && (
                     <Dimmer active inverted>
-                      <Loader size="large">Loading</Loader>
+                      <Loader size="large">載入中</Loader>
                     </Dimmer>
                   )}
                   <Table.Body>
@@ -375,7 +375,7 @@ export class AgencyList extends React.Component<any, any> {
                   </Table.Header>
                   {!this.state.typeChangeReady && (
                     <Dimmer active inverted>
-                      <Loader size="large">Loading</Loader>
+                      <Loader size="large">載入中</Loader>
                     </Dimmer>
                   )}
                   <Table.Body>
