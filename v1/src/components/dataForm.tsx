@@ -464,7 +464,7 @@ export class DataForm extends React.Component<any, any> {
                   <Table.Body>
                     {!this.state.typeChangeReady && (
                       <Dimmer active inverted>
-                        <Loader size="large">Loading</Loader>
+                        <Loader size="large">載入中</Loader>
                       </Dimmer>
                     )}
                     {this.state.typeChangeReady && livingServiceRows}
@@ -501,7 +501,7 @@ export class DataForm extends React.Component<any, any> {
                   <Table.Body>
                     {!this.state.typeChangeReady && (
                       <Dimmer active inverted>
-                        <Loader size="large">Loading</Loader>
+                        <Loader size="large">載入中</Loader>
                       </Dimmer>
                     )}
                     {this.state.typeChangeReady && registerSocialRows}
@@ -538,7 +538,7 @@ export class DataForm extends React.Component<any, any> {
                   <Table.Body>
                     {!this.state.typeChangeReady && (
                       <Dimmer active inverted>
-                        <Loader size="large">Loading</Loader>
+                        <Loader size="large">載入中</Loader>
                       </Dimmer>
                     )}
                     {this.state.typeChangeReady && otherSocialServiceRows}
