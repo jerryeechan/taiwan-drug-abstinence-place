@@ -16,6 +16,7 @@ import { Login } from "./login";
 import { Register } from "./register";
 import { ListData } from "./ListData";
 import { AgencyList } from "./AgencyList";
+import { Database } from "./Database";
 
 class MastHead extends React.Component<any, any> {
   render() {
@@ -28,6 +29,7 @@ class MastHead extends React.Component<any, any> {
             <Route path="/login" component={Login} />
             <Route path="/list" component={ListData} />
             <Route path="/form" component={DataForm} />
+            <Route path="/database" component={Database} />
             <Route path="/home" component={Home} />
             <Route path="/" component={Home} />
           </Switch>

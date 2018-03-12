@@ -25,6 +25,7 @@ import { AgencyForm } from "./AgencyForm";
 import { LivingService } from "./LivingService";
 import { RegisterSocialService } from "./RegisterSocialService";
 import { OtherSocialService } from "./OtherSocialService";
+import { Exporter } from "./Database";
 
 const agencyTypes = [
   {
@@ -176,6 +177,7 @@ export class AgencyList extends React.Component<any, any> {
     super(props);
 
     this.state = {
+      exportAdmin: false,
       typeChangeReady: false,
       livingServicesNum: 0,
       livingServices: [],
@@ -187,6 +189,37 @@ export class AgencyList extends React.Component<any, any> {
       citySelected: null
     };
   }
+
+  // 檢查user是否可以export資料
+  checkExportAdmin(user) {
+    db
+      .collection("UserProfiles")
+      .doc(user.email)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          let data = doc.data();
+          if (data.export == true) {
+            this.setState({
+              exportAdmin: true
+            });
+          }
+        }
+      });
+  }
+
+  componentDidMount() {
+    let user = firebase.auth().currentUser;
+    this.checkExportAdmin(user);
+  }
+
+  exportData = () => {
+    let link = Exporter.generateDataLink();
+
+    document.body.appendChild(link);
+
+    link.click();
+  };
 
   render() {
     var user = firebase.auth().currentUser;
@@ -254,6 +287,12 @@ export class AgencyList extends React.Component<any, any> {
               <Icon name="edit" />
               編輯資料
             </Menu.Item>
+            {this.state.exportAdmin && (
+              <Menu.Item onClick={() => this.exportData()}>
+                <Icon name="download" />
+                匯出資料
+              </Menu.Item>
+            )}
             <Menu.Item position="right" onClick={() => this.signOut()}>
               <Icon name="sign out" />
               登出
