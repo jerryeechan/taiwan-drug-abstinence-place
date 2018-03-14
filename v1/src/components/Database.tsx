@@ -559,15 +559,16 @@ export class Exporter {
 
   static _generateAndClickLink(rows, typeName) {
     let fileName = typeNameMap[typeName];
-    let csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "";
     rows.forEach(function (rowArray) {
       let row = rowArray.join(",");
       csvContent += row + "\r\n";
     });
+    + encodeURI(csvContent)
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    link.setAttribute("href",  "data:text/csv;charset=utf-8,%EF%BB%BF"+encodedUri);
     link.setAttribute("download", fileName + ".csv");
     document.body.appendChild(link);
     link.click();
