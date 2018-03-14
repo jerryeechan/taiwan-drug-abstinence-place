@@ -701,9 +701,9 @@ export class Exporter {
   }
 
   static _toShowValue(input) {
-    if (input === true) {
+    if (input === true || input === "true") {
       return "是";
-    } else if (input === false) {
+    } else if (input === false || input === "false") {
       return "否";
     } else if (input === undefined || input === null) {
       return "";
