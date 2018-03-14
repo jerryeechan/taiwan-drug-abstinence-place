@@ -219,10 +219,8 @@ export class AgencyList extends React.Component<any, any> {
       "registerSocialService",
       "otherSocialService"
     ];
-    fileTypeToExport.forEach(function(type) {
-      let link = Exporter.generateDataLink(type);
-      document.body.appendChild(link);
-      link.click();
+    fileTypeToExport.forEach(function (type) {
+      Exporter.generateDataLinkAndClick(type);
     });
   };
 
@@ -410,14 +408,14 @@ export class AgencyList extends React.Component<any, any> {
       .auth()
       .signOut()
       .then(
-        function() {
+        function () {
           console.log("sign out!");
           this.setState({
             login: false
           });
           this.toIndex();
         }.bind(this),
-        function(error) {
+        function (error) {
           console.log("sign out error");
         }
       );
@@ -436,8 +434,8 @@ export class AgencyList extends React.Component<any, any> {
         .where("city", "==", value)
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -453,7 +451,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     } else if (this.state.agencyType == "registerSocialService") {
@@ -463,8 +461,8 @@ export class AgencyList extends React.Component<any, any> {
         .where("city", "==", value)
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -480,7 +478,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     } else if (this.state.agencyType === "otherSocialService") {
@@ -490,8 +488,8 @@ export class AgencyList extends React.Component<any, any> {
         .where("city", "==", value)
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -507,7 +505,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     }
@@ -526,8 +524,8 @@ export class AgencyList extends React.Component<any, any> {
         .collection("LivingServices")
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -543,7 +541,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     } else if (value == "registerSocialService") {
@@ -552,8 +550,8 @@ export class AgencyList extends React.Component<any, any> {
         .collection("RegisterSocialServices")
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -569,7 +567,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     } else if (value === "otherSocialService") {
@@ -578,8 +576,8 @@ export class AgencyList extends React.Component<any, any> {
         .collection("OtherSocialServices")
         .get()
         .then(
-          function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               let name = doc.data().name;
               if (name) {
                 temData.push({
@@ -595,7 +593,7 @@ export class AgencyList extends React.Component<any, any> {
             });
           }.bind(this)
         )
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     }

@@ -143,7 +143,7 @@ const exportConfig = {
         six: "106年"
       },
       _template:
-        "輔助單位:%agency\n輔助項目:%subject\n104:%four\n105:%five\nsix:%six\n"
+        "輔助單位:%agency\n輔助項目:%subject\n104:%four\n105:%five\n106:%six\n"
     }
   },
   registerSocialService: {
@@ -508,7 +508,7 @@ const exportConfig = {
         pro: "專任",
         part: "兼任"
       },
-      _template: "%name(專任:%pro, 兼任:%part)"
+      _template: "%name(專任:%pro,兼任:%part)"
     },
     resources: {
       _title: "外部合作",
@@ -540,13 +540,13 @@ const exportConfig = {
         six: "106年"
       },
       _template:
-        "輔助單位:%agency\n輔助項目:%subject\n104:%four\n105:%five\nsix:%six\n"
+        "輔助單位:%agency\n輔助項目:%subject\n104:%four\n105:%five\n106:%six\n"
     }
   }
 };
 
 export class Exporter {
-  static generateDataLink(typeName: string) {
+  static generateDataLinkAndClick(typeName: string) {
     let fileName = typeNameMap[typeName];
     if (!fileName) {
       throw "no such typeName";
@@ -555,8 +555,12 @@ export class Exporter {
 
     rows.push(this._generateHead(typeName));
     this._getContent(rows, typeName);
+  }
+
+  static _generateAndClickLink(rows, typeName) {
+    let fileName = typeNameMap[typeName];
     let csvContent = "data:text/csv;charset=utf-8,";
-    rows.forEach(function(rowArray) {
+    rows.forEach(function (rowArray) {
       let row = rowArray.join(",");
       csvContent += row + "\r\n";
     });
@@ -565,8 +569,8 @@ export class Exporter {
     var link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", fileName + ".csv");
-
-    return link;
+    document.body.appendChild(link);
+    link.click();
   }
 
   // 產生csv的標題檔案
@@ -576,7 +580,7 @@ export class Exporter {
       throw "no such agencyType";
     }
     var head = [];
-    Object.keys(config).map(function(objectKey, index) {
+    Object.keys(config).map(function (objectKey, index) {
       var value = config[objectKey];
       if (typeof value == "string") {
         head.push(value);
@@ -601,28 +605,31 @@ export class Exporter {
     db
       .collection(dbTypeMap[agencyType])
       .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           let data = doc.data();
+          if (!data.name) {
+            return;
+          }
           let content = [];
 
-          Object.keys(config).map(function(key, index) {
+          Object.keys(config).map((key, index) => {
             var value = config[key];
-            //
             if (typeof value === "string") {
               content.push(this._toShowValue(data[key]));
             } else if (typeof value === "object") {
+              var dbValue = null;
               switch (value._type) {
                 case "dbMap":
-                  var dbValue = this._dbMap(value._map, data);
+                  dbValue = this._dbMap(value._map, data);
                   content.push(this._toShowValue(dbValue));
                   break;
                 case "keyMap":
-                  var dbValue = this._keyMap(value._map, data[key]);
+                  dbValue = this._keyMap(value._map, data[key]);
                   content.push(this._toShowValue(dbValue));
                   break;
                 case "multi":
-                  var dbValue = this._doMulti(value, data[key]);
+                  dbValue = this._doMulti(value, data[key]);
                   content.push(this._toShowValue(dbValue));
                   break;
                 case "doString":
@@ -632,8 +639,12 @@ export class Exporter {
               }
             }
           });
+          rows.push(content);
         });
-      }.bind(this));
+      })
+      .then(() => {
+        this._generateAndClickLink(rows, agencyType)
+      });
   }
 
   static _keyMap(map: object, dbValue) {
@@ -644,21 +655,22 @@ export class Exporter {
   }
 
   static _doMulti(config: object, data) {
+    if (!data) return;
     var out = [];
     // map 為null
     if (config["_map"] == null) {
-      Object.keys(data).map(function(key, index) {
-        var value = data[key] == null ? "": data[key];
+      Object.keys(data).map(function (key, index) {
+        var value = data[key] == null ? "" : data[key];
         out.push(value);
       });
     } else {
       // object類型
-      Object.keys(data).map(function(key, index) {
+      Object.keys(data).map(function (key, index) {
         var value = data[key];
         var temString = config["_template"];
-        Object.keys(config["_map"]).map(function(subKey, index) {
-          var rowValue = value[subKey] ==null ? "":value[subKey];
-          temString.replace("%"+subKey, value[subKey]);
+        Object.keys(config["_map"]).map(function (subKey, index) {
+          var rowValue = value[subKey] == null ? "" : value[subKey];
+          temString = temString.replace(("%" + subKey), value[subKey]);
         });
         out.push(temString);
       });
@@ -669,16 +681,17 @@ export class Exporter {
 
   static _doString(config: object, data) {
     var finalString = config["_template"];
-    Object.keys(config["_map"]).map(function(key, index) {
+    var outString = "";
+    Object.keys(config["_map"]).map(function (key, index) {
       var dataString = data[key] == null ? "" : data[key];
-      finalString.replace("%" + key, dataString);
+      finalString = finalString.replace(("%" + key), dataString);
     });
-    return '"' + finalString + '"';
+    return finalString;
   }
 
   static _dbMap(map: object, data) {
     var tem = [];
-    Object.keys(map).map(function(key, index) {
+    Object.keys(map).map(function (key, index) {
       var chineseName = map[key];
       if (data[key]) {
         tem.push(chineseName);
@@ -692,8 +705,10 @@ export class Exporter {
       return "是";
     } else if (input === false) {
       return "否";
+    } else if (input === undefined || input === null) {
+      return "";
     }
-    return input;
+    return '"' + input + '"';
   }
 }
 
@@ -724,8 +739,8 @@ export class Database extends React.Component<any, any> {
       // .collection("RegisterSocialServices")
       .collection("OtherSocialServices")
       .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
           let address = doc.data().address;
           // let ref = db.collection("LivingServices").doc(doc.id);
           // let ref = db.collection("RegisterSocialServices").doc(doc.id);
@@ -739,7 +754,7 @@ export class Database extends React.Component<any, any> {
                 .update({
                   city: cityNow
                 })
-                .then(function() {
+                .then(function () {
                   console.log("successful");
                 });
               return;
@@ -750,7 +765,7 @@ export class Database extends React.Component<any, any> {
             .update({
               city: "其他"
             })
-            .then(function() {
+            .then(function () {
               console.log("successful 其他");
             });
         });
