@@ -214,11 +214,16 @@ export class AgencyList extends React.Component<any, any> {
   }
 
   exportData = () => {
-    let link = Exporter.generateDataLink();
-
-    document.body.appendChild(link);
-
-    link.click();
+    let fileTypeToExport = [
+      "livingService",
+      "registerSocialService",
+      "otherSocialService"
+    ];
+    fileTypeToExport.forEach(function(type) {
+      let link = Exporter.generateDataLink(type);
+      document.body.appendChild(link);
+      link.click();
+    });
   };
 
   render() {
