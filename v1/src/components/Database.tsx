@@ -57,16 +57,10 @@ const exportConfig = {
     settleAddress: "安置單位地址",
     email: "電子信箱",
     url: "網站",
-    _drugs: {
-      _title: "成癮物質",
-      _type: "dbMap", // 從map找出db是否有值
-      _map: {
-        alchohol: "酒精",
-        opium: "鴉片類",
-        stimulant: "中樞神經興奮劑",
-        otherDrug: "其他"
-      }
-    },
+    alchohol: "酒精",
+    opium: "鴉片類",
+    stimulant: "中樞神經興奮劑",
+    otherDrug: "其他",
     isMale: "性別(男性)",
     isFemale: "性別(男性)",
     isAdult: "年齡(成人)",
@@ -154,16 +148,10 @@ const exportConfig = {
     settleAddress: "治療所或事務所地址",
     email: "電子信箱",
     url: "網站",
-    _drugs: {
-      _title: "成癮物質",
-      _type: "dbMap", // 從map找出db是否有值
-      _map: {
-        alchohol: "酒精",
-        opium: "鴉片類",
-        stimulant: "中樞神經興奮劑",
-        otherDrug: "其他"
-      }
-    },
+    alchohol: "酒精",
+    opium: "鴉片類",
+    stimulant: "中樞神經興奮劑",
+    otherDrug: "其他",
     isMale: "性別(男性)",
     isFemale: "性別(男性)",
     isAdult: "年齡(成人)",
@@ -302,16 +290,10 @@ const exportConfig = {
     address: "地址",
     email: "電子信箱",
     url: "網站",
-    _drugs: {
-      _title: "成癮物質",
-      _type: "dbMap", // 從map找出db是否有值
-      _map: {
-        alchohol: "酒精",
-        opium: "鴉片類",
-        stimulant: "中樞神經興奮劑",
-        otherDrug: "其他"
-      }
-    },
+    alchohol: "酒精",
+    opium: "鴉片類",
+    stimulant: "中樞神經興奮劑",
+    otherDrug: "其他",
     isMale: "性別(男性)",
     isFemale: "性別(男性)",
     isAdult: "年齡(成人)",
@@ -484,6 +466,8 @@ const exportConfig = {
     },
     clinicalPsyPro: "臨床心理師(專任)",
     clinicalPsyPart: "臨床心理師(兼任)",
+    adminPro: "行政人員(專任)",
+    adminPart: "行政人員(兼任)",
     conselorPro: "諮商心理師(專任)",
     conselorPart: "諮商心理師(兼任)",
     doctorPro: "醫師(專任)",
@@ -560,15 +544,18 @@ export class Exporter {
   static _generateAndClickLink(rows, typeName) {
     let fileName = typeNameMap[typeName];
     let csvContent = "";
-    rows.forEach(function (rowArray) {
+    rows.forEach(function(rowArray) {
       let row = rowArray.join(",");
       csvContent += row + "\r\n";
     });
-    + encodeURI(csvContent)
+    +encodeURI(csvContent);
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
-    link.setAttribute("href",  "data:text/csv;charset=utf-8,%EF%BB%BF"+encodedUri);
+    link.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8,%EF%BB%BF" + encodedUri
+    );
     link.setAttribute("download", fileName + ".csv");
     document.body.appendChild(link);
     link.click();
@@ -581,7 +568,7 @@ export class Exporter {
       throw "no such agencyType";
     }
     var head = [];
-    Object.keys(config).map(function (objectKey, index) {
+    Object.keys(config).map(function(objectKey, index) {
       var value = config[objectKey];
       if (typeof value == "string") {
         head.push(value);
@@ -606,8 +593,8 @@ export class Exporter {
     db
       .collection(dbTypeMap[agencyType])
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
           let data = doc.data();
           if (!data.name) {
             return;
@@ -644,7 +631,7 @@ export class Exporter {
         });
       })
       .then(() => {
-        this._generateAndClickLink(rows, agencyType)
+        this._generateAndClickLink(rows, agencyType);
       });
   }
 
@@ -660,18 +647,18 @@ export class Exporter {
     var out = [];
     // map 為null
     if (config["_map"] == null) {
-      Object.keys(data).map(function (key, index) {
+      Object.keys(data).map(function(key, index) {
         var value = data[key] == null ? "" : data[key];
         out.push(value);
       });
     } else {
       // object類型
-      Object.keys(data).map(function (key, index) {
+      Object.keys(data).map(function(key, index) {
         var value = data[key];
         var temString = config["_template"];
-        Object.keys(config["_map"]).map(function (subKey, index) {
+        Object.keys(config["_map"]).map(function(subKey, index) {
           var rowValue = value[subKey] == null ? "" : value[subKey];
-          temString = temString.replace(("%" + subKey), value[subKey]);
+          temString = temString.replace("%" + subKey, value[subKey]);
         });
         out.push(temString);
       });
@@ -683,16 +670,16 @@ export class Exporter {
   static _doString(config: object, data) {
     var finalString = config["_template"];
     var outString = "";
-    Object.keys(config["_map"]).map(function (key, index) {
+    Object.keys(config["_map"]).map(function(key, index) {
       var dataString = data[key] == null ? "" : data[key];
-      finalString = finalString.replace(("%" + key), dataString);
+      finalString = finalString.replace("%" + key, dataString);
     });
     return finalString;
   }
 
   static _dbMap(map: object, data) {
     var tem = [];
-    Object.keys(map).map(function (key, index) {
+    Object.keys(map).map(function(key, index) {
       var chineseName = map[key];
       if (data[key]) {
         tem.push(chineseName);
@@ -740,8 +727,8 @@ export class Database extends React.Component<any, any> {
       // .collection("RegisterSocialServices")
       .collection("OtherSocialServices")
       .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
           let address = doc.data().address;
           // let ref = db.collection("LivingServices").doc(doc.id);
           // let ref = db.collection("RegisterSocialServices").doc(doc.id);
@@ -755,7 +742,7 @@ export class Database extends React.Component<any, any> {
                 .update({
                   city: cityNow
                 })
-                .then(function () {
+                .then(function() {
                   console.log("successful");
                 });
               return;
@@ -766,7 +753,7 @@ export class Database extends React.Component<any, any> {
             .update({
               city: "其他"
             })
-            .then(function () {
+            .then(function() {
               console.log("successful 其他");
             });
         });
